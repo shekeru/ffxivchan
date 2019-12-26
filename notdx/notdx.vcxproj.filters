@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Cheat">
+      <UniqueIdentifier>{3c45bb0c-02c5-4e7d-9a89-39fca8761c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SDK">
+      <UniqueIdentifier>{95a4ba23-f181-4ea0-a40d-4f552771c33c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImGUI">
+      <UniqueIdentifier>{b87b2f54-1d2c-4fe1-8e0b-020bc37020cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua 5.1">
+      <UniqueIdentifier>{d7ebd9e2-dc6d-4fc0-9ef5-33f94b2306bd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\examples\imgui_impl_dx11.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_demo.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_draw.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lapi.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lauxlib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lbaselib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lcode.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\ldblib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\ldebug.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\ldo.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\ldump.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lfunc.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lgc.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\linit.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\liolib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\llex.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lmathlib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lmem.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\print.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lzio.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lvm.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\loadlib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lobject.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lopcodes.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\loslib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lparser.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lstate.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lstring.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lstrlib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\ltable.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\ltablib.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lundump.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\ltm.cpp">
+      <Filter>Source Files\Lua 5.1</Filter>
+    </ClCompile>
+    <ClCompile Include="embed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="unit.h">
+      <Filter>Header Files\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="system.h">
+      <Filter>Header Files\Cheat</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk.h">
+      <Filter>Header Files\Cheat</Filter>
+    </ClInclude>
+    <ClInclude Include="memory.h">
+      <Filter>Header Files\Cheat</Filter>
+    </ClInclude>
+    <ClInclude Include="gui.h">
+      <Filter>Header Files\Cheat</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
