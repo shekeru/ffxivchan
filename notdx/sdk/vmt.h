@@ -1,5 +1,6 @@
 #pragma once
 #include "base.h"
+#include <psapi.h>
 // Guard Class
 namespace detail
 {
@@ -19,8 +20,8 @@ namespace detail
 		}
 
 	private:
-		void*         _base;
-		size_t        _length;
+		void* _base;
+		size_t _length;
 		uint32_t _old;
 	};
 	inline bool validate(uintptr_t memory) {
@@ -45,7 +46,7 @@ public:
 		sdk_vmt = *object; while (detail::validate(sdk_vmt[method_count]))
 			method_count++; vmt = new uintptr_t[method_count + 1]();
 		memcpy(&vmt[1], sdk_vmt, sizeof(uintptr_t) * method_count);
-		printf("vL Total: %p => %d\n", object, method_count);
+		printf("vm Total: %p => %d\n", object, method_count);
 	}
 	template <typename func>
 	void HookVM(func ref, size_t index)

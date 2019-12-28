@@ -138,8 +138,8 @@
     <ClCompile Include="lua\lzio.c" />
     <ClCompile Include="lua\print.c" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\RefactorLater.cpp" />
-    <ClCompile Include="src\SystemConsole.cpp" />
+    <ClCompile Include="src\Parts.cpp" />
+    <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\Hooks.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\VM.cpp" />

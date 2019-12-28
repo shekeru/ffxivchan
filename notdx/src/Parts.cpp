@@ -9,8 +9,8 @@ void User::MainMenuBar()
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("eval(xiv)")) {
-			ImGui::MenuItem("version 0.1", "", false, false);
-			ImGui::MenuItem("ImGui Demo", "", &user.IsDemo);
+			ImGui::MenuItem("version 0.2", "", false, false);
+			ImGui::MenuItem("ImGui Demo", "", &sys.IsDemo);
 			ImGui::Separator(); ImGui::MenuItem("Options", "");
 			if (ImGui::BeginMenu("Colors"))
 			{
@@ -26,10 +26,12 @@ void User::MainMenuBar()
 			};  ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Lua 5.1.4")) {
-			ImGui::MenuItem("Output Window", "", &user.IsRepl);
+			ImGui::MenuItem("Output Window", "", &sys.IsRepl);
 			ImGui::MenuItem("Load New Script", "");
 			ImGui::Separator();
-			ImGui::MenuItem("_boot.lua");
+			if (ImGui::MenuItem("_boot.lua")) {
+				vm.DoFile("_boot.lua");
+			}
 			ImGui::EndMenu();
 		};  ImGui::EndMainMenuBar();
 	}
@@ -56,19 +58,19 @@ ImVector<char*>       History;
 int                   HistoryPos;    // -1: new line, 0..History.Size-1 browsing history.
 int TextEditCallback(ImGuiInputTextCallbackData* data);
 void User::LuaConsole() {
-	if (!user.IsDemo) return;
+	if (!sys.IsRepl) return;
 	static bool scroll = false;
 	static ImGuiStyle& style = ImGui::GetStyle(); 
 	ImGui::SetNextWindowBgAlpha(0.85f);
 	ImGui::SetNextWindowSize(ImVec2(640, 440), ImGuiCond_Appearing);
-	ImGui::Begin("Lua Output [_boot.lua]", &user.IsDemo, ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin("Lua Output [_boot.lua]", &sys.IsDemo, ImGuiWindowFlags_NoCollapse);
 	// Output Section
 	const float footer_height_to_reserve = 1.6 * ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
 	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false); // Leave room for 1 separator + 1 InputText
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
-	for (int i = 0; i < vL->Items.size(); i++)
+	for (int i = 0; i < vm.Items.size(); i++)
 	{
-		auto item = vL->Items[i];
+		auto item = vm.Items[i];
 		switch (item.std) {
 		case 1:
 			ImGui::PushStyleColor(ImGuiCol_Text, style.Colors[ImGuiCol_CheckMark]);
@@ -86,8 +88,8 @@ void User::LuaConsole() {
 	{
 		Strtrim(InputBuf);
 		if (scroll = *InputBuf) {
-			vL->Output(1, " >> "+string(InputBuf));
-			vL->DoString(InputBuf);
+			vm.Output(1, " >> "+string(InputBuf));
+			vm.DoString(InputBuf);
 		}; strcpy(InputBuf, "");
 		ImGui::SetKeyboardFocusHere(-1);
 	}; ImGui::PopItemWidth();

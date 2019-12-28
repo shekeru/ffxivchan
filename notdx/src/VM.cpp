@@ -14,7 +14,7 @@ static int luaB_print(lua_State* L) {
 				LUA_QL("print"));
 		if (i > 1) str += " "; str += s;
 		lua_pop(L, 1);  /* pop result */
-	}; vL->Output(0, str); return 0;
+	}; vm.Output(0, str); return 0;
 }
 
 static const struct luaL_Reg altRegs[] = {
@@ -22,7 +22,7 @@ static const struct luaL_Reg altRegs[] = {
   {NULL, NULL} /* end of array */
 };
 
-LuaVM::LuaVM() {
+void LuaVM::Connect() {
 	auto intptr5 = (uintptr_t***)game->ScanPattern
 		("48 83 3D ? ? ? ? ? 8B 9E ? ? ? ?", 3, 1);
 	L = (lua_State*)intptr5[0][0x583][1];
@@ -31,10 +31,11 @@ LuaVM::LuaVM() {
 	lua_getglobal(L, "_G");
 	luaL_register(L, NULL, altRegs);
 	lua_pop(L, 1); 
-	DoFile("../game/lua/_boot.lua");
+	DoFile("_boot.lua");
 };
 
-void LuaVM::DoFile(const char* fname) {
+void LuaVM::DoFile(const char* fname, const char* prefix) {
+	fname = (string(fname) + prefix).c_str();
 	if (luaL_dofile(L, fname)) {
 		auto line = lua_tostring(L, -1);
 		Output(2, line); lua_pop(L, 1);

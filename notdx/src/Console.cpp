@@ -1,4 +1,7 @@
 #include "base.h"
+#include <fcntl.h>
+#include <iostream>
+#include <io.h>
 
 namespace Utils {
 	void EnableConsole()

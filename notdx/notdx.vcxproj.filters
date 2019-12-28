@@ -19,6 +19,9 @@
     <Filter Include="Source Files\Lua 5.1.4">
       <UniqueIdentifier>{d7ebd9e2-dc6d-4fc0-9ef5-33f94b2306bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\User">
+      <UniqueIdentifier>{66ba769c-cae1-45cb-9d8a-d337df065b01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
@@ -132,36 +135,36 @@
     <ClCompile Include="lua\print.c">
       <Filter>Source Files\Lua 5.1.4</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VM.cpp">
+    <ClCompile Include="src\VM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Hooks.cpp">
+    <ClCompile Include="src\Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Hooks.cpp">
+      <Filter>Source Files\User</Filter>
     </ClCompile>
-    <ClCompile Include="RefactorLater.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Input.cpp">
+      <Filter>Source Files\User</Filter>
     </ClCompile>
-    <ClCompile Include="SystemConsole.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Parts.cpp">
+      <Filter>Source Files\User</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base.h">
+    <ClInclude Include="sdk\base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="repl.h">
+    <ClInclude Include="sdk\repl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="user.h">
+    <ClInclude Include="sdk\user.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vmt.h">
+    <ClInclude Include="sdk\vmt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

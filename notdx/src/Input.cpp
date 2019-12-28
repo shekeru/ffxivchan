@@ -1,5 +1,7 @@
 #include "user.h"
 #include "imgui_internal.h"
+#include "examples/imgui_impl_win32.h"
+#include "examples/imgui_impl_dx11.h"
 
 void Interface::StartGUI(HWND descW) {
 	ctx = ImGui::CreateContext();
@@ -17,7 +19,7 @@ void Interface::StartGUI(HWND descW) {
 	//ImGui::SetCurrentFont(jap_shit);
 	// Menu Toggle
 	RegisterHotkey(VK_INSERT, []() {
-		user.IsOpen ^= 1;
+		sys.IsOpen ^= 1;
 	});
 };
 
@@ -34,12 +36,12 @@ Interface::~Interface() {
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	user.ProcessMessage(msg, wParam, lParam);
+	sys.ProcessMessage(msg, wParam, lParam);
 	// Fuck my Life
-	if (user.IsOpen)
+	if (sys.IsOpen)
 		ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam);
 	else
-		CallWindowProc(user.prevProc, hWnd, msg, wParam, lParam);
+		CallWindowProc(sys.prevProc, hWnd, msg, wParam, lParam);
 	return true;
 }
 
@@ -142,17 +144,17 @@ bool Interface::ProcessKeybdMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return true;
 }
 
-KeyState Interface::GetKeyState(std::uint32_t vk)
+KeyState Interface::GetKeyState(uint32_t vk)
 {
 	return Keymap[vk];
 }
 
-bool Interface::IsKeyDown(std::uint32_t vk)
+bool Interface::IsKeyDown(uint32_t vk)
 {
 	return Keymap[vk] == KeyState::Down;
 }
 
-bool Interface::WasKeyPressed(std::uint32_t vk)
+bool Interface::WasKeyPressed(uint32_t vk)
 {
 	if (Keymap[vk] == KeyState::Pressed) {
 		Keymap[vk] = KeyState::Up;
@@ -161,12 +163,12 @@ bool Interface::WasKeyPressed(std::uint32_t vk)
 	return false;
 }
 
-void Interface::RegisterHotkey(std::uint32_t vk, std::function<void(void)> f)
+void Interface::RegisterHotkey(uint32_t vk, function<void(void)> f)
 {
 	Hotkeys[vk] = f;
 }
 
-void Interface::RemoveHotkey(std::uint32_t vk)
+void Interface::RemoveHotkey(uint32_t vk)
 {
 	Hotkeys[vk] = nullptr;
 }

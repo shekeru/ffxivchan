@@ -1,13 +1,12 @@
 #include "user.h"
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
-	game = new MemorySystem("ffxiv_dx11.exe");
-		Sleep(9750); vL = new LuaVM();
-	user.prevProc = (WNDPROC)SetWindowLongPtr
-		(user.hWindow, GWLP_WNDPROC, (LONG_PTR) WndProc);
-	while (!user.Stop) {
+	game = new MemorySystem("ffxiv_dx11.exe"); Sleep(9750); 
+	vm.Connect(); sys.prevProc = (WNDPROC)SetWindowLongPtr
+		(sys.hWindow, GWLP_WNDPROC, (LONG_PTR) WndProc);
+	while (!sys.Stop) {
 		Sleep(1000);
-	};
+	}; sys.~Interface();
 FreeLibrary:
 	FreeLibraryAndExitThread(hInstance, 1);
 }

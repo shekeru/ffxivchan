@@ -8,8 +8,9 @@ extern "C" {
 // SDK Namespace
 class LuaVM {
 public:
-	LuaVM(); lua_State* L;
-	void DoFile(const char* fname);
+	void Connect(); lua_State* L;
+	void DoFile(const char* fname, 
+		const char* prefix = "../game/lua/");
 	void DoString(const char* fn_str);
 	// REPL State
 	struct line {
@@ -20,10 +21,10 @@ public:
 	}; void Output(char x, char* ins) {
 		Items.push_back({ x, ins});
 	}; // Imgui Shit
-}; inline LuaVM* vL;
+}; inline LuaVM vm;
 // Hooks Namespace
 namespace Hooks {
 	HRESULT _fastcall Present(IDXGISwapChain *pChain, UINT SyncInterval, UINT Flags);
 	HRESULT _fastcall CreateSwapChain(IDXGIFactory* pFactory, ID3D11Device *pDevice,
 		DXGI_SWAP_CHAIN_DESC *pDesc, IDXGISwapChain **ppSwapChain);
-}; // Pieces Namespace
+};
