@@ -40,16 +40,23 @@ void SDK::RegisterLua() {
 	//luaL_register(_S, NULL, prints);
 	//lua_pop(_S, 1);
 	//// Init File
-	LuaExec("require '_boot'", 0);
+	LuaExec("require '_boot'");
 }
 
-void SDK::LuaExec(const char* fn_str, bool show) {
-	if (luaL_dostring(_L, fn_str)) {
+void SDK::LuaExec(const char* fn_str) {
+	auto ret_str = new char[strlen(fn_str) + 12];
+	sprintf(ret_str, "return %s", fn_str);
+	auto code = luaL_loadstring(_L, ret_str);
+	if (code) {
+		lua_pop(_L, 1); code = 
+			luaL_loadstring(_L, fn_str);
+	};  code = code || lua_pcall(_L, 0, -1, 0);
+	if (code) {
 		auto line = string(lua_tostring(_L, -1));
 		sys.Console(2, line); lua_pop(_L, 1);
-	} else if(show && lua_gettop(_L) > 0) {
+	} else if(lua_gettop(_L) > 0) {
 		lua_getglobal(_L, "print"); lua_insert(_L, 1);
 		if (lua_pcall(_L, lua_gettop(_L) - 1, 0, 0))
 			sys.Console(2, string(lua_tostring(_L, -1)));
-	}; lua_settop(_L, 0); 
+	}; lua_settop(_L, 0); delete ret_str;
 }

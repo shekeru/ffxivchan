@@ -20,7 +20,7 @@ extern "C" {
 namespace SDK {
 	inline lua_State *_L, *_S;
 	SINGLETON(MemorySystem, Memory);
-	void LuaExec(const char* fn_str, bool show = 1);
+	void LuaExec(const char* fn_str);
 	void RegisterLua();
 };
 // Hooks Namespace
