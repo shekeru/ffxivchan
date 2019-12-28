@@ -1,9 +1,6 @@
 #pragma once
-#define NOMINMAX
-#include "system.h"
-#include <stdexcept>
-#include <cstdint>
-#include <map>
+#include "base.h"
+// Guard Class
 namespace detail
 {
 	class protect_guard
@@ -100,7 +97,7 @@ public:
 			GetModuleHandle(exe_name), &baseModule, sizeof(baseModule));
 		printf("ffxiv_dx11.exe -> %p\n", baseModule.lpBaseOfDll);
 	}
-	inline uint64_t ScanPattern(const char* signature, int size, int extra = 0)
+	uint64_t ScanPattern(const char* signature, int size, int extra = 0)
 	{
 		static auto pattern_to_byte = [](const char* pattern) {
 			auto bytes = std::vector<int>{};
@@ -143,4 +140,4 @@ public:
 		}
 		return NULL;
 	}
-};
+}; inline MemorySystem* game;

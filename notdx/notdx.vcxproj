@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../imgui;./lua;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../imgui;./lua;./sdk;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
@@ -83,7 +83,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../imgui;./lua;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../imgui;./lua;./sdk;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
@@ -94,11 +94,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="gui.h" />
-    <ClInclude Include="unit.h" />
-    <ClInclude Include="sdk.h" />
-    <ClInclude Include="system.h" />
-    <ClInclude Include="memory.h" />
+    <ClInclude Include="sdk\base.h" />
+    <ClInclude Include="sdk\repl.h" />
+    <ClInclude Include="sdk\user.h" />
+    <ClInclude Include="sdk\vmt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_dx11.cpp" />
@@ -107,9 +106,6 @@
     <ClCompile Include="..\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="embed.cpp" />
-    <ClCompile Include="Hooks.cpp" />
-    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="lua\lapi.c" />
     <ClCompile Include="lua\lauxlib.c" />
     <ClCompile Include="lua\lbaselib.c" />
@@ -141,9 +137,12 @@
     <ClCompile Include="lua\lvm.c" />
     <ClCompile Include="lua\lzio.c" />
     <ClCompile Include="lua\print.c" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Objects.cpp" />
-    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\RefactorLater.cpp" />
+    <ClCompile Include="src\SystemConsole.cpp" />
+    <ClCompile Include="src\Hooks.cpp" />
+    <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\VM.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

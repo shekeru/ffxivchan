@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Cheat">
-      <UniqueIdentifier>{3c45bb0c-02c5-4e7d-9a89-39fca8761c31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\SDK">
-      <UniqueIdentifier>{95a4ba23-f181-4ea0-a40d-4f552771c33c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\ImGUI">
       <UniqueIdentifier>{b87b2f54-1d2c-4fe1-8e0b-020bc37020cc}</UniqueIdentifier>
     </Filter>
@@ -27,15 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Interface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
       <Filter>Source Files\ImGUI</Filter>
     </ClCompile>
@@ -53,15 +38,6 @@
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_draw.cpp">
       <Filter>Source Files\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Hooks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="embed.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lua\lapi.c">
       <Filter>Source Files\Lua 5.1.4</Filter>
@@ -156,22 +132,37 @@
     <ClCompile Include="lua\print.c">
       <Filter>Source Files\Lua 5.1.4</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RefactorLater.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemConsole.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="unit.h">
-      <Filter>Header Files\SDK</Filter>
+    <ClInclude Include="base.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="system.h">
-      <Filter>Header Files\Cheat</Filter>
+    <ClInclude Include="repl.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sdk.h">
-      <Filter>Header Files\Cheat</Filter>
+    <ClInclude Include="user.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="memory.h">
-      <Filter>Header Files\Cheat</Filter>
-    </ClInclude>
-    <ClInclude Include="gui.h">
-      <Filter>Header Files\Cheat</Filter>
+    <ClInclude Include="vmt.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
