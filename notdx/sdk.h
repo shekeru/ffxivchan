@@ -10,12 +10,17 @@
 #define IDXGIFactory__MakeWindowAssociation 8
 #define IDXGIFactory__GetWindowAssociation 9
 #define IDXGIFactory__CreateSwapChain 10
-#include "lauxlib.h"
 #include "memory.h"
+extern "C" {
+	#include "lua.h"
+	#include "lualib.h"
+	#include "lauxlib.h"
+}
 // SDK Namespace
 namespace SDK {
-	inline lua_State* _L;
+	inline lua_State *_L, *_S;
 	SINGLETON(MemorySystem, Memory);
+	void LuaFile(const char* str);
 	void LuaExec(const char* str); 
 	void RegisterLua();
 };

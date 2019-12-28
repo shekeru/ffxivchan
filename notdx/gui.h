@@ -55,7 +55,7 @@ public:
 	}; deque <struct line> Items;
 	void Console(char x, string ins) {
 		Items.push_back({x, ins});
-	};
+	}; // Imgui Shit
 private:
 	std::function<void(void)> Hotkeys[256];
 	KeyState Keymap[256];
@@ -65,6 +65,7 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // Local Shit
 namespace User {
+	void MainMenuBar();
 	void NameOverlay();
 	void LuaConsole();
-}
+}; extern bool openDemo;

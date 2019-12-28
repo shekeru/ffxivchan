@@ -21,10 +21,13 @@ HRESULT _fastcall Hooks::Present(IDXGISwapChain *pChain, UINT SyncInterval, UINT
 {
 	static auto eval = VMT::SwapChain->GetOriginalMethod(Present); using namespace User;
 	ImGui_ImplWin32_NewFrame(); ImGui_ImplDX11_NewFrame(); ImGui::NewFrame();
-	NameOverlay(); if (sys.IsOpen) {
+	if (sys.IsOpen) {
+		User::MainMenuBar();
+		ImGui::ShowDemoWindow(&openDemo);
 		User::LuaConsole();
-		ImGui::ShowDemoWindow();
-	}; ImGui::EndFrame(); ImGui::Render(); sys.ResizeTarget();
+	} else 
+		NameOverlay(); 
+	ImGui::EndFrame(); ImGui::Render(); sys.ResizeTarget();
 	sys.pImmediateContext->OMSetRenderTargets(1, &sys.pTargetView, NULL);
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	return eval(pChain, SyncInterval, Flags);

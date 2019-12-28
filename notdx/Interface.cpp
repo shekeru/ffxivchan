@@ -7,7 +7,9 @@ void Interface::Connect(HWND descW) {
 	ImGui_ImplDX11_Init(pDevice, pImmediateContext);
 	// Style Shit
 	ImGuiStyle& style = ImGui::GetStyle();
-	style.WindowBorderSize = 0.0f;
+	style.WindowBorderSize = 0.0f; style.Alpha = 0.92f;
+	style.Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	style.Colors[ImGuiCol_CheckMark] = ImVec4(46/255.0, 204/255.0, 64/255.0, 1.0f);
 	// Font Shit
 	//ImGuiIO& io = ImGui::GetIO();
 	//auto jap_shit = io.Fonts->AddFontFromFileTTF("meiryo_00.ttf", 16.f, NULL);

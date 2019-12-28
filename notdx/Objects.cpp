@@ -1,9 +1,44 @@
 #include "sdk.h"
 #include "gui.h"
 
+bool openDemo = false;
+bool openColors = false;
+bool openConsole = true;
+
 static int exIM_Overlay = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration
 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing
 | ImGuiWindowFlags_AlwaysAutoResize;
+
+void User::MainMenuBar()
+{
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("eval(xiv)")) {
+			ImGui::MenuItem("version 0.1", "", false, false);
+			ImGui::MenuItem("ImGui Demo", "", &openDemo);
+			ImGui::Separator(); ImGui::MenuItem("Options", "");
+			if (ImGui::BeginMenu("Colors"))
+			{
+				float sz = ImGui::GetTextLineHeight();
+				for (int i = 0; i < ImGuiCol_COUNT; i++)
+				{
+					const char* name = ImGui::GetStyleColorName((ImGuiCol)i);
+					ImVec2 p = ImGui::GetCursorScreenPos();
+					ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), 
+						ImGui::GetColorU32((ImGuiCol)i)); ImGui::Dummy(ImVec2(sz, sz));
+					ImGui::SameLine(); ImGui::MenuItem(name);
+				};  ImGui::EndMenu();
+			};  ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Lua 5.1.4")) {
+			ImGui::MenuItem("Console Window", "", &openConsole);
+			ImGui::MenuItem("Load New Script", "");
+			ImGui::Separator();
+			ImGui::MenuItem("_boot.lua");
+			ImGui::EndMenu();
+		};  ImGui::EndMainMenuBar();
+	}
+}
 
 void User::NameOverlay() {
 	const float DISTANCE = 0.0f;
@@ -22,40 +57,79 @@ void Strtrim(char* str) {
 		str_end--; *str_end = 0; 
 }; char InputBuf[256];
 
+ImVector<char*>       History;
+int                   HistoryPos;    // -1: new line, 0..History.Size-1 browsing history.
+int TextEditCallback(ImGuiInputTextCallbackData* data);
 void User::LuaConsole() {
-	ImGui::SetNextWindowBgAlpha(0.95f);
-	ImGui::SetNextWindowSize(ImVec2(640, 440));
-	ImGui::Begin("Lua Console", NULL, ImGuiWindowFlags_NoCollapse);
+	static bool scroll = false;
+	static ImGuiStyle& style = ImGui::GetStyle(); 
+	ImGui::SetNextWindowBgAlpha(0.85f);
+	ImGui::SetNextWindowSize(ImVec2(640, 440), ImGuiCond_Appearing);
+	ImGui::Begin("Lua Console [_boot.lua]", &openConsole, ImGuiWindowFlags_NoCollapse);
 	// Output
-	const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
-	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar); // Leave room for 1 separator + 1 InputText
+	const float footer_height_to_reserve = 1.6 * ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
+	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false); // Leave room for 1 separator + 1 InputText
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
 	for (int i = 0; i < sys.Items.size(); i++)
 	{
 		auto item = sys.Items[i];
 		switch (item.std) {
 		case 1:
-			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.8f, 0.6f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_Text, style.Colors[ImGuiCol_CheckMark]);
 			break;
 		case 2:
-			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_Text, style.Colors[ImGuiCol_PlotLinesHovered]);
 			break;
-		}; ImGui::TextUnformatted(item.str.c_str()); 
+		}; ImGui::TextWrapped(item.str.c_str());
 			if (item.std) ImGui::PopStyleColor();
-	} ImGui::PopStyleVar(); ImGui::EndChild(); ImGui::Separator();
+	}; if (scroll) ImGui::SetScrollHereY(1.0f); scroll = 0;
+	ImGui::PopStyleVar(); ImGui::EndChild(); ImGui::Separator();
 	// Input
-	bool reclaim_focus = false; ImGui::PushItemWidth(-1.0f);
+	ImGui::PushItemWidth(-1.0f);
 	if (ImGui::InputText("", InputBuf, IM_ARRAYSIZE(InputBuf), ImGuiInputTextFlags_EnterReturnsTrue))
 	{
 		Strtrim(InputBuf);
-		if (*InputBuf) {
-			sys.Console(1, "> "+string(InputBuf));
+		if (scroll = *InputBuf) {
+			sys.Console(1, "\\> "+string(InputBuf));
 			SDK::LuaExec(InputBuf);
 		}; strcpy(InputBuf, "");
+		ImGui::SetKeyboardFocusHere(-1);
 	}; ImGui::PopItemWidth();
 	// Auto-focus on window apparition
 	ImGui::SetItemDefaultFocus();
-	if (reclaim_focus)
-		ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
 	ImGui::End();
 };
+
+int TextEditCallback(ImGuiInputTextCallbackData* data)
+{
+	//AddLog("cursor: %d, selection: %d-%d", data->CursorPos, data->SelectionStart, data->SelectionEnd);
+	switch (data->EventFlag)
+	{
+	case ImGuiInputTextFlags_CallbackHistory:
+	{
+		// Example of HISTORY
+		const int prev_history_pos = HistoryPos;
+		if (data->EventKey == ImGuiKey_UpArrow)
+		{
+			if (HistoryPos == -1)
+				HistoryPos = History.Size - 1;
+			else if (HistoryPos > 0)
+				HistoryPos--;
+		}
+		else if (data->EventKey == ImGuiKey_DownArrow)
+		{
+			if (HistoryPos != -1)
+				if (++HistoryPos >= History.Size)
+					HistoryPos = -1;
+		}
+
+		// A better implementation would preserve the data on the current input line along with cursor position.
+		if (prev_history_pos != HistoryPos)
+		{
+			const char* history_str = (HistoryPos >= 0) ? History[HistoryPos] : "";
+			data->DeleteChars(0, data->BufTextLen);
+			data->InsertChars(0, history_str);
+		}
+	}
+	}; return 0;
+}
