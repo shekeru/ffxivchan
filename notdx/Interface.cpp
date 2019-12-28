@@ -9,7 +9,8 @@ void Interface::Connect(HWND descW) {
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.WindowBorderSize = 0.0f; style.Alpha = 0.92f;
 	style.Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	style.Colors[ImGuiCol_CheckMark] = ImVec4(46/255.0, 204/255.0, 64/255.0, 1.0f);
+	style.Colors[ImGuiCol_CheckMark] = ImVec4(132/255.0, 209/255.0, 96/255.0, 1.0f);
+	style.Colors[ImGuiCol_PlotLinesHovered] = ImVec4(235 / 255.0, 64 / 255.0, 52 / 255.0, 1.0f);
 	// Font Shit
 	//ImGuiIO& io = ImGui::GetIO();
 	//auto jap_shit = io.Fonts->AddFontFromFileTTF("meiryo_00.ttf", 16.f, NULL);

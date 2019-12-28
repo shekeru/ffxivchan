@@ -6,7 +6,6 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
 		Sleep(9750); SDK::RegisterLua(); 
 	sys.sdkDispatch = (WNDPROC)SetWindowLongPtr
 		(sys.hWindow, GWLP_WNDPROC, (LONG_PTR)WndProc);
-	SDK::LuaExec("print(\"Loaded Lua State...\")");
 	// main loop
 	while (!sys.Stop) {
 		//auto chars = (CUnit**) SDK::Memory->ScanPattern("48 8b 42 08 48 c1 e8 03 3d a7 01 00 00 77 24 8b c0 48 8d 0d");

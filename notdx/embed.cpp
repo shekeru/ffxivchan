@@ -40,29 +40,16 @@ void SDK::RegisterLua() {
 	//luaL_register(_S, NULL, prints);
 	//lua_pop(_S, 1);
 	//// Init File
-	LuaExec("require '_boot'");
+	LuaExec("require '_boot'", 0);
 }
 
-void SDK::LuaFile(const char* fname) {
-	static char buffer[256]; GetFullPathName
-		(fname, 256, buffer, NULL);
-	printf("%s\n", buffer);
-	if (luaL_dofile(_L, buffer)) {
+void SDK::LuaExec(const char* fn_str, bool show) {
+	if (luaL_dostring(_L, fn_str)) {
 		auto line = string(lua_tostring(_L, -1));
 		sys.Console(2, line); lua_pop(_L, 1);
-	}
-}
-
-void SDK::LuaExec(const char* str) {
-	auto new_str = new char[strlen(str) + 12]; 
-	sprintf(new_str, "return %s", str);
-	if (luaL_dostring(_L, new_str)) {
-		auto line = string(lua_tostring(_L, -1));
-		sys.Console(2, line); lua_pop(_L, 1);
-	} else if(lua_gettop(_L) > 0) {
+	} else if(show && lua_gettop(_L) > 0) {
 		lua_getglobal(_L, "print"); lua_insert(_L, 1);
 		if (lua_pcall(_L, lua_gettop(_L) - 1, 0, 0))
 			sys.Console(2, string(lua_tostring(_L, -1)));
 	}; lua_settop(_L, 0); 
-	delete new_str;
 }
