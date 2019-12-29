@@ -9,8 +9,7 @@ extern "C" {
 class LuaVM {
 public:
 	void Connect(); lua_State* L;
-	void DoFile(const char* fname, 
-		const char* prefix = "../game/lua/");
+	void DoFile(const char* fname);
 	void DoString(const char* fn_str);
 	// REPL State
 	struct line {

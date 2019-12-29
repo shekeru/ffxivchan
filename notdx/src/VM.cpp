@@ -26,7 +26,7 @@ void LuaVM::Connect() {
 	auto intptr5 = (uintptr_t***)game->ScanPattern
 		("48 83 3D ? ? ? ? ? 8B 9E ? ? ? ?", 3, 1);
 	L = (lua_State*)intptr5[0][0x583][1];
-	printf("Result, %p -> %p \n", intptr5, L);
+	printf("Lua_State, %p -> %p \n", intptr5, L);
 	// Unfuck VM
 	lua_getglobal(L, "_G");
 	luaL_register(L, NULL, altRegs);
@@ -34,16 +34,17 @@ void LuaVM::Connect() {
 	DoFile("_boot.lua");
 };
 
-void LuaVM::DoFile(const char* fname, const char* prefix) {
-	fname = (string(fname) + prefix).c_str();
-	if (luaL_dofile(L, fname)) {
+void LuaVM::DoFile(const char* fname) {
+	auto ret_str = new char[strlen(fname) + 12];
+	sprintf(ret_str, "../game/lua/%s", fname);
+	if (luaL_dofile(L, ret_str)) {
 		auto line = lua_tostring(L, -1);
 		Output(2, line); lua_pop(L, 1);
 	} else if (lua_gettop(L) > 0) {
 		lua_getglobal(L, "print"); lua_insert(L, 1);
 		if (lua_pcall(L, lua_gettop(L) - 1, 0, 0))
 			Output(2, lua_tostring(L, -1));
-	}; lua_settop(L, 0);
+	}; lua_settop(L, 0); delete ret_str;
 }
 
 void LuaVM::DoString(const char* fn_str) {
