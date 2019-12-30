@@ -10,15 +10,21 @@ void __fastcall N_41(__int64 a1) {
 }
 
 uintptr_t N_47_fn;
-void __fastcall N_47(__int64 mbw, __int64 ntp, __int64 idk) {
+void __fastcall N_47(__int64 mbw, __int64 ntp, __int64 stp) {
 	static auto eval = (decltype(&N_47))N_47_fn;
-	auto n2 = IntPtr(ntp)[272].Cast<__int64>();
-	if (n2) {
-		auto n3 = IntPtr(n2)[32].Cast<__int64>();
-		auto n_h = IntPtr(n3)[2004].Cast<int>();
-		printf("call (N-47), ntp-2/3: %p/%p, n-h: %i\n", n2, n3, n_h);
-
-	}; return eval(mbw, ntp, idk);
+	auto iTables = IntPtr(ntp)[272][32].Cast<__int64>();
+	auto iData = (IntResults*)(iTables + 2004);
+	auto aTables = IntPtr(stp)[248][32].Cast<__int64>();
+	auto aData = (StrResults*)(iTables + 1608);
+	if (iData->Count) {
+		printf("call (N-47): %p %p %p\n", mbw, ntp, stp);
+		printf("Found %i Listings, jStruct_0: %p...\n", iData->Count, 
+			IntPtr(mbw)[640].Cast<void*>());
+		for (int j = 0; j < iData->Count; j++)
+			printf(" [+] Price: %i, City: %s\n",
+				iData->Items[j].Price, aData->Items[j].City);
+	}
+	return eval(mbw, ntp, stp);
 }
 
 void MemorySystem::DetourAll() {
