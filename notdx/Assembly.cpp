@@ -26,13 +26,36 @@ void __fastcall N_47(__int64 mbw, __int64 ntp, __int64 stp) {
 			iData->Items[j].Price, aData->Items[j].Retainer);
 }
 
+PVOID ProcessZonePacket;
+UINT64 __fastcall hkPzPacket(INT64 a1, UINT a2, INT64 a3) {
+	static auto eval = (decltype(&hkPzPacket))ProcessZonePacket;
+	switch (*(UINT16*)(a3 + 2)) {
+		case 0x25E:
+			printf("MarketTaxRates\n"); 
+			break;
+		case 0x328:
+			printf("MarketBoardItemRequestStart\n");
+			break;
+		case 0x15F:
+			printf("MarketBoardOfferings\n");
+			break;
+		case 0x113:
+			printf("MarketBoardHistory\n");
+			break;
+	}; return eval(a1, a2, a3);
+}
+
 void MemorySystem::DetourAll() {
-	DetourRestoreAfterWith(); DetourTransactionBegin();
-	DetourUpdateThread(GetCurrentThread());
+	ProcessZonePacket = (PVOID) game->GetLocation(Offsets::NETWORK);
 	auto Market = game->ScanPattern(Offsets::MARKET, 3);
 	N_47_fn = Market[0x8 * 47].Cast<uintptr_t>();
 	N_41_fn = Market[0x8 * 41].Cast<uintptr_t>();
-	DetourAttach(&(PVOID&)N_47_fn, N_47);
+	// Detours Init
+	DetourRestoreAfterWith(); DetourTransactionBegin();
+	DetourUpdateThread(GetCurrentThread());
+	//DetourAttach(&(PVOID&)N_47_fn, N_47);
 	//DetourAttach(&(PVOID&)N_41_fn, N_41);
+	DetourAttach(&ProcessZonePacket, hkPzPacket);
+	// Detours Post
 	DetourTransactionCommit();
 }
