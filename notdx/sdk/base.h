@@ -29,7 +29,19 @@ public:
 }; // Macros
 #define INSTANCE(TYPE, NAME) \
 	inline static TYPE* NAME;
-// Utils Area
+// Pointer Shit
+class IntPtr {
+public:
+	IntPtr(uintptr_t value) {
+		this->value = value;
+	}; uintptr_t value;
+	IntPtr operator[](uintptr_t next) const {
+		return IntPtr(*(uintptr_t*)(value + next));
+	}; template<typename obj> 
+	obj Cast() {
+		return (obj) value;
+	};
+}; // Utils Area
 namespace Utils {
 	inline struct console {
 		HANDLE err, out, in;
@@ -41,4 +53,11 @@ namespace Utils {
 			printf("%hhx ", PUCHAR(target)[i]);
 		}; printf("\n");
 	};
+}; // Memory Patterns
+namespace Offsets {
+	inline const char* CHAT = "48 8B 0D ? ? ? ? BA ? ? ? ? 48 83 C1 ? E8 ? ? ? ? 83 78 ? ? 0F 85 ? ? ? ? C6 05 ? ? ? ? ?";
+	inline const char* MARKET = "48 8d 05 ? ? ? ? 48 8b d9 48 89 01 48 81 c1 60 03";
+	inline const char* LUA = "48 83 3D ? ? ? ? ? 8B 9E ? ? ? ? ";
 };
+#include <set>
+inline std::set <uintptr_t> objects;

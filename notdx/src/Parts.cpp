@@ -88,7 +88,7 @@ void User::LuaConsole() {
 	{
 		Strtrim(InputBuf);
 		if (scroll = *InputBuf) {
-			vm.Output(1, " >> "+string(InputBuf));
+			vm.Output(1, ">> "+string(InputBuf));
 			vm.DoString(InputBuf);
 		}; strcpy(InputBuf, "");
 		ImGui::SetKeyboardFocusHere(-1);

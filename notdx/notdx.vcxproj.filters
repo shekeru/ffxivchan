@@ -22,6 +22,9 @@
     <Filter Include="Source Files\User">
       <UniqueIdentifier>{66ba769c-cae1-45cb-9d8a-d337df065b01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Detours">
+      <UniqueIdentifier>{88d8ffa6-514c-43ac-8e54-3523d7ec01e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
@@ -153,6 +156,39 @@
     <ClCompile Include="src\Parts.cpp">
       <Filter>Source Files\User</Filter>
     </ClCompile>
+    <ClCompile Include="Assembly.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disasm.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolarm.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolarm64.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolia64.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolx64.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolx86.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\image.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\modules.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\creatwth.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\detours.cpp">
+      <Filter>Source Files\Detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sdk\base.h">
@@ -165,6 +201,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sdk\vmt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatLog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Market.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

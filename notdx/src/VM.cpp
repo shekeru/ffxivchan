@@ -23,11 +23,9 @@ static const struct luaL_Reg altRegs[] = {
 };
 
 void LuaVM::Connect() {
-	auto intptr5 = (uintptr_t***)game->ScanPattern
-		("48 83 3D ? ? ? ? ? 8B 9E ? ? ? ?", 3, 1);
-	L = (lua_State*)intptr5[0][0x583][1];
-	printf("Lua_State, %p -> %p \n", intptr5, L);
-	// Unfuck VM
+	IntPtr lua_pb = game->ScanPattern(Offsets::LUA, 3, 1);
+	L = lua_pb[0][0x2C18][8].Cast<lua_State*>();
+	printf("Lua_State: OK, %p\n", L);
 	lua_getglobal(L, "_G");
 	luaL_register(L, NULL, altRegs);
 	lua_pop(L, 1); 

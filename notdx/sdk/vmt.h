@@ -88,18 +88,15 @@ public:
 public:
 	INSTANCE(VMT, Factory);
 	INSTANCE(VMT, SwapChain);
-};
-// Memory Cunts
-class MemorySystem {
+}; class MemorySystem {
 public:
 	MODULEINFO baseModule;
 	MemorySystem(const char* exe_name) {
 		GetModuleInformation(GetCurrentProcess(),
 			GetModuleHandle(exe_name), &baseModule, sizeof(baseModule));
-		printf("ffxiv_dx11.exe -> %p\n", baseModule.lpBaseOfDll);
+		printf("ffxiv Executable Start -> %p\n", baseModule.lpBaseOfDll);
 	}
-	uint64_t ScanPattern(const char* signature, int size, int extra = 0)
-	{
+	uintptr_t GetLocation(const char* signature) {
 		static auto pattern_to_byte = [](const char* pattern) {
 			auto bytes = std::vector<int>{};
 			auto start = const_cast<char*>(pattern);
@@ -122,9 +119,7 @@ public:
 		auto sizeOfImage = baseModule.SizeOfImage;
 		auto patternBytes = pattern_to_byte(signature);
 		auto scanBytes = reinterpret_cast<std::uint8_t*>(baseModule.lpBaseOfDll);
-
-		auto s = patternBytes.size();
-		auto d = patternBytes.data();
+		auto s = patternBytes.size(); auto d = patternBytes.data();
 
 		for (auto i = 0ul; i < sizeOfImage - s; ++i) {
 			bool found = true;
@@ -135,10 +130,14 @@ public:
 				}
 			}
 			if (found) {
-				auto offset = (int*)(scanBytes + i + size);
-				return *offset + uintptr_t(offset) + 4 + extra;
+				return uintptr_t(scanBytes + i);
 			}
 		}
 		return NULL;
 	}
+	IntPtr ScanPattern(const char* signature, int size, int extra = 0)
+	{
+		auto offset = (int*)(GetLocation(signature) + size);
+		return IntPtr(*offset + uintptr_t(offset) + 4 + extra);
+	}; void DetourAll();
 }; inline MemorySystem* game;
