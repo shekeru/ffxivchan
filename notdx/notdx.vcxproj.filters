@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Detours">
       <UniqueIdentifier>{88d8ffa6-514c-43ac-8e54-3523d7ec01e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FFXIV">
+      <UniqueIdentifier>{973ae75d-676e-4b6e-857b-87fcc34f23e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
@@ -204,10 +207,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ChatLog.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\FFXIV</Filter>
     </ClInclude>
     <ClInclude Include="Market.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\FFXIV</Filter>
+    </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>Header Files\FFXIV</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

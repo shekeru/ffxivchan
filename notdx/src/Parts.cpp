@@ -63,7 +63,7 @@ void User::LuaConsole() {
 	static ImGuiStyle& style = ImGui::GetStyle(); 
 	ImGui::SetNextWindowBgAlpha(0.85f);
 	ImGui::SetNextWindowSize(ImVec2(640, 440), ImGuiCond_Appearing);
-	ImGui::Begin("Lua Output [_boot.lua]", &sys.IsDemo, ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin("Lua Output [_boot.lua]", &sys.IsRepl, ImGuiWindowFlags_NoCollapse);
 	// Output Section
 	const float footer_height_to_reserve = 1.6 * ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
 	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false); // Leave room for 1 separator + 1 InputText

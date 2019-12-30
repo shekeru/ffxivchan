@@ -8,7 +8,7 @@ struct iGenericT {
 
 struct iSearchResult {
 	int Price, Qty, HQ, 
-		City, Materia, Padding;
+		City, Materia, OnMann;
 };
 
 typedef struct iGenericT
@@ -36,10 +36,14 @@ struct j_search_t {
 	char _pad[6];
 };
 
-class SearchResultsObj {
+class MarketWindow {
 public:
-	char pad[584]; // 0
-	void* n_584; // 562
+	void* _pad1[44]; // 0
+	struct {
+		int type, _pad_0; 
+		int value, _pad_1;
+	} *Properties;
+	void* pad[31]; // weh
 	void* n_608;
 	void* n_616;
 	void* n_624;

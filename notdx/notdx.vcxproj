@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="ChatLog.h" />
     <ClInclude Include="Market.h" />
+    <ClInclude Include="Network.h" />
     <ClInclude Include="sdk\base.h" />
     <ClInclude Include="sdk\repl.h" />
     <ClInclude Include="sdk\user.h" />
