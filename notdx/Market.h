@@ -28,14 +28,23 @@ struct aSearchResult {
 typedef struct aGenericT
 	<aSearchResult> StrResults;
 
-template <typename T>
-struct oGenericT {
-	char *_NIL, *Hits;
-	T Items[100];
+struct j_search_t {
+	int _nil, iCity;
+	char *Price, *Total, 
+		*Qty, *Retainer, *City;
+	BYTE iMateria, isHQ;
+	char _pad[6];
 };
 
-struct oSearchResult {
+class SearchResultsObj {
+public:
+	char pad[584]; // 0
+	void* n_584; // 562
+	void* n_608;
+	void* n_616;
+	void* n_624;
+	void* n_632;
+	struct j_search_t* Items; // 640
+	void* n_648;
+	void* n_656;
 };
-
-typedef struct oGenericT
-	<oSearchResult> ObjResults;
