@@ -55,6 +55,8 @@ namespace Utils {
 	};
 }; // Memory Patterns
 namespace Offsets {
+	inline const char* SENDACTION =
+		"e8 ? ? ? ? 8b 44 24 20 c1 e8 05";
 	inline const char* SPAWNUI = 
 		"48 8b ce e8 ? ? ? ? 48 8b 4d 4f";
 	inline const char* NETWORK = 

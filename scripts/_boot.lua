@@ -32,3 +32,9 @@ function xiv.players()
     if k:match("^Pc:%w+$") then
       print(k)
 end end end
+-- Retainer's Bell
+function xiv.bell()
+  for k, v in pairs(_G) do
+    if k:match("^CmnDefRetainerBell:%x+$") then
+      return v:OpenRetainerList()
+  end end end

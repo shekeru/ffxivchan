@@ -22,9 +22,10 @@ void __fastcall N_47(MarketWindow* mbw, __int64 ntp, __int64 stp) {
 	printf("call (N-47): %p %p %p\n", mbw, ntp, stp);
 	printf("Found %i Listings, 0x160_mby: %p...\n", 
 		iData->Count, mbw->Properties);
-	//for (int j = 0; j < iData->Count; j++)
-	//	printf(" [+] Price: %i, Retainer: %s\n",
-	//		iData->Items[j].Price, aData->Items[j].Retainer);
+	printf("iTable Start : %p\n", iTables);
+	for (int j = 0; j < iData->Count; j++)
+		printf(" [+] OnMannTest: %i, Retainer: %s\n",
+			iData->Items[j].OnMann, aData->Items[j].Retainer);
 }
 
 PVOID ProcessZonePacket;
@@ -44,22 +45,39 @@ UINT64 __fastcall hkPzPacket(INT64 a1, UINT a2, INT64 a3) {
 		//	printf("MarketBoardOfferings: %i\n", lists->RequestId);
 		//  printf("FUCK: %i, %i\n", lists->IndexEnd, lists->IndexStart);
 		//	break;
-		case 0x113:
-			printf("MarketBoardHistory, ItemId: %i\n", 
-				hist->catalogId); break;
+		//case 0x113:
+		//	printf("MarketBoardHistory, ItemId: %i\n", 
+		//		hist->catalogId); break;
 	}; return eval(a1, a2, a3);
 }
 
 PVOID SpawnWindow; std::map<std::string, PVOID> Windows;
 char __fastcall hkSpawnWindow(void* obj, char* Name, UCHAR flag, UINT ex) {
-	static auto eval = (decltype(&hkSpawnWindow))SpawnWindow;
+	static auto eval = (decltype(&hkSpawnWindow)) SpawnWindow;
 	printf("Spawning (%s) at %p, Flag: %i, Ex: %x\n", Name, obj, flag, ex);
 	Windows[Name] = obj; return eval(obj, Name, flag, ex);
 };
 
+PVOID SendAction;
+__int64 __fastcall hkSendAction(void* obj, __int64 N, ULONG64* arr, __int64 opt) {
+	static auto eval = (decltype(&hkSendAction))SendAction; std::string window = "???";
+	for (auto it = Windows.begin(); it != Windows.end(); ++it)
+		if (it->second == obj)
+			window = std::string(it->first);
+	printf("SendAction(%s), N: %i, ", window, N);
+	for (int i = 0; i < N*2; i+=2)
+		printf("(%llu, %llu), ", arr[i], 
+			arr[i+1]); printf("%x\n", opt); 
+	return eval(obj, N, arr, opt);
+}
+
 void MemorySystem::DetourAll() {
+	// Window System
+	SendAction = game->ScanPattern(Offsets::SENDACTION, 1).Cast<PVOID>();
 	SpawnWindow = game->ScanPattern(Offsets::SPAWNUI, 4).Cast<PVOID>();
+	// Networking
 	ProcessZonePacket = (PVOID)game->GetLocation(Offsets::NETWORK);
+	// Market (Window System)
 	auto Market = game->ScanPattern(Offsets::MARKET, 3);
 	N_47_fn = Market[0x8 * 47].Cast<uintptr_t>();
 	N_41_fn = Market[0x8 * 41].Cast<uintptr_t>();
@@ -67,10 +85,11 @@ void MemorySystem::DetourAll() {
 	DetourRestoreAfterWith(); DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	// Attach Detours
-	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&ProcessZonePacket, hkPzPacket);
+	DetourAttach(&SpawnWindow, hkSpawnWindow);
+	//DetourAttach(&SendAction, hkSendAction);
 	//DetourAttach(&(PVOID&)N_41_fn, N_41);
-	DetourAttach(&(PVOID&)N_47_fn, N_47);
+	//DetourAttach(&(PVOID&)N_47_fn, N_47);
 	// Detours Post
 	DetourTransactionCommit();
 }
