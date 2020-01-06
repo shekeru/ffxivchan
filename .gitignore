@@ -296,6 +296,7 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+cefbins/
 reborn/
 macos/
 bins/

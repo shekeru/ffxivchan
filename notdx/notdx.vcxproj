@@ -119,7 +119,7 @@
     <ClCompile Include="..\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Assembly.cpp" />
+    <ClCompile Include="Console.cpp" />
     <ClCompile Include="lua\lapi.c" />
     <ClCompile Include="lua\lauxlib.c" />
     <ClCompile Include="lua\lbaselib.c" />
@@ -151,11 +151,14 @@
     <ClCompile Include="lua\lvm.c" />
     <ClCompile Include="lua\lzio.c" />
     <ClCompile Include="lua\print.c" />
+    <ClCompile Include="Market.cpp" />
+    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="RaptureSys.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Parts.cpp" />
-    <ClCompile Include="src\Console.cpp" />
-    <ClCompile Include="src\Hooks.cpp" />
-    <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\Misc.cpp" />
+    <ClCompile Include="src\Debug.cpp" />
+    <ClCompile Include="src\SwapChain.cpp" />
+    <ClCompile Include="src\WndProc.cpp" />
     <ClCompile Include="src\VM.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

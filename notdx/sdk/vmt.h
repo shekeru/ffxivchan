@@ -1,6 +1,7 @@
 #pragma once
 #include "base.h"
 #include <psapi.h>
+#include <detours.h>
 // Guard Class
 namespace detail
 {
@@ -139,5 +140,13 @@ public:
 	{
 		auto offset = (int*)(GetLocation(signature) + size);
 		return IntPtr(*offset + uintptr_t(offset) + 4 + extra);
-	}; void DetourAll();
+	}; void DetourAll() {
+		DetourRestoreAfterWith(); DetourTransactionBegin();
+		DetourUpdateThread(GetCurrentThread());
+		// Attaching Detours
+		using namespace Hooks;
+		RaptureAttach(); NetworkAttach(); MarketAttach();
+		// Detours Post
+		DetourTransactionCommit();
+	}
 }; inline MemorySystem* game;

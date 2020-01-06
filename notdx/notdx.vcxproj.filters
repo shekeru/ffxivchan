@@ -9,188 +9,202 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\ImGUI">
-      <UniqueIdentifier>{b87b2f54-1d2c-4fe1-8e0b-020bc37020cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Lua 5.1.4">
-      <UniqueIdentifier>{d7ebd9e2-dc6d-4fc0-9ef5-33f94b2306bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\User">
-      <UniqueIdentifier>{66ba769c-cae1-45cb-9d8a-d337df065b01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Detours">
-      <UniqueIdentifier>{88d8ffa6-514c-43ac-8e54-3523d7ec01e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\FFXIV">
       <UniqueIdentifier>{973ae75d-676e-4b6e-857b-87fcc34f23e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hooking">
+      <UniqueIdentifier>{4297a585-bf36-4fd8-9d43-78c5cc2b46a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extra Files">
+      <UniqueIdentifier>{cf44d9ef-2459-4afd-bf8c-6a13e6bfb8e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extra Files\Lua 5.1.4">
+      <UniqueIdentifier>{d7ebd9e2-dc6d-4fc0-9ef5-33f94b2306bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extra Files\ImGUI">
+      <UniqueIdentifier>{b87b2f54-1d2c-4fe1-8e0b-020bc37020cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extra Files\Detours">
+      <UniqueIdentifier>{88d8ffa6-514c-43ac-8e54-3523d7ec01e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{e5010dc4-de89-408f-a95f-8e37bc71b7c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua">
+      <UniqueIdentifier>{9bd4bf32-55c8-4e27-9689-e2b322c3e195}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
-      <Filter>Source Files\ImGUI</Filter>
+      <Filter>Extra Files\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\examples\imgui_impl_dx11.cpp">
-      <Filter>Source Files\ImGUI</Filter>
+      <Filter>Extra Files\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_widgets.cpp">
-      <Filter>Source Files\ImGUI</Filter>
+      <Filter>Extra Files\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\imgui.cpp">
-      <Filter>Source Files\ImGUI</Filter>
+      <Filter>Extra Files\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_demo.cpp">
-      <Filter>Source Files\ImGUI</Filter>
+      <Filter>Extra Files\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_draw.cpp">
-      <Filter>Source Files\ImGUI</Filter>
+      <Filter>Extra Files\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="lua\lapi.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lauxlib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lbaselib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lcode.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\ldblib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\ldebug.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\ldo.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\ldump.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lfunc.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lgc.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\linit.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\liolib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\llex.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lmathlib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lmem.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\loadlib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lobject.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lopcodes.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\loslib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lparser.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lstate.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lstring.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lstrlib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\ltable.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\ltablib.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\ltm.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\luac.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lundump.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lvm.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\lzio.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="lua\print.c">
-      <Filter>Source Files\Lua 5.1.4</Filter>
+      <Filter>Extra Files\Lua 5.1.4</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Console.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Hooks.cpp">
-      <Filter>Source Files\User</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Input.cpp">
-      <Filter>Source Files\User</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Parts.cpp">
-      <Filter>Source Files\User</Filter>
-    </ClCompile>
-    <ClCompile Include="Assembly.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Detours\src\disasm.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolarm.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolarm64.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolia64.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolx64.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolx86.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\image.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\modules.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\creatwth.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\detours.cpp">
-      <Filter>Source Files\Detours</Filter>
+      <Filter>Extra Files\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="RaptureSys.cpp">
+      <Filter>Source Files\Hooking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SwapChain.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WndProc.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VM.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Market.cpp">
+      <Filter>Source Files\Hooking</Filter>
+    </ClCompile>
+    <ClCompile Include="Network.cpp">
+      <Filter>Source Files\Hooking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
