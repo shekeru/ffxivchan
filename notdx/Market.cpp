@@ -1,14 +1,14 @@
 #include "user.h"
 #include "Market.h"
 
-uintptr_t N_41_fn;
+PVOID N_41_fn;
 void __fastcall N_41(__int64 a1) {
 	static auto eval = (decltype(&N_41))N_41_fn;
 	printf("call (N-41): %p\n", a1);
 	return eval(a1);
 }
 
-uintptr_t N_47_fn;
+PVOID N_47_fn;
 void __fastcall N_47(MarketWindow* mbw, __int64 ntp, __int64 stp) {
 	static auto eval = (decltype(&N_47))N_47_fn; eval(mbw, ntp, stp);
 	auto iTables = IntPtr(ntp)[272][32].Cast<__int64>();
@@ -28,9 +28,9 @@ void __fastcall N_47(MarketWindow* mbw, __int64 ntp, __int64 stp) {
 
 void Hooks::MarketAttach() {
 	auto Market = game->ScanPattern(Offsets::MARKET, 3);
-	N_47_fn = Market[0x8 * 47].Cast<uintptr_t>();
-	N_41_fn = Market[0x8 * 41].Cast<uintptr_t>();
+	N_47_fn = Market[0x8 * 47].Cast<PVOID>();
+	N_41_fn = Market[0x8 * 41].Cast<PVOID>();
 	// Market (Window System)
 	//DetourAttach(&(PVOID&)N_41_fn, N_41);
-	DetourAttach(&(PVOID&)N_47_fn, N_47);
+	DetourAttach(&N_47_fn, N_47);
 }

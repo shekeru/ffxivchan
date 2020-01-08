@@ -4,25 +4,22 @@
 PVOID SpawnWindow; std::map<std::string, PVOID> Windows; VMT* CtxMenu;
 char __fastcall hkSpawnWindow(void* obj, char* Name, UCHAR flag, UINT ex) {
 	static auto eval = (decltype(&hkSpawnWindow))SpawnWindow;
-	//printf("Spawning (%s) at %p, Flag: %i, Ex: %x\n", Name, obj, flag, ex);
-	if (!strcmp(Name, "ContextMenu")) {
-		CtxMenu = new VMT(obj);
-		CtxMenu->ApplyVMT();
-	}; Windows[Name] = obj; return eval(obj, Name, flag, ex);
+	printf("[Spawn] %p (%s), Flag: %i, Ex: %x\n", obj, Name, flag, ex);
+	Windows[Name] = obj; return eval(obj, Name, flag, ex);
 };
 
 
 PVOID SendAction; const char* g_next = "FUCK WHY NOT";
 __int64 __fastcall hkSendAction(INT64 obj, __int64 N, ULONG64* arr, __int64 opt) {
 	static auto eval = (decltype(&hkSendAction))SendAction; std::string window = "???";
-	if ((PVOID)obj == Windows["ContextMenu"]) {
-		auto cock = IntPtr(obj)[0x160].Cast<ULONG64*>();
-		printf("  %p::IsContextMenu(%llu) \n", obj, cock[1]);
-		auto after = cock + 14;
-		for (int i = 0; i < cock[1]; i++) {
-			printf("%s\n", after[1 + i * 2]);
-		};
-	}
+	//if ((PVOID)obj == Windows["ContextMenu"]) {
+	//	auto cock = IntPtr(obj)[0x160].Cast<ULONG64*>();
+	//	printf("  %p::IsContextMenu(%llu) \n", obj, cock[1]);
+	//	auto after = cock + 14;
+	//	for (int i = 0; i < cock[1]; i++) {
+	//		printf("%s\n", after[1 + i * 2]);
+	//	};
+	//}
 	//for (auto it = Windows.begin(); it != Windows.end(); ++it)
 	//	if (it->second == obj)
 	//		window = std::string(it->first);

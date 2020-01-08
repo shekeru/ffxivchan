@@ -1,0 +1,26 @@
+Start: 13FF10000
+
+Single Sets:
+1404091E2 - 48 8B 03  - mov rax,[rbx]
+140B663C8 - 4C 8B 0F  - mov r9,[rdi]
+140B6643C - 48 8B 07  - mov rax,[rdi]
+13FFC337B - 48 8B 03  - mov rax,[rbx]
+1404092AB - 48 8B 01  - mov rax,[rcx]
+140405527 - 48 8B 01  - mov rax,[rcx]
+140405538 - 48 8B 03  - mov rax,[rbx]
+140405505 - 48 8B 01  - mov rax,[rcx]
+140405516 - 48 8B 03  - mov rax,[rbx]
+
+Late Sets:
+140B6683E - 48 8B 01  - mov rax,[rcx]
+1404018FE - 49 8B 07  - mov rax,[r15]
+14040DC0D - 48 8B 01  - mov rax,[rcx]
+
+Double Sets:
+14040F698 - 49 8B 00  - mov rax,[r8]
+14040DAA6 - 48 8B 01  - mov rax,[rcx]
+14040DB2B - 48 8B 01  - mov rax,[rcx]
+1403D499E - 48 8B 01  - mov rax,[rcx]
+
+Constant:
+140408AED - 48 8B 07  - mov rax,[rdi]

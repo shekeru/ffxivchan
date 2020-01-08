@@ -145,7 +145,8 @@ public:
 		DetourUpdateThread(GetCurrentThread());
 		// Attaching Detours
 		using namespace Hooks;
-		RaptureAttach(); NetworkAttach(); MarketAttach();
+		RaptureAttach(); NetworkAttach(); 
+		MarketAttach(); ContextAttach();
 		// Detours Post
 		DetourTransactionCommit();
 	}

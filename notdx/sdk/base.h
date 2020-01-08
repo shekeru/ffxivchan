@@ -59,5 +59,5 @@ namespace Hooks {
 	HRESULT _fastcall Present(IDXGISwapChain *pChain, UINT SyncInterval, UINT Flags);
 	HRESULT _fastcall CreateSwapChain(IDXGIFactory* pFactory, ID3D11Device *pDevice,
 		DXGI_SWAP_CHAIN_DESC *pDesc, IDXGISwapChain **ppSwapChain);
-	void RaptureAttach(), MarketAttach(), NetworkAttach();
+	void RaptureAttach(), MarketAttach(), NetworkAttach(), ContextAttach();
 };

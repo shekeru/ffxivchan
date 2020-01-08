@@ -24,6 +24,8 @@ public:
 // Memory Patterns
 #define pattern inline const char*
 namespace Offsets {
+	pattern CONTEXT = 
+		"48 8d 05 ? ? ? ? 48 8b f9 48 89 01 8b da 48 81 c1 20 02 00 00 48 8d 05";
 	pattern SENDACTION =
 		"e8 ? ? ? ? 8b 44 24 20 c1 e8 05";
 	pattern SPAWNUI =

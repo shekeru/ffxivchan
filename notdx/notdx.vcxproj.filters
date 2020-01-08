@@ -206,6 +206,9 @@
     <ClCompile Include="Network.cpp">
       <Filter>Source Files\Hooking</Filter>
     </ClCompile>
+    <ClCompile Include="Context.cpp">
+      <Filter>Source Files\Hooking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sdk\base.h">
