@@ -47,6 +47,7 @@ private:
 	function<void(void)> Hotkeys[256]; KeyState Keymap[256];
 }; inline Interface sys; LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+inline map<string, PVOID> Windows;
 // User Components
 namespace User {
 	void MainMenuBar();

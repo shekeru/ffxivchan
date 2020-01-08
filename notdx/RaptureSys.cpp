@@ -1,7 +1,7 @@
 #include "user.h"
 #include <detours.h>
 
-PVOID SpawnWindow; std::map<std::string, PVOID> Windows; VMT* CtxMenu;
+PVOID SpawnWindow;
 char __fastcall hkSpawnWindow(void* obj, char* Name, UCHAR flag, UINT ex) {
 	static auto eval = (decltype(&hkSpawnWindow))SpawnWindow;
 	printf("[Spawn] %p (%s), Flag: %i, Ex: %x\n", obj, Name, flag, ex);
