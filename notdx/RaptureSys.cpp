@@ -41,8 +41,7 @@ __int64 __fastcall hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt)
 			if (GATHERING[1] != -1 && (GATHERING[0] = 3i64)) {
 				CreateThread(0, 0, (LPTHREAD_START_ROUTINE)
 					GatherCallback, NULL, 0, 0);
-			}
-			return eval(obj, 1, ESC_SEQ, 1);
+			}; return eval(obj, 1, ESC_SEQ, 1);
 		}
 	};  return eval(obj, N, arr, opt);
 }
