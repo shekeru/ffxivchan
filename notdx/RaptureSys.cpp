@@ -12,6 +12,7 @@ char __fastcall hkSpawnWindow(void* obj, char* Name, UCHAR flag, UINT ex) {
 };
 
 PVOID SendAction;
+static ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
 __int64 __fastcall hkSendAction(INT64 obj, __int64 N, ULONG64* arr, __int64 opt) {
 	static auto eval = (decltype(&hkSendAction))SendAction; string window = "???";
 	//if ((PVOID)obj == Windows["ContextMenu"]) {
@@ -31,8 +32,10 @@ __int64 __fastcall hkSendAction(INT64 obj, __int64 N, ULONG64* arr, __int64 opt)
 		for (int i = 0; i < N * 2; i += 2)
 			printf("(%llx, %llx), ", arr[i],
 				arr[i + 1]); printf("%x\n", opt);
-		if (N == 5 && arr[0] == 3i64 && arr[2] == 3i64 && arr[3] == repl_A)
-			printf("SELECTED!!\n"); return 1;
+		// Only If Selected
+		if (N == 5 && arr[0] == 3i64 && arr[2] == 3i64 && arr[3] == repl_A) {
+			printf("SELECTED!!\n"); return eval(obj, 1, ESC_SEQ, 1);
+		}
 	};  return eval(obj, N, arr, opt);
 }
 
