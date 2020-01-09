@@ -27,7 +27,7 @@ void __fastcall N_47(MarketWindow* mbw, __int64 ntp, __int64 stp) {
 }
 
 void Hooks::MarketAttach() {
-	auto Market = game->ScanPattern(Offsets::MARKET, 3);
+	auto Market = game->ScanPattern(Offsets::SRUCT_MARKET, 3);
 	N_47_fn = Market[0x8 * 47].Cast<PVOID>();
 	N_41_fn = Market[0x8 * 41].Cast<PVOID>();
 	// Market (Window System)
