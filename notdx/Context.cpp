@@ -36,7 +36,7 @@ void Hooks::ContextAttach() {
 	CTX_5_fn = Context[0x8 * 5].Cast<PVOID>();
 	CTX_1_fn = Context[0x8 * 1].Cast<PVOID>();
 	//DetourAttach(&CTX_1_fn, CTX_1);
-	DetourAttach(&CTX_5_fn, CTX_5);
+	//DetourAttach(&CTX_5_fn, CTX_5);
 	//DetourAttach(&CTX_17_fn, CTX_17);
-	DetourAttach(&CTX_0_fn, CTX_0);
+	//DetourAttach(&CTX_0_fn, CTX_0);
 }

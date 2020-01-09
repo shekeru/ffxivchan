@@ -5,15 +5,17 @@ HANDLE* HeapHandle;
 ULONG64 repl_A;
 
 PVOID SpawnWindow;
-char __fastcall hkSpawnWindow(void* obj, char* Name, UCHAR flag, UINT ex) {
+char __fastcall hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	static auto eval = (decltype(&hkSpawnWindow))SpawnWindow;
-	printf("[Spawn] %p (%s), Flag: %i, Ex: %x\n", obj, Name, flag, ex);
+	//printf("[Spawn] %p (%s), Flag: %i, Ex: %x\n", obj, Name, flag, ex);
 	Windows[Name] = obj; return eval(obj, Name, flag, ex);
 };
 
 PVOID SendAction;
 static ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
-__int64 __fastcall hkSendAction(INT64 obj, __int64 N, ULONG64* arr, __int64 opt) {
+static ULONG64 GATHERING[2]{ 0i64, -1 };
+VOID WINAPI GatherCallback(ULONG64 nil);
+__int64 __fastcall hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 	static auto eval = (decltype(&hkSendAction))SendAction; string window = "???";
 	//if ((PVOID)obj == Windows["ContextMenu"]) {
 	//	auto cock = IntPtr(obj)[0x160].Cast<ULONG64*>();
@@ -24,50 +26,71 @@ __int64 __fastcall hkSendAction(INT64 obj, __int64 N, ULONG64* arr, __int64 opt)
 	//	};
 	//}
 	//for (auto it = Windows.begin(); it != Windows.end(); ++it)
-	//	if (it->second == (PVOID)obj)
+	//	if (it->second == obj)
 	//		window = std::string(it->first);
 	//printf("SendAction(%s), N: %i, ", window, N);
-	if ((PVOID)obj == Windows["ContextMenu"]) {
-		printf("CtxAction, N: %i, ", N);
-		for (int i = 0; i < N * 2; i += 2)
-			printf("(%llx, %llx), ", arr[i],
-				arr[i + 1]); printf("%x\n", opt);
+	//for (int i = 0; i < N * 2; i += 2)
+	//	printf("(%x, %llx), ", arr[i] & 0xFFFFFFFF,
+	//		arr[i + 1]); printf("%x\n", opt);
+	if (obj == Windows["Gathering"] && int
+		(arr[1]) == 0x81 && !GATHERING[0]) {
+		GATHERING[1] = arr[3] & 0xFFFFFFFF;
+	} else if (obj == Windows["ContextMenu"]) {
 		// Only If Selected
 		if (N == 5 && arr[0] == 3i64 && arr[2] == 3i64 && arr[3] == repl_A) {
-			printf("SELECTED!!\n"); return eval(obj, 1, ESC_SEQ, 1);
+			if (GATHERING[1] != -1 && (GATHERING[0] = 3i64)) {
+				CreateThread(0, 0, (LPTHREAD_START_ROUTINE)
+					GatherCallback, NULL, 0, 0);
+			}
+			return eval(obj, 1, ESC_SEQ, 1);
 		}
 	};  return eval(obj, N, arr, opt);
 }
 
-PVOID SetsCtxReal; const char* cunts = "[[REPL: Action]]";
-__int64 __fastcall hkSetsCtxReal(PVOID a1, int a2, UINT64* a3) {
+VOID WINAPI GatherCallback(ULONG64 nil) {
+	static auto eval = (decltype(&hkSendAction))SendAction;
+	UINT* value = (UINT*)(UINT64(Windows["Gathering"]) + 0x180);
+	printf("Gathering Location: %p\n", Windows["Gathering"]);
+	while(*value == 0x23340303) {
+		printf("\t Callback!! %x\n", value);
+		eval(Windows["Gathering"], 1, GATHERING, 1); 
+		Sleep(1250);
+	}; GATHERING[1] = -1; GATHERING[0] = 0;
+}
+
+const char* AutoGather = "Action: Gather All";
+PVOID SetsCtxReal; const char* dString = "-- Debug Action --";
+__int64 __fastcall hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 	static auto eval = (decltype(&hkSetsCtxReal))SetsCtxReal;
-	if ((PVOID) a1 == Windows["ContextMenu"]) {
-		printf("SETS_REAL: %p, %i, %p\n", a1, a2, a3);
-		printf("Row Length: %llu\n", repl_A = a3[1]);
-		if (0x26 == a3[14]) {
+	if (ctx == Windows["ContextMenu"] && N && arr) {
+		printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
+		printf("Row Length: %llu\n", repl_A = (int) arr[1]);
+		if (N - repl_A == 7) { // no bools
 			// Init Memory
 			auto ptr = (UINT64*) HeapAlloc(*HeapHandle,
-				HEAP_ZERO_MEMORY, 16 * (a2 + 1));
+				HEAP_ZERO_MEMORY, 16 * (N + 1));
 			printf("CASE_26: HEAP(%llx), ptr: %p\n", 
-				*HeapHandle, ptr); memcpy(ptr, a3, a2 * 16);
+				*HeapHandle, ptr); memcpy(ptr, arr, N * 16);
 			// Add Custom Row in 0x26
-			ptr[2 * a2 + 1] = (UINT64) cunts; 
-			ptr[2 * a2] = 38i64; ptr[1] += 1; 
-			return eval(a1, a2 + 1, ptr);
-		} else if(0x6 == a3[14]) {
-			auto last = a3[1] + 7;
+			ptr[2 * N + 1] = (UINT64) dString;
+			if(N == 9 && GATHERING[1] != -1)
+				ptr[2 * N + 1] = (UINT64) AutoGather;
+			ptr[2 * N] = arr[14]; ptr[1] += 1;
+			return eval(ctx, N + 1, ptr);
+		} else { // with bools
+			auto idx = 2 * (repl_A + 7);
 			auto ptr = (UINT64*)HeapAlloc(*HeapHandle,
-				HEAP_ZERO_MEMORY, 16 * (a2 + 2));
+				HEAP_ZERO_MEMORY, 16 * (N + 2));
 			printf("CASE_06: HEAP(%llx), ptr: %p\n", 
-				*HeapHandle, ptr); memcpy(ptr, a3, last * 16);
+				*HeapHandle, ptr); memcpy(ptr, arr, idx * 8);
 			// Add Custom Row in 0x6
-			ptr[2 * last + 1] = (UINT64)cunts;
-			ptr[2 * last] = 6i64; ptr[1] += 1;
-			memcpy(2 * (last + 1) + ptr, a3 + last, a3[1]);
-			return eval(a1, a2 + 1, ptr);
+			ptr[idx + 1] = (UINT64) dString;
+			ptr[idx] = arr[14]; ptr[1] += 1;
+			memcpy(2 + idx + ptr, arr + idx, 16 * repl_A);
+			ptr[2 + idx + 2 * repl_A] = 3i64;
+			return eval(ctx, N + 2, ptr);
 		}
-	}; return eval(a1, a2, a3);
+	}; return eval(ctx, N, arr);
 }
 
 void Hooks::RaptureAttach() {
