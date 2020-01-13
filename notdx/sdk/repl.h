@@ -24,6 +24,8 @@ public:
 // Memory Patterns
 #define pattern inline const char*
 namespace Offsets {
+	pattern LOCAL_ACTOR =
+		"48 8b 05 ? ? ? ? 48 89 6c 24 60";
 	pattern HEAP_HANDLE =
 		"48 8b 0d ? ? ? ? 4c 8b c3 ba";
 	pattern SETS_REAL = 

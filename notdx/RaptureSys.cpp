@@ -58,7 +58,7 @@ VOID WINAPI GatherCallback(ULONG64 nil) {
 }
 
 const char* AutoGather = "Action: Gather All";
-PVOID SetsCtxReal; const char* dString = "-- Debug Action --";
+PVOID SetsCtxReal; const char* dString = "-- Custom Action --";
 __int64 __fastcall hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 	static auto eval = (decltype(&hkSetsCtxReal))SetsCtxReal;
 	if (ctx == Windows["ContextMenu"] && N && arr) {

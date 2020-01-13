@@ -28,10 +28,11 @@ function xiv.state()
 end
 -- Player Listing
 function xiv.players()
-  for k,v in pairs(xiv.insts) do
+  local t = {}
+  for k,v in pairs(_G) do
     if k:match("^Pc:%w+$") then
-      print(k)
-end end end
+      t[#t+1] = v; print(k)
+  end end; return t end
 -- Retainer's Bell
 function xiv.bell()
   for k, v in pairs(_G) do
