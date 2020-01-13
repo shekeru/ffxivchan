@@ -8,7 +8,7 @@ setmetatable(_G, {
   end,
 }); xiv = {}
 -- Helper Functions
-function xiv.show(obj)
+function show(obj)
 	for k, v in pairs(obj) do
 		print(" [+]", k, "->", v)
 end end

@@ -10,16 +10,26 @@ static int luaB_lactor(lua_State* L) {
 	return 1;
 }
 
+class Actor {
+public:
+	int a;
+};
+
+class Local : Actor {
+public:
+
+};
+
 static int luaB_test(lua_State* L) {
-	auto LocalPlayer = game->ScanPattern
-	(Offsets::LOCAL_ACTOR, 3).Cast<UINT64>();
+	UINT64*& LocalActor = *game->ScanPattern
+	(Offsets::LOCAL_ACTOR, 3).Cast<UINT64**>();
 	auto ptr = lua_touserdata(L, 1);
-	printf("USERDATA: (%p) ", LocalPlayer);
+	printf("USERDATA: (%p) ", LocalActor);
 	Utils::PrintBytes(ptr);
 	return 0;
 }
 
-static const struct luaL_Reg Pc[] = {
+static const struct luaL_Reg ll_Actor[] = {
   {"inspect", luaB_test},
   {NULL, NULL} /* end of array */
 };
@@ -41,26 +51,12 @@ static int luaB_print(lua_State* L) {
 	}; vm.Output(0, str); return 0;
 }
 
-static int luaB_init(lua_State* L) {
-	lua_getglobal(L, "Pc");
-	luaL_register(L, NULL, Pc);
-	lua_pop(L, 1);
-	return 0;
-}
-
-static const struct luaL_Reg _G[] = {
-  {"print", luaB_print},
-  {"xivapi", luaB_init},
-  {NULL, NULL} /* end of array */
-};
-
 void LuaVM::Connect() {
 	IntPtr lua_pb = game->ScanPattern(Offsets::LUA, 3, 1);
 	L = lua_pb[0][0x2C18][8].Cast<lua_State*>();
 	printf("Lua_State: OK, %p\n", L);
-	lua_getglobal(L, "_G");
-	luaL_register(L, NULL, _G);
-	lua_pop(L, 1); 
+	lua_register(L, "print", luaB_print);
+	luaL_register(L, "Actor", ll_Actor);
 	DoFile("_boot.lua");
 };
 
