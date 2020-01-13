@@ -2,8 +2,10 @@
 
 class Actor {
 public:
-	void* _pad[5];
-	char Name[32];
+	char pad[152];
+	float X, Z, Y;
+	int nil;
+	float spin;
 public:
 	virtual void _unkvf();
 };
