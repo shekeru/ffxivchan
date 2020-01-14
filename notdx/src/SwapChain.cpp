@@ -17,14 +17,9 @@ HRESULT _fastcall Hooks::CreateSwapChain(IDXGIFactory* pFactory, ID3D11Device *p
 
 HRESULT _fastcall Hooks::Present(IDXGISwapChain *pChain, UINT SyncInterval, UINT Flags)
 {
-	static auto eval = VMT::SwapChain->GetOriginalMethod(Present); using namespace User;
+	static auto eval = VMT::SwapChain->GetOriginalMethod(Present);
 	ImGui_ImplWin32_NewFrame(); ImGui_ImplDX11_NewFrame(); ImGui::NewFrame();
-	if (sys.IsOpen) {
-		if(sys.IsDemo) 
-			ImGui::ShowDemoWindow(&sys.IsDemo);
-		MainMenuBar(); LuaConsole();
-	} else NameOverlay();
-	ImGui::EndFrame(); ImGui::Render(); sys.ResizeTarget();
+	User::GenerateFrame(); ImGui::EndFrame(); ImGui::Render(); sys.ResizeTarget();
 	sys.pImmediateContext->OMSetRenderTargets(1, &sys.pTargetView, NULL);
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	return eval(pChain, SyncInterval, Flags);

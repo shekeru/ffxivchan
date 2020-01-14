@@ -28,10 +28,8 @@ public:
 	ImGuiContext* ctx;
 	void StartGUI(HWND descW);
 	// Pretty Much Global Vars
-	bool IsOpen, Stop, IsDemo, IsRepl;
-	struct {
-		bool SpinBot;
-	} Opts;
+	bool IsOpen, Stop, IsDemo, 
+		IsRepl = true, IsSpin;
 	// Needed Vars
 	ID3D11Device* pDevice;
 	ID3D11DeviceContext* pImmediateContext;
@@ -53,7 +51,14 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
 inline map<string, PVOID> Windows;
 // User Components
 namespace User {
-	void MainMenuBar();
-	void NameOverlay();
-	void LuaConsole();
+	void MainMenuBar(), NameOverlay(), 
+		LuaConsole(), SpinBotting();
+	inline void GenerateFrame() {
+		if (sys.IsOpen) {
+			if (sys.IsDemo)
+				ImGui::ShowDemoWindow(&sys.IsDemo);
+			MainMenuBar(); LuaConsole(); SpinBotting();
+		}
+		else NameOverlay();
+	};
 };

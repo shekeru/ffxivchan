@@ -5,12 +5,23 @@ static int exIM_Overlay = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration
 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing
 | ImGuiWindowFlags_AlwaysAutoResize;
 
-void SpinSettings() {
-	static bool last_dir = 0; static float degree = 2.4;
-	ImGui::InputFloat("Amount", &degree, 0.1f);
-	if (sys.Opts.SpinBot && xiv->LocalActor) {
+void User::SpinBotting() {
+	static int amount = 4;
+	static bool last_dir = 0; 
+	static bool enabled = 0;
+	static float degree = 2.4;
+	if (!sys.IsSpin) {
+		enabled = 0;
+		return;
+	}; ImGui::Begin("SpinBot Settings", 
+		&sys.IsSpin, ImGuiWindowFlags_NoCollapse);
+	// Settings
+	ImGui::Checkbox("Enable", &enabled);
+	ImGui::InputFloat("magnitude", &degree, 0.1f);
+	ImGui::InputInt("turn/sec", &amount, 1);
+	ImGui::End(); if (enabled && xiv->LocalActor) {
 		xiv->LocalActor->Spin = (last_dir ^= 1)
-			? 2.4f : -2.4f;
+			? degree : -degree;
 	}
 };
 
@@ -43,8 +54,8 @@ void User::MainMenuBar()
 				vm.DoFile("_boot.lua");
 			}; ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Actor Fuckery")) {
-			ImGui::MenuItem("SpinToWin", "", &sys.Opts.SpinBot);
+		if (ImGui::BeginMenu("Misc")) {
+			ImGui::MenuItem("SpinBot", "", &sys.IsSpin);
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
