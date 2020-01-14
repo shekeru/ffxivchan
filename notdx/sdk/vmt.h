@@ -149,5 +149,5 @@ public:
 		MarketAttach(); ContextAttach();
 		// Detours Post
 		DetourTransactionCommit();
-	}
+	};
 }; inline MemorySystem* game;

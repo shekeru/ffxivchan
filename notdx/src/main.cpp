@@ -1,16 +1,15 @@
 #include "user.h"
-#include "../ChatLog.h"
+#include "../Actor.h"
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
-	game = new MemorySystem("ffxiv_dx11.exe");
+	game = new MemorySystem("ffxiv_dx11.exe"); xiv = new FFXIV();
 	Sleep(9750); vm.Connect(); sys.prevProc = (WNDPROC)
 		SetWindowLongPtr (sys.hWindow, GWLP_WNDPROC, (LONG_PTR) WndProc);
-	Sleep(30 * 1000);
 	//auto chat_pb = game->ScanPattern(Offsets::CHAT, 3);
 	//auto chat = chat_pb[0x2C10][0x16D8 + 0x48].Cast<ChatLog>();
 	//printf("chat_pb, chats: %p, %p\n", chat_pb, chat);
 	while (!sys.Stop) {
-		Sleep(10000);
+		Sleep(1000);
 	}; sys.~Interface();
 FreeLibrary:
 	FreeLibraryAndExitThread(hInstance, 1);

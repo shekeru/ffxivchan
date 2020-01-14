@@ -235,5 +235,8 @@
     <ClInclude Include="Actor.h">
       <Filter>Header Files\FFXIV</Filter>
     </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

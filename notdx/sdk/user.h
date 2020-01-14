@@ -29,6 +29,9 @@ public:
 	void StartGUI(HWND descW);
 	// Pretty Much Global Vars
 	bool IsOpen, Stop, IsDemo, IsRepl;
+	struct {
+		bool SpinBot;
+	} Opts;
 	// Needed Vars
 	ID3D11Device* pDevice;
 	ID3D11DeviceContext* pImmediateContext;

@@ -5,12 +5,14 @@ static int exIM_Overlay = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration
 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing
 | ImGuiWindowFlags_AlwaysAutoResize;
 
-float RandomFloat(float a, float b) {
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = b - a;
-	float r = random * diff;
-	return a + r;
-}; bool spinToWin = 0;
+void SpinSettings() {
+	static bool last_dir = 0; static float degree = 2.4;
+	ImGui::InputFloat("Amount", &degree, 0.1f);
+	if (sys.Opts.SpinBot && xiv->LocalActor) {
+		xiv->LocalActor->Spin = (last_dir ^= 1)
+			? 2.4f : -2.4f;
+	}
+};
 
 void User::MainMenuBar()
 {
@@ -19,7 +21,6 @@ void User::MainMenuBar()
 		if (ImGui::BeginMenu("eval(xiv)")) {
 			ImGui::MenuItem("version 0.2", "", false, false);
 			ImGui::MenuItem("ImGui Demo", "", &sys.IsDemo);
-			ImGui::MenuItem("SpinToWin", "", &spinToWin);
 			ImGui::Separator(); ImGui::MenuItem("Options", "");
 			if (ImGui::BeginMenu("Colors"))
 			{
@@ -41,7 +42,12 @@ void User::MainMenuBar()
 			if (ImGui::MenuItem("_boot.lua")) {
 				vm.DoFile("_boot.lua");
 			}; ImGui::EndMenu();
-		}; ImGui::EndMainMenuBar();
+		}
+		if (ImGui::BeginMenu("Actor Fuckery")) {
+			ImGui::MenuItem("SpinToWin", "", &sys.Opts.SpinBot);
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
 	}
 }
 
@@ -54,9 +60,4 @@ void User::NameOverlay() {
 	ImGui::SetNextWindowBgAlpha(0.0f); // Transparent background
 	if (ImGui::Begin("Testing Overlay", NULL, ImGuiWindowFlags_NoMove
 		| exIM_Overlay)) ImGui::Text(" [Read, Eval, Print, Loop] "); ImGui::End();
-	if (spinToWin) {
-		static Actor*& LocalActor = *game->ScanPattern
-		(Offsets::LOCAL_ACTOR, 3).Cast<Actor**>();
-		LocalActor->spin = RandomFloat(-2.45, 2.45);
-	};
 };
