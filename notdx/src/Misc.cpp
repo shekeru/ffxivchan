@@ -5,24 +5,34 @@ static int exIM_Overlay = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration
 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing
 | ImGuiWindowFlags_AlwaysAutoResize;
 
+#include <chrono>
+double check_elapsed(int times) {
+	using namespace chrono; static auto before = system_clock::now();
+	auto elapsed = duration<double, milli>(system_clock
+		::now() - before).count() * times > 1000;
+	if (elapsed) 
+		before = system_clock::now();
+	return elapsed;
+}
+#define state(type, name, value) \
+	static type name = value;
+
 void User::SpinBotting() {
-	static int amount = 4;
-	static bool last_dir = 0; 
-	static bool enabled = 0;
-	static float degree = 2.4;
+	state(int, times, 4);
+	state(bool, last_dir, 0);
+	state(bool, enabled, 0);
+	state(float, degree, 2.4);
 	if (!sys.IsSpin) {
-		enabled = 0;
-		return;
-	}; ImGui::Begin("SpinBot Settings", 
-		&sys.IsSpin, ImGuiWindowFlags_NoCollapse);
-	// Settings
-	ImGui::Checkbox("Enable", &enabled);
-	ImGui::InputFloat("magnitude", &degree, 0.1f);
-	ImGui::InputInt("turn/sec", &amount, 1);
-	ImGui::End(); if (enabled && xiv->LocalActor) {
-		xiv->LocalActor->Spin = (last_dir ^= 1)
-			? degree : -degree;
-	}
+		enabled = 0; return;
+	} if (sys.IsOpen) {
+		ImGui::Begin("SpinBot Settings",
+			&sys.IsSpin, ImGuiWindowFlags_NoCollapse);
+		ImGui::Checkbox("Enable", &enabled);
+		ImGui::InputFloat("magnitude", &degree, 0.1f);
+		ImGui::InputInt("turn/sec", &times, 1);
+		ImGui::End();
+	}; if (enabled && check_elapsed(times) && xiv->LocalActor)
+		xiv->LocalActor->Spin = (last_dir ^= 1) ? degree : -degree;
 };
 
 void User::MainMenuBar()

@@ -57,8 +57,9 @@ namespace User {
 		if (sys.IsOpen) {
 			if (sys.IsDemo)
 				ImGui::ShowDemoWindow(&sys.IsDemo);
-			MainMenuBar(); LuaConsole(); SpinBotting();
-		}
-		else NameOverlay();
+			MainMenuBar(); LuaConsole();
+		} else NameOverlay();
+		// Misc Shit
+		SpinBotting();
 	};
 };
