@@ -1,15 +1,29 @@
 #include "user.h"
 #include "../Actor.h"
 #include "..\res\resource.h"
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+#include <fstream>
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
 	game = new MemorySystem("ffxiv_dx11.exe"); xiv = new FFXIV();
 	Sleep(9750); vm.Connect(); sys.prevProc = (WNDPROC)
 		SetWindowLongPtr (sys.hWindow, GWLP_WNDPROC, (LONG_PTR) WndProc);
-	auto hIcon = LoadImage(hInstance, MAKEINTRESOURCE(101), IMAGE_ICON, 48, 48, LR_DEFAULTCOLOR);
-	if (hIcon) SendMessage(GetActiveWindow(), WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+	// Resources
+	const HANDLE hbicon = ::LoadImage(
+		hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON,
+		::GetSystemMetrics(SM_CXICON),
+		::GetSystemMetrics(SM_CYICON),
+		0);
+	if (hbicon)
+		::SendMessage(sys.hWindow, WM_SETICON, ICON_BIG, (LPARAM) hbicon);
+	const HANDLE hsicon = ::LoadImage(
+		hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON,
+		::GetSystemMetrics(SM_CXSMICON),
+		::GetSystemMetrics(SM_CYSMICON),
+		0);
+	if (hsicon)
+		::SendMessage(sys.hWindow, WM_SETICON, ICON_SMALL, (LPARAM) hsicon);
+	// Misc Testing
+	ifstream fs("../game/lua/data/tradecraft.json"); fs >> xiv->tradecraft;
 	//auto chat_pb = game->ScanPattern(Offsets::CHAT, 3);
 	//auto chat = chat_pb[0x2C10][0x16D8 + 0x48].Cast<ChatLog>();
 	//printf("chat_pb, chats: %p, %p\n", chat_pb, chat);

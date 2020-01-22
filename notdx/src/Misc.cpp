@@ -71,8 +71,12 @@ void User::MainMenuBar()
 				auto location = game->ScanPattern(Offsets::QUEST_2, 3).Cast<Quest*>();
 				for (int i = 29; i < 45; i++) {
 					auto quest = location[i];
-					if (quest.Id.value && quest.c_ptr)
-						printf("Slot #%i, %i: %s\n", i, quest.Id.value, quest.c_ptr);
+					if (quest.Id.value && quest.c_ptr) {
+						const char* str_id = to_string(quest.Id.value).c_str();
+						printf("Slot #%i, %s: %s\n", i, str_id, quest.c_ptr);
+							json sel = xiv->tradecraft[str_id];
+						printf("yield, Needs: %s\n", sel["itemName"]);
+					}
 					else
 						printf("Empty Quest Slot #%i\n", i);
 				}

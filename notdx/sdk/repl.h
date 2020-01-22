@@ -5,6 +5,8 @@ extern "C" {
 	#include "lualib.h"
 	#include "lauxlib.h"
 }; using namespace std;
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 // SDK Namespace
 class LuaVM {
 public:
@@ -52,4 +54,5 @@ class FFXIV {
 public:
 	Actor*& LocalActor = *game->ScanPattern(Offsets
 		::LOCAL_ACTOR, 3).Cast<Actor**>();
+	json tradecraft;
 }; inline FFXIV* xiv;
