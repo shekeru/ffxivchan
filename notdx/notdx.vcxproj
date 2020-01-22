@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;../json/single_include;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
@@ -83,7 +83,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;../json/single_include;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
@@ -98,6 +98,8 @@
     <ClInclude Include="ChatLog.h" />
     <ClInclude Include="Market.h" />
     <ClInclude Include="Network.h" />
+    <ClInclude Include="Quest.h" />
+    <ClInclude Include="res\resource.h" />
     <ClInclude Include="sdk\base.h" />
     <ClInclude Include="sdk\repl.h" />
     <ClInclude Include="sdk\user.h" />
@@ -163,6 +165,9 @@
     <ClCompile Include="src\SwapChain.cpp" />
     <ClCompile Include="src\WndProc.cpp" />
     <ClCompile Include="src\VM.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\project.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

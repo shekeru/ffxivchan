@@ -1,5 +1,6 @@
 #include "user.h"
 #include "../Actor.h"
+#include "../Quest.h"
 
 static int exIM_Overlay = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration
 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing
@@ -66,7 +67,16 @@ void User::MainMenuBar()
 		}
 		if (ImGui::BeginMenu("Misc")) {
 			ImGui::MenuItem("SpinBot", "", &sys.IsSpin);
-			ImGui::EndMenu();
+			if (ImGui::MenuItem("Test, Quests", "")) {
+				auto location = game->ScanPattern(Offsets::QUEST_2, 3).Cast<Quest*>();
+				for (int i = 29; i < 45; i++) {
+					auto quest = location[i];
+					if (quest.Id.value && quest.c_ptr)
+						printf("Slot #%i, %i: %s\n", i, quest.Id.value, quest.c_ptr);
+					else
+						printf("Empty Quest Slot #%i\n", i);
+				}
+			}; ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}
