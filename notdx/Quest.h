@@ -17,3 +17,20 @@ typedef struct Quest { //144 bytes
 	short unk_8; // 140
 	int unk_9; // 144
 } Quest;
+
+namespace data {
+	typedef struct Level {
+		string leveName;
+		int quantity;
+		bool repeated;
+		int itemId;
+		string itemName;
+	} Level;
+	void from_json(const json& j, Level& p) {
+		j.at("leveName").get_to(p.leveName);
+		j.at("quantity").get_to(p.quantity);
+		j.at("repeated").get_to(p.repeated);
+		j.at("itemId").get_to(p.itemId);
+		j.at("itemName").get_to(p.itemName);
+	}
+}

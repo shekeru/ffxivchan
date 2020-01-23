@@ -72,14 +72,12 @@ void User::MainMenuBar()
 				for (int i = 29; i < 45; i++) {
 					auto quest = location[i];
 					if (quest.Id.value && quest.c_ptr) {
-						const char* str_id = to_string(quest.Id.value).c_str();
-						printf("Slot #%i, %s: %s\n", i, str_id, quest.c_ptr);
-							json sel = xiv->tradecraft[str_id];
-						printf("yield, Needs: %s\n", sel["itemName"]);
+						string id_L = to_string(quest.Id.value);
+						auto sel = xiv->tradecraft[id_L].get<data::Level>();
+						printf("Slot #%i, %s: %s (%i)\n", i, id_L, quest.c_ptr, id_L.length());
+						printf("yield, ItemName: %s\n", sel.itemName);
 					}
-					else
-						printf("Empty Quest Slot #%i\n", i);
-				}
+				}; printf("\n");
 			}; ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();

@@ -1,7 +1,6 @@
 #include "user.h"
 #include "../Actor.h"
 #include "..\res\resource.h"
-#include <fstream>
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
 	game = new MemorySystem("ffxiv_dx11.exe"); xiv = new FFXIV();
@@ -23,7 +22,9 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
 	if (hsicon)
 		::SendMessage(sys.hWindow, WM_SETICON, ICON_SMALL, (LPARAM) hsicon);
 	// Misc Testing
-	ifstream fs("../game/lua/data/tradecraft.json"); fs >> xiv->tradecraft;
+	ifstream ifs("../game/lua/data/tradecraft.json"); 
+		ifs >> xiv->tradecraft; ifs.close();
+	cout << xiv->tradecraft;
 	//auto chat_pb = game->ScanPattern(Offsets::CHAT, 3);
 	//auto chat = chat_pb[0x2C10][0x16D8 + 0x48].Cast<ChatLog>();
 	//printf("chat_pb, chats: %p, %p\n", chat_pb, chat);

@@ -3,6 +3,8 @@
 #include "imgui.h"
 // Fucking ImGUI autism
 #include <functional>
+#include <iostream>
+#include <fstream>
 enum class KeyState
 {
 	None = 1,
