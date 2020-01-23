@@ -31,7 +31,8 @@ public:
 	void StartGUI(HWND descW);
 	// Pretty Much Global Vars
 	bool IsOpen, Stop, IsDemo, 
-		IsRepl = true, IsSpin;
+		IsRepl = true, IsSpin, 
+	IsQuest;
 	// Needed Vars
 	ID3D11Device* pDevice;
 	ID3D11DeviceContext* pImmediateContext;
@@ -54,12 +55,12 @@ inline map<string, PVOID> Windows;
 // User Components
 namespace User {
 	void MainMenuBar(), NameOverlay(), 
-		LuaConsole(), SpinBotting();
+		LuaConsole(), SpinBotting(), QuestPanel();
 	inline void GenerateFrame() {
 		if (sys.IsOpen) {
 			if (sys.IsDemo)
 				ImGui::ShowDemoWindow(&sys.IsDemo);
-			MainMenuBar(); LuaConsole();
+			MainMenuBar(); LuaConsole(); QuestPanel();
 		} else NameOverlay();
 		// Misc Shit
 		SpinBotting();

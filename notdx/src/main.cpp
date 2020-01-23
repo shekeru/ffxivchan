@@ -24,7 +24,6 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
 	// Misc Testing
 	ifstream ifs("../game/lua/data/tradecraft.json"); 
 		ifs >> xiv->tradecraft; ifs.close();
-	cout << xiv->tradecraft;
 	//auto chat_pb = game->ScanPattern(Offsets::CHAT, 3);
 	//auto chat = chat_pb[0x2C10][0x16D8 + 0x48].Cast<ChatLog>();
 	//printf("chat_pb, chats: %p, %p\n", chat_pb, chat);

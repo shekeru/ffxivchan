@@ -67,18 +67,8 @@ void User::MainMenuBar()
 		}
 		if (ImGui::BeginMenu("Misc")) {
 			ImGui::MenuItem("SpinBot", "", &sys.IsSpin);
-			if (ImGui::MenuItem("Test, Quests", "")) {
-				auto location = game->ScanPattern(Offsets::QUEST_2, 3).Cast<Quest*>();
-				for (int i = 29; i < 45; i++) {
-					auto quest = location[i];
-					if (quest.Id.value && quest.c_ptr) {
-						string id_L = to_string(quest.Id.value);
-						auto sel = xiv->tradecraft[id_L].get<data::Level>();
-						printf("Slot #%i, %s: %s (%i)\n", i, id_L, quest.c_ptr, id_L.length());
-						printf("yield, ItemName: %s\n", sel.itemName);
-					}
-				}; printf("\n");
-			}; ImGui::EndMenu();
+			ImGui::MenuItem("Test, Quests", "", &sys.IsQuest);
+			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}
@@ -93,4 +83,34 @@ void User::NameOverlay() {
 	ImGui::SetNextWindowBgAlpha(0.0f); // Transparent background
 	if (ImGui::Begin("Testing Overlay", NULL, ImGuiWindowFlags_NoMove
 		| exIM_Overlay)) ImGui::Text(" [Read, Eval, Print, Loop] "); ImGui::End();
+};
+
+void User::QuestPanel() {
+	using namespace ImGui;
+	if (!sys.IsQuest) return;
+	static char idBuffer[24] = {0};
+	static auto quest = game->ScanPattern(Offsets::QUEST_2, 3).Cast<Quest*>();
+	Begin("Tradecraft Info", &sys.IsQuest, ImGuiWindowFlags_NoCollapse);
+	// Header
+	Columns(4, "tradecrafts"); // 4-ways, with border
+	Text("Slot"); NextColumn();
+	Text("Id"); NextColumn();
+	Text("Quest Name"); NextColumn();
+	Text("Item Name"); NextColumn();
+	Separator();
+	// Body
+	for (int i = 29; i < 45; i++) {
+		if (quest[i].Id.value && quest[i].c_ptr) {
+			sprintf(idBuffer, "%i", quest[i].Id.value);
+			auto value = xiv->tradecraft.find(idBuffer);
+			if (xiv->tradecraft.end() == value)
+				continue;
+			string item = (*value)["itemName"].get<string>();
+			// Print Table
+			Text(to_string(i).c_str()); NextColumn();
+			Text(idBuffer); NextColumn();
+			Text(quest[i].c_ptr); NextColumn();
+			Text(item.c_str()); NextColumn();
+		}
+	}; Columns(1); End();
 };
