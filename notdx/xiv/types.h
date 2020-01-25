@@ -8,10 +8,14 @@ enum Job {
 
 enum Action {
 	Jolt = 7503,
+	Riposte = 7504,
 	Verthunder = 7505,
+	Corps_Corps = 7506,
 	Veraero = 7507,
 	Verfire = 7510,
 	Verstone = 7511,
+	Zwerchhau = 7512,
+	Redoublement = 7516,
 	Verthunder_II = 16524,
 	Veraero_II = 16525,
 };

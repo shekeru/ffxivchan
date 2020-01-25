@@ -23,8 +23,9 @@ public:
 		Items.push_back({ x, ins});
 	}; // Imgui Shit
 }; inline LuaVM vm;
-// Memory Patterns
+#define local static auto
 #define pattern inline const char*
+// Memory Patterns
 namespace Offsets {
 	pattern QUEST_2 =
 		"48 8d 05 ? ? ? ? 48 8d 0c db 48";
@@ -48,6 +49,8 @@ namespace Offsets {
 		"48 8d 05 ? ? ? ? 48 8b d9 48 89 01 48 81 c1 60 03";
 	pattern LUA =
 		"48 83 3D ? ? ? ? ? 8B 9E ? ? ? ? ";
+	pattern CAN_SWAP =
+		"81 f9 2e 01 00 00 7f 39 81 f9";
 	pattern GET_ICON =
 		"E8 ?? ?? ?? ?? F6 DB 8B C8";
 	pattern COMBO_INT64 =

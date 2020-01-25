@@ -23,18 +23,18 @@ public:
 	int nil;
 	float Spin;
 public:
-	inline UCHAR JobId() {
-		static UCHAR* ID = (UCHAR*)
+	UCHAR& JobId() {
+		local value = (UCHAR*)
 			(uintptr_t(this) + ClassJob);
-		return *ID;
+		return *value;
 	};
-	inline UCHAR Level() {
-		static UCHAR* value = (UCHAR*)
+	UCHAR& Level() {
+		local value = (UCHAR*)
 			(uintptr_t(this) + JobLevel);
 		return *value;
 	};
-	inline bool HasAura(int value) {
-		static Aura* Effects = (Aura*)
+	bool HasAura(int value) {
+		local Effects = (Aura*)
 			(uintptr_t(this) + AuraStatus);
 		for (int i = 0; i < 30; i++)
 			if (Effects[i].Type == value)
@@ -43,9 +43,14 @@ public:
 	};
 };
 
-typedef struct Combo {
-	int Timer, LastMove;
-} Combo;
+class Combo {
+	float Timer; int ActiveId;
+public:
+	bool Is(int action, float margin = 0.f) {
+		return ActiveId == action 
+			&& Timer >= margin;
+	};
+};
 
 class JobGauge {
 	void* vfunc_table_0;
@@ -55,4 +60,8 @@ class JobGauge {
 class RDM_HUD: JobGauge {
 public:
 	UCHAR WhiteMana, BlackMana;
+public:
+	bool Has(int level) {
+		return WhiteMana >= level && BlackMana >= level;
+	};
 };

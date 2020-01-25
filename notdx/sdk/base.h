@@ -29,7 +29,10 @@ public:
 	}; HMODULE _module;
 }; // Macros
 #define INSTANCE(TYPE, NAME) \
-	inline static TYPE* NAME;
+	inline static TYPE* NAME
+#define ORIGINAL(type, location) \
+	static auto original = decltype(&type)(location)
+#define BINDING(type) static type _fastcall
 // Pointer Shit
 class IntPtr {
 public:

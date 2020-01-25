@@ -4,19 +4,12 @@
 HANDLE* HeapHandle; 
 ULONG64 repl_A;
 
-PVOID SpawnWindow;
-char __fastcall hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
-	static auto eval = (decltype(&hkSpawnWindow))SpawnWindow;
-	show(SpawnWindow)("at: %p, %s, Flag: %i, Ex: %x\n", obj, Name, flag, ex);
-	Windows[Name] = obj; return eval(obj, Name, flag, ex);
-};
-
 PVOID SendAction;
-static ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
-static ULONG64 GATHERING[2]{ 0i64, -1 };
+ULONG64 GATHERING[2]{ 0i64, -1 };
+ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
 VOID WINAPI GatherCallback(ULONG64 nil);
 __int64 __fastcall hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
-	static auto eval = decltype(&hkSendAction)(SendAction); string window = "???";
+	local eval = decltype(&hkSendAction)(SendAction); string window = "???";
 	//if ((PVOID)obj == Windows["ContextMenu"]) {
 	//	auto cock = IntPtr(obj)[0x160].Cast<ULONG64*>();
 	//	printf("  %p::IsContextMenu(%llu) \n", obj, cock[1]);
@@ -47,7 +40,7 @@ __int64 __fastcall hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt)
 }
 
 VOID WINAPI GatherCallback(ULONG64 nil) {
-	static auto eval = decltype(&hkSendAction)(SendAction);
+	local eval = decltype(&hkSendAction)(SendAction);
 	UINT* value = (UINT*)(UINT64(Windows["Gathering"]) + 0x180);
 	printf("Gathering Location: %p\n", Windows["Gathering"]);
 	while(*value == 0x23340303) {
@@ -60,7 +53,7 @@ VOID WINAPI GatherCallback(ULONG64 nil) {
 const char* AutoGather = "Action: Gather All";
 PVOID SetsCtxReal; const char* dString = "      >_<  ";
 __int64 __fastcall hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
-	static auto eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
+	local eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
 	if (ctx == Windows["ContextMenu"] && N && arr) {
 		printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
 		printf("Row Length: %llu\n", repl_A = (int) arr[1]);
@@ -93,6 +86,16 @@ __int64 __fastcall hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 skip_insert:
 	return eval(ctx, N, arr);
 }
+
+PVOID SpawnWindow;
+char __fastcall hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
+	local spawnW = decltype(&hkSpawnWindow)(SpawnWindow); Windows[Name] = obj;
+	show(SpawnWindow)("at: %p, %s, Flag: %i, Ex: %x\n", obj, Name, flag, ex);
+	local sendA = decltype(&hkSendAction)(SendAction);
+	if (Windows["SalvageResult"] == obj)
+		sendA(obj, 1, ESC_SEQ, 1);
+	return spawnW(obj, Name, flag, ex);
+};
 
 void Hooks::RaptureAttach() {
 	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
