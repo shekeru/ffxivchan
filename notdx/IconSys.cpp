@@ -3,8 +3,8 @@
 
 INT64 _fastcall IconSys::raw_call(IconSys* self, int action) {
 	if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
-		//case Job::RedMage:
-			//return self->RedMage(action);
+		case Job::RedMage:
+			return self->RedMage(action);
 	default:
 		break;
 	}; return self->GetIcon(action);

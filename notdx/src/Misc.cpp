@@ -75,14 +75,11 @@ void User::MainMenuBar()
 }
 
 void User::NameOverlay() {
-	const float DISTANCE = 0.0f;
-	ImGuiIO& io = ImGui::GetIO();
-	ImVec2 window_pos = ImVec2(io.DisplaySize.x - DISTANCE, DISTANCE);
-	ImVec2 window_pos_pivot = ImVec2(1.0f, 0.0f);
-	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
-	ImGui::SetNextWindowBgAlpha(0.0f); // Transparent background
-	if (ImGui::Begin("Testing Overlay", NULL, ImGuiWindowFlags_NoMove
-		| exIM_Overlay)) ImGui::Text(" [Read, Eval, Print, Loop] "); ImGui::End();
+	using namespace ImGui;
+	SetNextWindowBgAlpha(0.0f); static ImGuiIO& io = ImGui::GetIO();
+	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
+	if (Begin("Testing Overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay)) 
+		Text(" <Re: VerL> 20.1.25_Junimo "); ImGui::End();
 };
 
 void User::QuestPanel() {
