@@ -1,5 +1,6 @@
 #pragma once
 #include "types.h"
+#include "repl.h"
 
 typedef struct Aura {
 	USHORT Type;

@@ -66,6 +66,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;./xiv;../json/single_include;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
+      <PrecompiledHeaderFile>user.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,6 +86,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;./xiv;../json/single_include;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
+      <PrecompiledHeaderFile>user.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

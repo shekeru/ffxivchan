@@ -1,4 +1,5 @@
 #include "../hooks.h"
+#include "user.h"
 
 void MemorySystem::DetourAll(){
 	DetourRestoreAfterWith(); DetourTransactionBegin();

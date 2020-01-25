@@ -7,6 +7,7 @@ class IconSys {
 		return 1;
 	}; INSTANCE(void, _Ptr), *_Chk;
 public:
+	int Lancer(int action);
 	int RedMage(int action);
 // Construction
 	INT64 GetIcon(int action) {
