@@ -48,6 +48,8 @@ namespace Offsets {
 		"48 8d 05 ? ? ? ? 48 8b d9 48 89 01 48 81 c1 60 03";
 	pattern LUA =
 		"48 83 3D ? ? ? ? ? 8B 9E ? ? ? ? ";
+	pattern GET_ICON =
+		"E8 ?? ?? ?? ?? F6 DB 8B C8";
 }; 
 #include "../Actor.h"
 class FFXIV {

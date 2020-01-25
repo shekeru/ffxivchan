@@ -7,7 +7,7 @@ ULONG64 repl_A;
 PVOID SpawnWindow;
 char __fastcall hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	static auto eval = (decltype(&hkSpawnWindow))SpawnWindow;
-	show(SpawnWindow)("%p (%s), Flag: %i, Ex: %x\n", obj, Name, flag, ex);
+	show(SpawnWindow)("at: %p, %s, Flag: %i, Ex: %x\n", obj, Name, flag, ex);
 	Windows[Name] = obj; return eval(obj, Name, flag, ex);
 };
 
@@ -16,7 +16,7 @@ static ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
 static ULONG64 GATHERING[2]{ 0i64, -1 };
 VOID WINAPI GatherCallback(ULONG64 nil);
 __int64 __fastcall hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
-	static auto eval = (decltype(&hkSendAction))SendAction; string window = "???";
+	static auto eval = decltype(&hkSendAction)(SendAction); string window = "???";
 	//if ((PVOID)obj == Windows["ContextMenu"]) {
 	//	auto cock = IntPtr(obj)[0x160].Cast<ULONG64*>();
 	//	printf("  %p::IsContextMenu(%llu) \n", obj, cock[1]);
@@ -47,7 +47,7 @@ __int64 __fastcall hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt)
 }
 
 VOID WINAPI GatherCallback(ULONG64 nil) {
-	static auto eval = (decltype(&hkSendAction))SendAction;
+	static auto eval = decltype(&hkSendAction)(SendAction);
 	UINT* value = (UINT*)(UINT64(Windows["Gathering"]) + 0x180);
 	printf("Gathering Location: %p\n", Windows["Gathering"]);
 	while(*value == 0x23340303) {
@@ -58,9 +58,9 @@ VOID WINAPI GatherCallback(ULONG64 nil) {
 }
 
 const char* AutoGather = "Action: Gather All";
-PVOID SetsCtxReal; const char* dString = "-- Custom Action --";
+PVOID SetsCtxReal; const char* dString = "      >_<  ";
 __int64 __fastcall hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
-	static auto eval = (decltype(&hkSetsCtxReal))SetsCtxReal;
+	static auto eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
 	if (ctx == Windows["ContextMenu"] && N && arr) {
 		printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
 		printf("Row Length: %llu\n", repl_A = (int) arr[1]);
@@ -89,10 +89,45 @@ __int64 __fastcall hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 			ptr[2 + idx + 2 * repl_A] = 3i64;
 			return eval(ctx, N + 2, ptr);
 		}
-	}; return eval(ctx, N, arr);
+	}; 
+skip_insert:
+	return eval(ctx, N, arr);
+}
+
+enum Action {
+	Jolt = 7503,
+	Verthunder = 7505,
+	Veraero = 7507,
+	Verfire = 7510,
+	Verstone = 7511,
+};
+
+enum Status {
+	Swiftcast = 167,
+	VerfireReady = 1234,
+	VerstoneReady = 1235,
+	Dualcast = 1249,
+};
+
+PVOID GetIcon;
+__int64 __fastcall hkGetIcon(__int64 self, int action) {
+	static auto eval = decltype(&hkGetIcon)(GetIcon);
+	if(xiv->LocalActor) switch (action) {
+	case Action::Verthunder:
+		if (xiv->LocalActor->HasAura(Status::VerfireReady))
+			return Action::Verfire;
+		break;
+	case Action::Veraero:
+		if(xiv->LocalActor->HasAura(Status::VerstoneReady))
+			return Action::Verstone;
+		break;
+	default:
+		break;
+	}; return eval(self, action);
 }
 
 void Hooks::RaptureAttach() {
+	GetIcon = game->ScanPattern(Offsets::GET_ICON, 1).Cast<PVOID>();
 	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
 	SetsCtxReal = game->ScanPattern(Offsets::SETS_REAL, 1).Cast<PVOID>();
 	SendAction = game->ScanPattern(Offsets::SENDACTION, 1).Cast<PVOID>();
@@ -101,4 +136,5 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&SetsCtxReal, hkSetsCtxReal);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&SendAction, hkSendAction);
+	DetourAttach(&GetIcon, hkGetIcon);
 }

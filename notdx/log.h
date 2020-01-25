@@ -48,6 +48,7 @@ public:
 	}; map<const char*, Logging*> windows = {
 		{ "SpawnWindow", new Logging() },
 		{ "SendAction", new Logging() },
+		{ "GetIcon", new Logging() },
 	}; 	bool IsActive;
 };
 // Macros
