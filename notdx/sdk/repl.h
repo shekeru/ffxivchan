@@ -50,11 +50,15 @@ namespace Offsets {
 		"48 83 3D ? ? ? ? ? 8B 9E ? ? ? ? ";
 	pattern GET_ICON =
 		"E8 ?? ?? ?? ?? F6 DB 8B C8";
+	pattern COMBO_INT64 =
+		"48 89 2D ? ? ? ? 85 c0";
 }; 
-#include "../Actor.h"
+#include "Actor.h"
 class FFXIV {
 public:
 	Actor*& LocalActor = *game->ScanPattern(Offsets
 		::LOCAL_ACTOR, 3).Cast<Actor**>();
+	Combo* ComboTimer = game->ScanPattern
+		(Offsets::COMBO_INT64, 3).Cast<Combo*>();
 	json tradecraft;
 }; inline FFXIV* xiv;

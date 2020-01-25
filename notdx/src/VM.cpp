@@ -1,5 +1,4 @@
 #include "repl.h"
-#include "../Actor.h"
 
 static int luaB_lactor(lua_State* L) {
 	//static auto LocalPlayer = game->ScanPattern

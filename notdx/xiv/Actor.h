@@ -1,4 +1,5 @@
 #pragma once
+#include "types.h"
 
 typedef struct Aura {
 	USHORT Type;
@@ -8,6 +9,7 @@ typedef struct Aura {
 } Aura;
 
 enum ActorOffsets {
+	Job = 6388,
 	Level = 6390,
 	AuraStatus = 6520,
 };
@@ -21,6 +23,16 @@ public:
 	int nil;
 	float Spin;
 public:
+	inline UCHAR JobId() {
+		static UCHAR* ID = (UCHAR*)
+			(uintptr_t(this) + Job);
+		return *ID;
+	};
+	inline UCHAR Level() {
+		static UCHAR* N = (UCHAR*)
+			(uintptr_t(this) + N);
+		return *N;
+	};
 	inline bool HasAura(int value) {
 		static Aura* Effects = (Aura*)
 			(uintptr_t(this) + AuraStatus);
@@ -30,3 +42,7 @@ public:
 		return false;
 	};
 };
+
+typedef struct Combo {
+	int Timer, LastMove;
+} Combo;

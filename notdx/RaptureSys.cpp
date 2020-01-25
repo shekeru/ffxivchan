@@ -94,47 +94,52 @@ skip_insert:
 	return eval(ctx, N, arr);
 }
 
-enum Action {
-	Jolt = 7503,
-	Verthunder = 7505,
-	Veraero = 7507,
-	Verfire = 7510,
-	Verstone = 7511,
+// Icon System Fuckfest
+class IconSys {
+public:
+	INT64 GetIcon(int action) {
+		static auto original = decltype(&raw_call)(_Ptr);
+		return original(this, action);
+	}; 	inline static PVOID _Ptr;
+public:
+	int RedMage(int action) {
+		switch (action) {
+		case Action::Verthunder:
+			if (xiv->LocalActor->HasAura(Status::VerfireReady))
+				return Action::Verfire;
+			goto jolt_case;
+		case Action::Veraero:
+			if (xiv->LocalActor->HasAura(Status::VerstoneReady))
+				return Action::Verstone;
+			goto jolt_case;
+		default:
+			break;
+		jolt_case:
+			if (!xiv->LocalActor->HasAura(Status::Dualcast) &&
+				!xiv->LocalActor->HasAura(Status::Swiftcast))
+				return Action::Jolt;
+		}; return GetIcon(action);
+	}
+public:
+	static __int64 __fastcall raw_call(IconSys* self, int action) {
+		if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
+		case Job::RedMage:
+			return self->RedMage(action);
+		default:
+			break;
+		}; return self->GetIcon(action);
+	}
 };
-
-enum Status {
-	Swiftcast = 167,
-	VerfireReady = 1234,
-	VerstoneReady = 1235,
-	Dualcast = 1249,
-};
-
-PVOID GetIcon;
-__int64 __fastcall hkGetIcon(__int64 self, int action) {
-	static auto eval = decltype(&hkGetIcon)(GetIcon);
-	if(xiv->LocalActor) switch (action) {
-	case Action::Verthunder:
-		if (xiv->LocalActor->HasAura(Status::VerfireReady))
-			return Action::Verfire;
-		break;
-	case Action::Veraero:
-		if(xiv->LocalActor->HasAura(Status::VerstoneReady))
-			return Action::Verstone;
-		break;
-	default:
-		break;
-	}; return eval(self, action);
-}
 
 void Hooks::RaptureAttach() {
-	GetIcon = game->ScanPattern(Offsets::GET_ICON, 1).Cast<PVOID>();
 	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
+	IconSys::_Ptr = game->ScanPattern(Offsets::GET_ICON, 1).Cast<PVOID>();
 	SetsCtxReal = game->ScanPattern(Offsets::SETS_REAL, 1).Cast<PVOID>();
 	SendAction = game->ScanPattern(Offsets::SENDACTION, 1).Cast<PVOID>();
 	SpawnWindow = game->ScanPattern(Offsets::SPAWNUI, 4).Cast<PVOID>();
 	// Attachments
+	DetourAttach(&IconSys::_Ptr, IconSys::raw_call);
 	DetourAttach(&SetsCtxReal, hkSetsCtxReal);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&SendAction, hkSendAction);
-	DetourAttach(&GetIcon, hkGetIcon);
 }

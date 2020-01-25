@@ -1,6 +1,5 @@
 #include "user.h"
-#include "../Actor.h"
-#include "../Quest.h"
+#include "Quest.h"
 
 static int exIM_Overlay = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration
 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing

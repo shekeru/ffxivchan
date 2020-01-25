@@ -1,6 +1,6 @@
 #pragma once
 #include "repl.h"
-#include "../log.h"
+#include "log.h"
 // Fucking ImGUI autism
 #include <functional>
 #include <iostream>

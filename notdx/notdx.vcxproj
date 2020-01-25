@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;../json/single_include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;./xiv;../json/single_include;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
@@ -83,7 +83,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;../json/single_include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;./xiv;../json/single_include;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
@@ -94,18 +94,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Actor.h" />
-    <ClInclude Include="ChatLog.h" />
-    <ClInclude Include="log.h" />
-    <ClInclude Include="Market.h" />
-    <ClInclude Include="Network.h" />
-    <ClInclude Include="Quest.h" />
+    <ClInclude Include="xiv\ChatLog.h" />
+    <ClInclude Include="xiv\types.h" />
+    <ClInclude Include="sdk\log.h" />
+    <ClInclude Include="xiv\Market.h" />
+    <ClInclude Include="xiv\Network.h" />
+    <ClInclude Include="xiv\Quest.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="sdk\base.h" />
     <ClInclude Include="sdk\repl.h" />
     <ClInclude Include="sdk\user.h" />
     <ClInclude Include="sdk\vmt.h" />
-    <ClInclude Include="timer.h" />
+    <ClInclude Include="xiv\Actor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Detours\src\creatwth.cpp" />

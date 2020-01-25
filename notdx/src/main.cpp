@@ -1,6 +1,5 @@
-#include "user.h"
-#include "../Actor.h"
 #include "..\res\resource.h"
+#include "user.h"
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
 	game = new MemorySystem("ffxiv_dx11.exe"); xiv = new FFXIV();
