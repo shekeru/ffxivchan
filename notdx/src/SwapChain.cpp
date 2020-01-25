@@ -1,4 +1,16 @@
-#include "user.h"
+#include "../hooks.h"
+
+void MemorySystem::DetourAll(){
+	DetourRestoreAfterWith(); DetourTransactionBegin();
+	DetourUpdateThread(GetCurrentThread());
+	// Attaching Detours
+	IconSys::AttachSystem();
+	using namespace Hooks;
+	RaptureAttach(); NetworkAttach();
+	MarketAttach(); ContextAttach();
+	// Detours Post
+	DetourTransactionCommit();
+};
 
 #include "examples/imgui_impl_win32.h"
 #include "examples/imgui_impl_dx11.h"

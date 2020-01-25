@@ -140,14 +140,5 @@ public:
 	{
 		auto offset = (int*)(GetLocation(signature) + size);
 		return IntPtr(*offset + uintptr_t(offset) + 4 + extra);
-	}; void DetourAll() {
-		DetourRestoreAfterWith(); DetourTransactionBegin();
-		DetourUpdateThread(GetCurrentThread());
-		// Attaching Detours
-		using namespace Hooks;
-		RaptureAttach(); NetworkAttach(); 
-		MarketAttach(); ContextAttach();
-		// Detours Post
-		DetourTransactionCommit();
-	};
+	}; void DetourAll();
 }; inline MemorySystem* game;
