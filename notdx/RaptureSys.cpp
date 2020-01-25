@@ -7,7 +7,7 @@ ULONG64 repl_A;
 PVOID SpawnWindow;
 char __fastcall hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	static auto eval = (decltype(&hkSpawnWindow))SpawnWindow;
-	//printf("[Spawn] %p (%s), Flag: %i, Ex: %x\n", obj, Name, flag, ex);
+	show(SpawnWindow)("%p (%s), Flag: %i, Ex: %x\n", obj, Name, flag, ex);
 	Windows[Name] = obj; return eval(obj, Name, flag, ex);
 };
 

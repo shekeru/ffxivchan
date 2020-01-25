@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ChatLog.h" />
+    <ClInclude Include="log.h" />
     <ClInclude Include="Market.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="Quest.h" />

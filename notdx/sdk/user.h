@@ -1,6 +1,6 @@
 #pragma once
 #include "repl.h"
-#include "imgui.h"
+#include "../log.h"
 // Fucking ImGUI autism
 #include <functional>
 #include <iostream>
@@ -56,10 +56,14 @@ inline map<string, PVOID> Windows;
 namespace User {
 	void MainMenuBar(), NameOverlay(), 
 		LuaConsole(), SpinBotting(), QuestPanel();
+	inline LogWindow log = LogWindow();
 	inline void GenerateFrame() {
 		if (sys.IsOpen) {
+			log.Render();
+			// Demo Window
 			if (sys.IsDemo)
 				ImGui::ShowDemoWindow(&sys.IsDemo);
+			// Misc Shit
 			MainMenuBar(); LuaConsole(); QuestPanel();
 		} else NameOverlay();
 		// Misc Shit

@@ -65,9 +65,10 @@ void User::MainMenuBar()
 				vm.DoFile("_boot.lua");
 			}; ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Misc")) {
-			ImGui::MenuItem("SpinBot", "", &sys.IsSpin);
+		if (ImGui::BeginMenu("Alpha Features")) {
+			ImGui::MenuItem("Log Window", "", &log.IsActive);
 			ImGui::MenuItem("Test, Quests", "", &sys.IsQuest);
+			ImGui::MenuItem("SpinBot", "", &sys.IsSpin);
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
