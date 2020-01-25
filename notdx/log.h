@@ -15,8 +15,7 @@ public:
 			TextWrapped(Items[i]); 
 		if (scroll)
 			ImGui::SetScrollHereY(1.0f); 
-		scroll = 0; PopStyleVar(); 
-		EndChild(); Separator();
+		scroll = 0; PopStyleVar(); EndChild();
 	}; inline void Log(const char* fmt...) {
 		va_list args; va_start(args, fmt);
 		auto buffer = new char[256];
