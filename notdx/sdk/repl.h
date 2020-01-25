@@ -52,6 +52,8 @@ namespace Offsets {
 		"E8 ?? ?? ?? ?? F6 DB 8B C8";
 	pattern COMBO_INT64 =
 		"48 89 2D ? ? ? ? 85 c0";
+	pattern JOB_GAUGE =
+		"48 8d 0d ? ? ? ? 0f 95 c2 e8";
 }; 
 #include "Actor.h"
 class FFXIV {
@@ -60,5 +62,7 @@ public:
 		::LOCAL_ACTOR, 3).Cast<Actor**>();
 	Combo* ComboTimer = game->ScanPattern
 		(Offsets::COMBO_INT64, 3).Cast<Combo*>();
+	JobGauge* JobHud = game->ScanPattern
+		(Offsets::JOB_GAUGE, 3).Cast<JobGauge*>();
 	json tradecraft;
 }; inline FFXIV* xiv;

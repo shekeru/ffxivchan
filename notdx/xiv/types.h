@@ -3,7 +3,7 @@
 enum Job {
 	Adventurer = 0,
 	Gladiator = 1,
-	RedMage = 35,
+	Red_Mage = 35,
 };
 
 enum Action {
@@ -12,6 +12,8 @@ enum Action {
 	Veraero = 7507,
 	Verfire = 7510,
 	Verstone = 7511,
+	Verthunder_II = 16524,
+	Veraero_II = 16525,
 };
 
 enum Status {

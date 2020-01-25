@@ -9,8 +9,8 @@ typedef struct Aura {
 } Aura;
 
 enum ActorOffsets {
-	Job = 6388,
-	Level = 6390,
+	ClassJob = 6388,
+	JobLevel = 6390,
 	AuraStatus = 6520,
 };
 
@@ -25,13 +25,13 @@ public:
 public:
 	inline UCHAR JobId() {
 		static UCHAR* ID = (UCHAR*)
-			(uintptr_t(this) + Job);
+			(uintptr_t(this) + ClassJob);
 		return *ID;
 	};
 	inline UCHAR Level() {
-		static UCHAR* N = (UCHAR*)
-			(uintptr_t(this) + N);
-		return *N;
+		static UCHAR* value = (UCHAR*)
+			(uintptr_t(this) + JobLevel);
+		return *value;
 	};
 	inline bool HasAura(int value) {
 		static Aura* Effects = (Aura*)
@@ -46,3 +46,13 @@ public:
 typedef struct Combo {
 	int Timer, LastMove;
 } Combo;
+
+class JobGauge {
+	void* vfunc_table_0;
+	void* vfunc_talle_1;
+};
+
+class RDM_HUD: JobGauge {
+public:
+	UCHAR WhiteMana, BlackMana;
+};

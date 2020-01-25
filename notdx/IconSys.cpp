@@ -3,7 +3,7 @@
 
 INT64 _fastcall IconSys::raw_call(IconSys* self, int action) {
 	if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
-		case Job::RedMage:
+		case Job::Red_Mage:
 			return self->RedMage(action);
 	default:
 		break;
@@ -11,6 +11,7 @@ INT64 _fastcall IconSys::raw_call(IconSys* self, int action) {
 };
 
 int IconSys::RedMage(int action) {
+	static auto HUD = (RDM_HUD*) xiv->JobHud;
 	switch (action) {
 		case Action::Verthunder:
 			if (xiv->LocalActor->HasAura(Status::VerfireReady))
@@ -20,6 +21,10 @@ int IconSys::RedMage(int action) {
 			if (xiv->LocalActor->HasAura(Status::VerstoneReady))
 				return Action::Verstone;
 			goto jolt_case;
+		case Action::Verthunder_II:
+			if (xiv->LocalActor->Level() >= 22 && 
+					HUD->WhiteMana <= HUD->BlackMana)
+				return Action::Veraero_II;
 		default:
 			break;
 		jolt_case:
