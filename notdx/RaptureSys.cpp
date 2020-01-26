@@ -1,4 +1,4 @@
-#include "user.h"
+#include "hooks.h"
 #include <detours.h>
 
 HANDLE* HeapHandle; 
@@ -97,12 +97,33 @@ char __fastcall hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	return spawnW(obj, Name, flag, ex);
 };
 
+PVOID QueueAction;
+char _fastcall hkQueueAction(IconSys* self, UINT a2, UINT nextAction, 
+	INT64 a4, INT a5, UINT a6, INT a7) 
+{ 
+	ORIGINAL(hkQueueAction, QueueAction);
+	auto value = original(self, a2, nextAction, a4, a5, a6, a7);
+	//printf("ptr: %p, flag: %i, id: %i -> %i\n", self, a5, nextAction, value); 
+	return xiv->ComboSys->Set(value, nextAction);
+}
+
+PVOID FloatChecking;
+char _fastcall hkFloatChecking(IconSys* self, UINT flag, UINT action) {
+	ORIGINAL(hkFloatChecking, FloatChecking); auto value = original(self, flag, action);
+	//printf("ptr: %p, flag: %i, id: %i -> %i\n", self, flag, action, value); 
+	return 1;
+}
+
 void Hooks::RaptureAttach() {
+	QueueAction = (PVOID) game->GetLocation(Offsets::QUEUE_ACTION);
+	FloatChecking = game->ScanPattern(Offsets::FLOAT_CHECK, 4).Cast<PVOID>();
 	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
 	SetsCtxReal = game->ScanPattern(Offsets::SETS_REAL, 1).Cast<PVOID>();
 	SendAction = game->ScanPattern(Offsets::SENDACTION, 1).Cast<PVOID>();
 	SpawnWindow = game->ScanPattern(Offsets::SPAWNUI, 4).Cast<PVOID>();
 	// Attachments
+	DetourAttach(&QueueAction, hkQueueAction);
+	DetourAttach(&FloatChecking, hkFloatChecking);
 	DetourAttach(&SetsCtxReal, hkSetsCtxReal);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&SendAction, hkSendAction);

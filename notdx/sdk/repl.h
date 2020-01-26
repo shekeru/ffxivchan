@@ -57,13 +57,17 @@ namespace Offsets {
 		"48 89 2D ? ? ? ? 85 c0";
 	pattern JOB_GAUGE =
 		"48 8d 0d ? ? ? ? 0f 95 c2 e8";
+	pattern FLOAT_CHECK =
+		"48 8b cf e8 ? ? ? ? 84 c0 74 31";
+	pattern QUEUE_ACTION =
+		"40 53 55 57 41 54 41 57 48 83 ec 60";
 }; 
 #include "Actor.h"
 class FFXIV {
 public:
 	Actor*& LocalActor = *game->ScanPattern(Offsets
 		::LOCAL_ACTOR, 3).Cast<Actor**>();
-	Combo* ComboTimer = game->ScanPattern
+	Combo* ComboSys = game->ScanPattern
 		(Offsets::COMBO_INT64, 3).Cast<Combo*>();
 	JobGauge* JobHud = game->ScanPattern
 		(Offsets::JOB_GAUGE, 3).Cast<JobGauge*>();

@@ -43,11 +43,18 @@ public:
 };
 
 class Combo {
-	float Timer; int ActiveId;
+	float Timer; int 
+		ActiveId, IsQueued, 
+		_v9, NextSkill;
 public:
 	bool Is(int action, float margin = 0.f) {
 		return ActiveId == action 
 			&& Timer >= margin;
+	}; 
+	char Set(char success, int next) {
+		if (success || !next)
+			return success;
+		NextSkill = next; return 1;
 	};
 };
 

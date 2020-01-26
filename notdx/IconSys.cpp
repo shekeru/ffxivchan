@@ -14,7 +14,7 @@ INT64 _fastcall IconSys::hkGetIcon(IconSys* self, int action) {
 };
 
 int IconSys::Lancer(int action) {
-	local Combo = xiv->ComboTimer;
+	local Combo = xiv->ComboSys;
 	local HUD = (RDM_HUD*)xiv->JobHud;
 	local &level = xiv->LocalActor->Level();
 	// Pretty Simple Combo Checking
@@ -33,7 +33,7 @@ int IconSys::Lancer(int action) {
 };
 
 int IconSys::RedMage(int action) {
-	local Combo = xiv->ComboTimer;
+	local Combo = xiv->ComboSys;
 	local HUD = (RDM_HUD*) xiv->JobHud;
 	local &level = xiv->LocalActor->Level();
 	using namespace Status; using namespace Action;
