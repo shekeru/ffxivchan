@@ -50,23 +50,40 @@ enum Job {
 	Dancer = 38,
 };
 
-enum Action {
-	Jolt = 7503,
-	Riposte = 7504,
-	Verthunder = 7505,
-	Corps_Corps = 7506,
-	Veraero = 7507,
-	Verfire = 7510,
-	Verstone = 7511,
-	Zwerchhau = 7512,
-	Redoublement = 7516,
-	Verthunder_II = 16524,
-	Veraero_II = 16525,
+namespace Action {
+	enum Action {
+		// LNC
+		True_Thrust = 75,
+		Vorpal_Thrust = 78,
+		Full_Thrust = 84,
+		Disembowel = 87,
+		// RDM
+		Jolt = 7503,
+		Riposte = 7504,
+		Verthunder = 7505,
+		Corps_Corps = 7506,
+		Veraero = 7507,
+		Verfire = 7510,
+		Verstone = 7511,
+		Zwerchhau = 7512,
+		Redoublement = 7516,
+		Verthunder_II = 16524,
+		Veraero_II = 16525,
+	};
 };
 
-enum Status {
-	Swiftcast = 167,
-	VerfireReady = 1234,
-	VerstoneReady = 1235,
-	Dualcast = 1249,
+namespace Status {
+	enum Status {
+		// LNC
+		Life_Surge = 116,
+		Chaos_Thrust = 118,
+		Power_Surge = 120,
+		// Caster
+		Swiftcast = 167,
+		VerfireReady = 1234,
+		VerstoneReady = 1235,
+		Dualcast = 1249,
+		// Changes
+		Disembowel = 1914,
+	};
 };

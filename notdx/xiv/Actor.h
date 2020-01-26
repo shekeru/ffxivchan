@@ -3,10 +3,8 @@
 #include "repl.h"
 
 typedef struct Aura {
-	USHORT Type;
-	USHORT Stacks;
-	FLOAT TimeLeft;
-	UINT CastId;
+	USHORT Type, Stacks;
+	FLOAT Timer; UINT CastId;
 } Aura;
 
 enum ActorOffsets {
@@ -34,12 +32,12 @@ public:
 			(uintptr_t(this) + JobLevel);
 		return *value;
 	};
-	bool HasAura(int value) {
+	bool HasAura(int value, float margin = 0.f) {
 		local Effects = (Aura*)
 			(uintptr_t(this) + AuraStatus);
 		for (int i = 0; i < 30; i++)
 			if (Effects[i].Type == value)
-				return true;
+				return margin <= Effects[i].Timer;
 		return false;
 	};
 };
