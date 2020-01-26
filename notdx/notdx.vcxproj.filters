@@ -36,7 +36,7 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{ed75defb-5f60-4004-9eea-e70b5fa3b326}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Detours">
+    <Filter Include="Source Files\Rapture System">
       <UniqueIdentifier>{819b9ba7-d14c-4093-bf20-b0dcbd2a8175}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -215,8 +215,11 @@
     <ClCompile Include="Context.cpp">
       <Filter>Source Files\Hooking</Filter>
     </ClCompile>
-    <ClCompile Include="IconSys.cpp">
-      <Filter>Source Files\Detours</Filter>
+    <ClCompile Include="rapture\ForceQueue.cpp">
+      <Filter>Source Files\Rapture System</Filter>
+    </ClCompile>
+    <ClCompile Include="rapture\IconSwaps.cpp">
+      <Filter>Source Files\Rapture System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,8 +259,8 @@
     <ClInclude Include="xiv\types.h">
       <Filter>Header Files\FFXIV</Filter>
     </ClInclude>
-    <ClInclude Include="hooks.h">
-      <Filter>Source Files\Detours</Filter>
+    <ClInclude Include="rapture\main.h">
+      <Filter>Source Files\Rapture System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

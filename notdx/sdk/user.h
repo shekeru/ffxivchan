@@ -65,8 +65,6 @@ namespace User {
 				ImGui::ShowDemoWindow(&sys.IsDemo);
 			// Misc Shit
 			MainMenuBar(); LuaConsole(); QuestPanel();
-		} else NameOverlay();
-		// Misc Shit
-		SpinBotting();
+		} else NameOverlay(); SpinBotting();
 	};
 };

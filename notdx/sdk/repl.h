@@ -49,18 +49,10 @@ namespace Offsets {
 		"48 8d 05 ? ? ? ? 48 8b d9 48 89 01 48 81 c1 60 03";
 	pattern LUA =
 		"48 83 3D ? ? ? ? ? 8B 9E ? ? ? ? ";
-	pattern CAN_SWAP =
-		"81 f9 2e 01 00 00 7f 39 81 f9";
-	pattern GET_ICON =
-		"E8 ?? ?? ?? ?? F6 DB 8B C8";
 	pattern COMBO_INT64 =
 		"48 89 2D ? ? ? ? 85 c0";
 	pattern JOB_GAUGE =
 		"48 8d 0d ? ? ? ? 0f 95 c2 e8";
-	pattern FLOAT_CHECK =
-		"48 8b cf e8 ? ? ? ? 84 c0 74 31";
-	pattern QUEUE_ACTION =
-		"40 53 55 57 41 54 41 57 48 83 ec 60";
 }; 
 #include "Actor.h"
 class FFXIV {

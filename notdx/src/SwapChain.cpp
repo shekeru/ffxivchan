@@ -1,11 +1,11 @@
-#include "../hooks.h"
+#include "rapture/main.h"
 #include "user.h"
 
 void MemorySystem::DetourAll(){
 	DetourRestoreAfterWith(); DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	// Attaching Detours
-	IconSys::AttachSystem();
+	Rapture::Attach();
 	using namespace Hooks;
 	RaptureAttach(); NetworkAttach();
 	MarketAttach(); ContextAttach();

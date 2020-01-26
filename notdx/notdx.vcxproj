@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;./xiv;../json/single_include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;./xiv;../json/single_include;./;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
       <PrecompiledHeaderFile>user.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -84,7 +84,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;./xiv;../json/single_include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Detours/src;../imgui;./lua;./sdk;./xiv;../json/single_include;./;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
       <PrecompiledHeaderFile>user.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -96,7 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="hooks.h" />
+    <ClInclude Include="rapture\main.h" />
     <ClInclude Include="xiv\ChatLog.h" />
     <ClInclude Include="xiv\types.h" />
     <ClInclude Include="sdk\log.h" />
@@ -129,7 +129,6 @@
     <ClCompile Include="..\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Context.cpp" />
-    <ClCompile Include="IconSys.cpp" />
     <ClCompile Include="lua\lapi.c" />
     <ClCompile Include="lua\lauxlib.c" />
     <ClCompile Include="lua\lbaselib.c" />
@@ -164,6 +163,8 @@
     <ClCompile Include="Market.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="RaptureSys.cpp" />
+    <ClCompile Include="rapture\ForceQueue.cpp" />
+    <ClCompile Include="rapture\IconSwaps.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Misc.cpp" />
     <ClCompile Include="src\Debug.cpp" />

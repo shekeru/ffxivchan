@@ -1,10 +1,9 @@
-#include "hooks.h"
-#include <detours.h>
+#include "main.h"
 
 #define effect(value) \
 	xiv->LocalActor->HasAura(value)
 
-INT64 _fastcall IconSys::hkGetIcon(IconSys* self, int action) {
+INT64 GetIcon::Detour(Rapture* self, int action) {
 	if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
 		case Job::Lancer:
 			return self->Lancer(action);
@@ -13,7 +12,7 @@ INT64 _fastcall IconSys::hkGetIcon(IconSys* self, int action) {
 	}; return self->GetIcon(action);
 };
 
-int IconSys::Lancer(int action) {
+int Rapture::Lancer(int action) {
 	local Combo = xiv->ComboSys;
 	local HUD = (RDM_HUD*)xiv->JobHud;
 	local &level = xiv->LocalActor->Level();
@@ -32,7 +31,7 @@ int IconSys::Lancer(int action) {
 	};  return GetIcon(action);
 };
 
-int IconSys::RedMage(int action) {
+int Rapture::RedMage(int action) {
 	local Combo = xiv->ComboSys;
 	local HUD = (RDM_HUD*)xiv->JobHud;
 	local &lvl = xiv->LocalActor->Level();
@@ -71,4 +70,8 @@ int IconSys::RedMage(int action) {
 		if (lvl >= 50 && Combo->Is(Zwerchhau))
 			return GetIcon(Redoublement);
 	}; return GetIcon(action);
+};
+
+char IsIconReplaceable::Detour(int action) {
+	return 1;
 };
