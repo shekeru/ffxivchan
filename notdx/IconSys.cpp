@@ -34,39 +34,41 @@ int IconSys::Lancer(int action) {
 
 int IconSys::RedMage(int action) {
 	local Combo = xiv->ComboSys;
-	local HUD = (RDM_HUD*) xiv->JobHud;
-	local &level = xiv->LocalActor->Level();
+	local HUD = (RDM_HUD*)xiv->JobHud;
+	local &lvl = xiv->LocalActor->Level();
 	using namespace Status; using namespace Action;
-	// Instant-Cast/Non-Instant Switches
+	// Instant-Cast/Non-Instant Switches, Harder
 	if (effect(Dualcast) || effect(Swiftcast)) switch (action) {
-	// If proc, swap skill type
-		case Verthunder:
-			if (effect(VerfireReady)) 
-				return effect(VerfireReady)
-					? GetIcon(Jolt) : GetIcon(Veraero);
+	case Jolt: 
+	// White Mana Need (Veraero)
+		if (lvl >= 10 && !effect(VerstoneReady)) {
+			if (effect(VerfireReady) || 
+				HUD->WhiteMana <= HUD->BlackMana)
+				return GetIcon(Veraero);
+		};
+	// Black Mana Need (Verthunder)
+		if (lvl >= 4 && !effect(VerfireReady)) {
 			return GetIcon(Verthunder);
-		case Veraero:
-			if (effect(VerstoneReady))
-				return effect(VerfireReady) 
-					? GetIcon(Jolt) : GetIcon(Verthunder);
-			return GetIcon(Veraero);
-	} switch (action) { 
-	// Check for Proc Skills
-		case Verthunder:
-			return effect(VerfireReady) ? 
-				GetIcon(Verfire): GetIcon(Jolt);
-		case Veraero:
-			return effect(VerstoneReady) ?
-				GetIcon(Verstone): GetIcon(Jolt); 
-	// Flip AoE, based on mana needs
-		case Verthunder_II: 
-			return (level >= 22 && HUD->WhiteMana <= HUD->BlackMana) 
-				? GetIcon(Veraero_II) : GetIcon(Verthunder_II);
-	// Melee Section
-		case Riposte:
-			if (level >= 35 && Combo->Is(Riposte))
-				return GetIcon(Zwerchhau);
-			if (level >= 50 && Combo->Is(Zwerchhau))
-				return GetIcon(Redoublement);
+		}; 
+	// Otherwise, Nothing
+		return GetIcon(Jolt);
+	} switch (action) {
+	// Check for Proc Skills on Jolt, Easy
+	case Jolt:
+		if (effect(VerstoneReady))
+			return GetIcon(Verstone);
+		if (effect(VerfireReady))
+			return GetIcon(Verfire);
+		return GetIcon(Jolt);
+		// Flip AoE, based on mana needs
+	case Verthunder_II:
+		return (lvl >= 22 && HUD->WhiteMana <= HUD->BlackMana)
+			? GetIcon(Veraero_II) : GetIcon(Verthunder_II);
+		// Melee Section
+	case Riposte:
+		if (lvl >= 35 && Combo->Is(Riposte))
+			return GetIcon(Zwerchhau);
+		if (lvl >= 50 && Combo->Is(Zwerchhau))
+			return GetIcon(Redoublement);
 	}; return GetIcon(action);
 };
