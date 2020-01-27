@@ -56,7 +56,7 @@ void User::MainMenuBar()
 				};  ImGui::EndMenu();
 			};  ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Lua 5.1.4")) {
+		if (ImGui::BeginMenu("Lua 5.1.5")) {
 			ImGui::MenuItem("Output Window", "", &sys.IsRepl);
 			ImGui::MenuItem("Load New Script", "");
 			ImGui::Separator();
@@ -79,7 +79,7 @@ void User::NameOverlay() {
 	SetNextWindowBgAlpha(0.0f); static ImGuiIO& io = ImGui::GetIO();
 	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
 	if (Begin("Testing Overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay)) 
-		Text("  Re: VerL, 20.1.26_Parks  "); ImGui::End();
+		Text("  Re: VerL, 20.1.27_Bones  "); ImGui::End();
 };
 
 void User::QuestPanel() {

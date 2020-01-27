@@ -13,8 +13,8 @@ void MemorySystem::DetourAll(){
 	DetourTransactionCommit();
 };
 
-#include "examples/imgui_impl_win32.h"
 #include "examples/imgui_impl_dx11.h"
+#include "examples/imgui_impl_win32.h"
 HRESULT _fastcall Hooks::CreateSwapChain(IDXGIFactory* pFactory, ID3D11Device *pDevice,
 	DXGI_SWAP_CHAIN_DESC *pDesc, IDXGISwapChain **ppSwapChain)
 {
