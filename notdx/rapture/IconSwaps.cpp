@@ -9,6 +9,8 @@ INT64 GetIcon::Detour(Rapture* self, int action) {
 			return self->Marauder(action);
 		case Job::Lancer:
 			return self->Lancer(action);
+		case Job::Rogue:
+			return self->Rogue(action);
 		case Job::Red_Mage:
 			return self->RedMage(action);
 	}; return self->GetIcon(action);
@@ -42,6 +44,18 @@ int Rapture::Lancer(int action) {
 				return GetIcon(Action::Full_Thrust);
 			return GetIcon(Action::True_Thrust);
 	};  return GetIcon(action);
+};
+
+int Rapture::Rogue(int action) {
+	local Combo = xiv->ComboSys;
+	local &lvl = xiv->LocalActor->Level();
+	// Pretty Simple Combo Checking
+	switch (action) {
+	case Action::Spinning_Edge:
+		if (lvl >= 4 && Combo->Is(Action::Spinning_Edge))
+			return GetIcon(Action::Gust_Slash);
+		return GetIcon(Action::Spinning_Edge);
+	}; return GetIcon(action);
 };
 
 int Rapture::RedMage(int action) {

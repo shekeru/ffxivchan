@@ -60,6 +60,10 @@ namespace Action {
 		Vorpal_Thrust = 78,
 		Full_Thrust = 84,
 		Disembowel = 87,
+		// ROG
+		Spinning_Edge = 2240,
+		Shade_Shift = 2241,
+		Gust_Slash = 2242,
 		// RDM
 		Jolt = 7503,
 		Riposte = 7504,

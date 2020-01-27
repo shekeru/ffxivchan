@@ -47,6 +47,7 @@ class Rapture {
 public:
 	int Marauder(int action);
 	int Lancer(int action);
+	int Rogue(int action);
 	int RedMage(int action);
 // Methods
 	INT64 GetIcon(int action) {
