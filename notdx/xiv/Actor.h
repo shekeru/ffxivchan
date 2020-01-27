@@ -52,9 +52,9 @@ public:
 			&& Timer >= margin;
 	}; 
 	char Set(char success, int next) {
-		if (success || !next)
-			return success;
-		NextSkill = next; return 1;
+		if (success || !next || !NextSkill)
+			return success; NextSkill = next; 
+		return TRUE;
 	};
 };
 

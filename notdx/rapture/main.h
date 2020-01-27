@@ -39,6 +39,11 @@ INSTALL(AllowRequestsGCD, char, Rapture*, UINT, UINT)
 $ AllowRequestsGCD;
 // Main Class
 class Rapture {
+// Local Data
+	void* _VMT1;
+	float Animation;
+	char _pad[84];
+	Combo Local;
 public:
 	int Lancer(int action);
 	int RedMage(int action);
