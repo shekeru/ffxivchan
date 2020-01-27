@@ -5,6 +5,8 @@
 
 INT64 GetIcon::Detour(Rapture* self, int action) {
 	if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
+		case Job::Marauder:
+			return self->Marauder(action);
 		case Job::Lancer:
 			return self->Lancer(action);
 		case Job::Red_Mage:
@@ -12,9 +14,20 @@ INT64 GetIcon::Detour(Rapture* self, int action) {
 	}; return self->GetIcon(action);
 };
 
+int Rapture::Marauder(int action) {
+	local Combo = xiv->ComboSys;
+	local &lvl = xiv->LocalActor->Level();
+	// Pretty Simple Combo Checking
+	switch (action) {
+		case Action::Heavy_Swing:
+			if (lvl >= 4 && Combo->Is(Action::Heavy_Swing))
+				return GetIcon(Action::Maim);
+			return GetIcon(Action::Heavy_Swing);
+	}; return GetIcon(action);
+};
+
 int Rapture::Lancer(int action) {
 	local Combo = xiv->ComboSys;
-	local HUD = (RDM_HUD*)xiv->JobHud;
 	local &level = xiv->LocalActor->Level();
 	// Pretty Simple Combo Checking
 	switch (action) {

@@ -52,6 +52,9 @@ enum Job {
 
 namespace Action {
 	enum Action {
+		//MRD
+		Heavy_Swing = 31,
+		Maim = 37,
 		// LNC
 		True_Thrust = 75,
 		Vorpal_Thrust = 78,

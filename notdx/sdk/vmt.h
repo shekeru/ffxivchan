@@ -133,8 +133,7 @@ public:
 			if (found) {
 				return uintptr_t(scanBytes + i);
 			}
-		}
-		return NULL;
+		}; return printf("SCAN FAILURE: %s\n", signature);
 	}
 	IntPtr ScanPattern(const char* signature, int size, int extra = 0)
 	{

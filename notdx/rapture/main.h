@@ -45,6 +45,7 @@ class Rapture {
 	char _pad[84];
 	Combo Local;
 public:
+	int Marauder(int action);
 	int Lancer(int action);
 	int RedMage(int action);
 // Methods
