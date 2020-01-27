@@ -1,9 +1,9 @@
-#include "main.h"
+#include "ActionManager.h"
 
 #define effect(value) \
 	xiv->LocalActor->HasAura(value)
 
-INT64 GetIcon::Detour(Rapture* self, int action) {
+INT64 GetIcon::Detour(ActionSys* self, int action) {
 	if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
 		case Job::Marauder:
 			return self->Marauder(action);
@@ -16,7 +16,7 @@ INT64 GetIcon::Detour(Rapture* self, int action) {
 	}; return self->GetIcon(action);
 };
 
-int Rapture::Marauder(int action) {
+int ActionSys::Marauder(int action) {
 	local Combo = xiv->ComboSys;
 	local &lvl = xiv->LocalActor->Level();
 	// Pretty Simple Combo Checking
@@ -28,7 +28,7 @@ int Rapture::Marauder(int action) {
 	}; return GetIcon(action);
 };
 
-int Rapture::Lancer(int action) {
+int ActionSys::Lancer(int action) {
 	local Combo = xiv->ComboSys;
 	local &level = xiv->LocalActor->Level();
 	// Pretty Simple Combo Checking
@@ -46,7 +46,7 @@ int Rapture::Lancer(int action) {
 	};  return GetIcon(action);
 };
 
-int Rapture::Rogue(int action) {
+int ActionSys::Rogue(int action) {
 	local Combo = xiv->ComboSys;
 	local &lvl = xiv->LocalActor->Level();
 	// Pretty Simple Combo Checking
@@ -58,7 +58,7 @@ int Rapture::Rogue(int action) {
 	}; return GetIcon(action);
 };
 
-int Rapture::RedMage(int action) {
+int ActionSys::RedMage(int action) {
 	local Combo = xiv->ComboSys;
 	local HUD = (RDM_HUD*)xiv->JobHud;
 	local &lvl = xiv->LocalActor->Level();

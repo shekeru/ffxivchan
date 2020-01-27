@@ -36,7 +36,10 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{ed75defb-5f60-4004-9eea-e70b5fa3b326}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Rapture System">
+    <Filter Include="System Folders">
+      <UniqueIdentifier>{f1b151b0-3add-4854-9fb9-4b229f1ca811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System Folders\Action System">
       <UniqueIdentifier>{819b9ba7-d14c-4093-bf20-b0dcbd2a8175}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -215,11 +218,11 @@
     <ClCompile Include="Context.cpp">
       <Filter>Source Files\Hooking</Filter>
     </ClCompile>
-    <ClCompile Include="rapture\ForceQueue.cpp">
-      <Filter>Source Files\Rapture System</Filter>
+    <ClCompile Include="ActionSystem\ForceQueue.cpp">
+      <Filter>System Folders\Action System</Filter>
     </ClCompile>
-    <ClCompile Include="rapture\IconSwaps.cpp">
-      <Filter>Source Files\Rapture System</Filter>
+    <ClCompile Include="ActionSystem\IconSwaps.cpp">
+      <Filter>System Folders\Action System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,8 +262,8 @@
     <ClInclude Include="xiv\types.h">
       <Filter>Header Files\FFXIV</Filter>
     </ClInclude>
-    <ClInclude Include="rapture\main.h">
-      <Filter>Source Files\Rapture System</Filter>
+    <ClInclude Include="ActionSystem\ActionManager.h">
+      <Filter>System Folders\Action System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

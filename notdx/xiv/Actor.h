@@ -42,7 +42,7 @@ public:
 	};
 };
 
-class Combo {
+class ComboArea {
 	float Timer; int 
 		ActiveId, IsQueued, 
 		_v9, NextSkill;

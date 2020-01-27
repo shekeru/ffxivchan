@@ -96,7 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="rapture\main.h" />
+    <ClInclude Include="ActionSystem\ActionManager.h" />
     <ClInclude Include="xiv\ChatLog.h" />
     <ClInclude Include="xiv\types.h" />
     <ClInclude Include="sdk\log.h" />
@@ -127,6 +127,8 @@
     <ClCompile Include="..\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="ActionSystem\ForceQueue.cpp" />
+    <ClCompile Include="ActionSystem\IconSwaps.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="lua\lapi.c" />
@@ -163,8 +165,6 @@
     <ClCompile Include="Market.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="RaptureSys.cpp" />
-    <ClCompile Include="rapture\ForceQueue.cpp" />
-    <ClCompile Include="rapture\IconSwaps.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Misc.cpp" />
     <ClCompile Include="src\Debug.cpp" />
