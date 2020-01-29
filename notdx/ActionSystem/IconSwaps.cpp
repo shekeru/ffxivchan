@@ -7,6 +7,7 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 	if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
 		case Job::Marauder:
 			return self->Marauder(action);
+		case Job::Dragoon:
 		case Job::Lancer:
 			return self->Lancer(action);
 		case Job::Archer:
