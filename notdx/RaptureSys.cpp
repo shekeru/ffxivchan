@@ -8,22 +8,15 @@ ULONG64 GATHERING[2]{ 0i64, -1 };
 ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
 VOID WINAPI GatherCallback(ULONG64 nil);
 INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
-	local eval = decltype(&hkSendAction)(SendAction); string window = "???";
-	//if ((PVOID)obj == Windows["ContextMenu"]) {
-	//	auto cock = IntPtr(obj)[0x160].Cast<ULONG64*>();
-	//	printf("  %p::IsContextMenu(%llu) \n", obj, cock[1]);
-	//	auto after = cock + 14;
-	//	for (int i = 0; i < cock[1]; i++) {
-	//		printf("%s\n", after[1 + i * 2]);
-	//	};
-	//}
-	//for (auto it = Windows.begin(); it != Windows.end(); ++it)
-	//	if (it->second == obj)
-	//		window = std::string(it->first);
-	//printf("SendAction(%s), N: %i, ", window, N);
-	//for (int i = 0; i < N * 2; i += 2)
-	//	printf("(%x, %llx), ", arr[i] & 0xFFFFFFFF,
-	//		arr[i + 1]); printf("%x\n", opt);
+	local eval = decltype(&hkSendAction)(SendAction);
+	for (auto it = Windows.begin(); it != Windows.end(); ++it)
+		if (it->second == obj) {
+			show(SendAction)("SendAction(%s), N: %i, ", it->first, N);
+			for (int i = 0; i < N * 2; i += 2)
+				show(SendAction)("(%x, %llx), ", arr[i] & 0xFFFFFFFF,
+					arr[i + 1]); show(SendAction)("%x\n", opt);
+		}
+	// Conditions
 	if (obj == Windows["Gathering"] && int
 		(arr[1]) == 0x81 && !GATHERING[0]) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
@@ -50,12 +43,14 @@ VOID WINAPI GatherCallback(ULONG64 nil) {
 }
 
 const char* AutoGather = "Action: Gather All";
-PVOID SetsCtxReal; const char* dString = "      >_<  ";
+PVOID SetsCtxReal; const char* dString = "-- Debug: Action";
 __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 	local eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
 	if (ctx == Windows["ContextMenu"] && N && arr) {
 		printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
 		printf("Row Length: %llu\n", repl_A = (int) arr[1]);
+		if (N != 9 || GATHERING[1] == -1)
+			goto skip_insert;
 		if (N - repl_A == 7) { // no bools
 			// Init Memory
 			auto ptr = (UINT64*) HeapAlloc(*HeapHandle,

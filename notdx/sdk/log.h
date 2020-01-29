@@ -3,7 +3,7 @@
 
 class Logging {
 public:
-	ImVector<char*> Items;
+	deque<char*> Items;
 	inline void Render() {
 		using namespace ImGui;
 		static bool scroll = false;
@@ -25,6 +25,8 @@ public:
 		while (isprint(*check)) 
 			check++; *check = 0;
 		Items.push_back(buffer);
+		if (Items.size() > 256)
+			Items.pop_front();
 	}; 
 }; 
 
