@@ -60,6 +60,9 @@ namespace Action {
 		Vorpal_Thrust = 78,
 		Full_Thrust = 84,
 		Disembowel = 87,
+		// RNG
+		Heavy_Shot = 97,
+		Straight_Shot = 98,
 		// ROG
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
@@ -85,6 +88,8 @@ namespace Status {
 		Life_Surge = 116,
 		Chaos_Thrust = 118,
 		Power_Surge = 120,
+		// RNG
+		StraightShotReady = 122,
 		// Caster
 		Swiftcast = 167,
 		VerfireReady = 1234,

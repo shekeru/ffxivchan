@@ -9,6 +9,8 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 			return self->Marauder(action);
 		case Job::Lancer:
 			return self->Lancer(action);
+		case Job::Archer:
+			return self->Archer(action);
 		case Job::Rogue:
 			return self->Rogue(action);
 		case Job::Red_Mage:
@@ -30,20 +32,32 @@ int ActionSys::Marauder(int action) {
 
 int ActionSys::Lancer(int action) {
 	local Combo = xiv->ComboSys;
-	local &level = xiv->LocalActor->Level();
+	local &lvl = xiv->LocalActor->Level();
 	// Pretty Simple Combo Checking
 	switch (action) {
 		case Action::True_Thrust:
 			// Brain Dead Rotation
-			if (level >= 4 && Combo->Is(Action::True_Thrust)) {
+			if (lvl >= 4 && Combo->Is(Action::True_Thrust)) {
 				// Buffing Damage
-				if (level >= 18 && !effect(Status::Disembowel, 5.f))
+				if (lvl >= 18 && !effect(Status::Disembowel, 5.f))
 					return GetIcon(Action::Disembowel);
 				return GetIcon(Action::Vorpal_Thrust);
-			}; if (level >= 26 && Combo->Is(Action::Vorpal_Thrust))
+			}; if (lvl >= 26 && Combo->Is(Action::Vorpal_Thrust))
 				return GetIcon(Action::Full_Thrust);
 			return GetIcon(Action::True_Thrust);
 	};  return GetIcon(action);
+};
+
+
+int ActionSys::Archer(int action) {
+	local &lvl = xiv->LocalActor->Level();
+	// Pretty Simple Combo Checking
+	switch (action) {
+	case Action::Heavy_Shot:
+		// Brain Dead Rotation
+		if (lvl >= 2 && effect(Status::StraightShotReady))
+			return GetIcon(Action::Straight_Shot); break;
+	}; return GetIcon(action);
 };
 
 int ActionSys::Rogue(int action) {
