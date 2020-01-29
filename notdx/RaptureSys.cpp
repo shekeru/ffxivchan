@@ -4,6 +4,24 @@ HANDLE* HeapHandle;
 ULONG64 repl_A;
 
 PVOID SendAction;
+
+class Spec {
+	// 3 = Int?
+	// 6 = char*?
+public:
+	ULONG64 Type, Value;
+};
+
+INT64 ToDoList(PVOID obj, INT64 len, Spec* arr, INT64 flags) {
+	local Send = decltype(&ToDoList)(SendAction);
+	if (len == 4 && int(arr[0].Value) == 6) { // Title Interactions
+		if (int(arr[2].Value) == 1) { // Left Click: 0, Right Click: 1
+			printf("TodoList[%p], right click: %i, 4: %i \n",
+				obj, int(arr[1].Value), int(arr[3].Value));
+		}
+	}; return Send(obj, len, arr, flags);
+}
+
 ULONG64 GATHERING[2]{ 0i64, -1 };
 ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
 VOID WINAPI GatherCallback(ULONG64 nil);
@@ -17,6 +35,8 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 					arr[i + 1]); show(SendAction)("%x\n", opt);
 		}
 	// Conditions
+	if (obj == Windows["ToDoList"])
+		return ToDoList(obj, N, (Spec*) arr, opt);
 	if (obj == Windows["Gathering"] && int
 		(arr[1]) == 0x81 && !GATHERING[0]) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
@@ -47,10 +67,10 @@ PVOID SetsCtxReal; const char* dString = "-- Debug: Action";
 __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 	local eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
 	if (ctx == Windows["ContextMenu"] && N && arr) {
-		printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
-		printf("Row Length: %llu\n", repl_A = (int) arr[1]);
 		if (N != 9 || GATHERING[1] == -1)
 			goto skip_insert;
+		printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
+		printf("Row Length: %llu\n", repl_A = (int) arr[1]);
 		if (N - repl_A == 7) { // no bools
 			// Init Memory
 			auto ptr = (UINT64*) HeapAlloc(*HeapHandle,
