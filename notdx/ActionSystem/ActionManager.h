@@ -45,6 +45,7 @@ class ActionSys {
 	char _pad[84];
 	ComboArea Local;
 public:
+	int Gladiator(int);
 	int Marauder(int);
 	int Lancer(int);
 	int Archer(int);

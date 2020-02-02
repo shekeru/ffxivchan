@@ -52,9 +52,15 @@ enum Job {
 
 namespace Action {
 	enum Action {
+		//GLA
+		Fast_Blade = 9,
+		Riot_Blade = 15,
+		Rage_of_Halon = 21,
 		//MRD
 		Heavy_Swing = 31,
 		Maim = 37,
+		Overpower = 41,
+		Storms_Path = 42,
 		// LNC
 		True_Thrust = 75,
 		Vorpal_Thrust = 78,
