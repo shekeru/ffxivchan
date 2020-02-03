@@ -50,6 +50,7 @@ public:
 	int Lancer(int);
 	int Archer(int);
 	int Rogue(int);
+	int Samurai(int);
 	int RedMage(int);
 // Methods
 	INT64 GetIcon(int action) {

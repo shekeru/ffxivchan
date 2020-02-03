@@ -16,6 +16,8 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 			return self->Archer(action);
 		case Job::Rogue:
 			return self->Rogue(action);
+		case Job::Samurai:
+			return self->Samurai(action);
 		case Job::Red_Mage:
 			return self->RedMage(action);
 	}; return self->GetIcon(action);
@@ -91,6 +93,31 @@ int ActionSys::Rogue(int action) {
 		return GetIcon(Action::Spinning_Edge);
 	}; return GetIcon(action);
 };
+
+int ActionSys::Samurai(int action) {
+	local Combo = xiv->ComboSys;
+	//local HUD = (SAM_HUD*)xiv->JobHud;
+	local &lvl = xiv->LocalActor->Level();
+	// Instant-Cast/Non-Instant Switches, Harder
+	switch (action) {
+	case Action::Gekko:
+		if (lvl >= 4 && Combo->Is(Action::Hakaze))
+			return GetIcon(Action::Jinpu);
+		if (lvl >= 30 && Combo->Is(Action::Jinpu))
+			return GetIcon(Action::Gekko);
+		return GetIcon(Action::Hakaze);
+	case Action::Kasha:
+		if (lvl >= 18 && Combo->Is(Action::Hakaze))
+			return GetIcon(Action::Shifu);
+		if (lvl >= 40 && Combo->Is(Action::Shifu))
+			return GetIcon(Action::Kasha);
+		return GetIcon(Action::Hakaze);
+	case Action::Yukikaze:
+		return GetIcon(Combo->Is(Action::Hakaze) 
+			? Action::Yukikaze : Action::Hakaze);
+	}; return GetIcon(action);
+};
+
 
 int ActionSys::RedMage(int action) {
 	local Combo = xiv->ComboSys;

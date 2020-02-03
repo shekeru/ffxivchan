@@ -73,6 +73,16 @@ namespace Action {
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
 		Gust_Slash = 2242,
+		// SAM
+		Hakaze = 7477,
+		Jinpu = 7478,
+		Shifu = 7479,
+		Yukikaze = 7480,
+		Gekko = 7481,
+		Kasha = 7482,
+		Fuga = 7483,
+		Mangetsu = 7484,
+		Oka = 7485,
 		// RDM
 		Jolt = 7503,
 		Riposte = 7504,
@@ -101,6 +111,9 @@ namespace Status {
 		VerfireReady = 1234,
 		VerstoneReady = 1235,
 		Dualcast = 1249,
+		// Samurai
+		Jinpu = 1298,
+		Shifu = 1299,
 		// Changes
 		Disembowel = 1914,
 	};
