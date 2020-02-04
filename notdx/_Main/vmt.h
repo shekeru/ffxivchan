@@ -1,7 +1,6 @@
 #pragma once
 #include "base.h"
 #include <psapi.h>
-#include <detours.h>
 // Guard Class
 namespace detail {
 	class protect_guard {

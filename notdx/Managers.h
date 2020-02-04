@@ -1,9 +1,8 @@
 #pragma once
 #include "vmt.h"
 #include "Actor.h"
-
-class FFXIV; inline FFXIV* xiv;
-
+#include <detours.h>
+// More Macros
 #define INSTALL(NAME, type, ...) \
 	class NAME { public: PVOID Location; \
 		static type Detour(__VA_ARGS__);\
@@ -17,10 +16,10 @@ class FFXIV; inline FFXIV* xiv;
 
 #define RESTORE(NAME, ...) \
 	return NAME.Call(this, __VA_ARGS__)
-
+// Manager Headers
 #include "ActionSystem/ActionManager.h"
 #include "UserSystem/UserManager.h"
-
+// Game Pointers
 class FFXIV {
 public:
 // Double Pointers
@@ -40,4 +39,4 @@ public:
 	FFXIV() {
 		printf("LocalActor*: %p\n", &LocalActor);
 	}; json tradecraft;
-};
+}; inline FFXIV* xiv;
