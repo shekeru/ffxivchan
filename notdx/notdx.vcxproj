@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../Detours/src;../imgui;../lua;../json/single_include;./sdk;./xiv;./;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Detours/src;../imgui;../lua;../json/single_include;./_Main;./xiv;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
       <PrecompiledHeaderFile>user.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -84,7 +84,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../Detours/src;../imgui;../lua;../json/single_include;./sdk;./xiv;./;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Detours/src;../imgui;../lua;../json/single_include;./_Main;./xiv;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
       <PrecompiledHeaderFile>user.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -97,20 +97,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ActionSystem\ActionManager.h" />
+    <ClInclude Include="LuaVM\Scripts.h" />
     <ClInclude Include="Managers.h" />
-    <ClInclude Include="Scripts.h" />
     <ClInclude Include="UserSystem\UserManager.h" />
     <ClInclude Include="xiv\ChatLog.h" />
     <ClInclude Include="xiv\types.h" />
-    <ClInclude Include="sdk\logs.h" />
+    <ClInclude Include="_Main\logs.h" />
     <ClInclude Include="xiv\Market.h" />
     <ClInclude Include="xiv\Network.h" />
     <ClInclude Include="xiv\Quest.h" />
-    <ClInclude Include="res\resource.h" />
-    <ClInclude Include="sdk\base.h" />
-    <ClInclude Include="sdk\user.h" />
-    <ClInclude Include="sdk\vmt.h" />
+    <ClInclude Include="_Main\base.h" />
+    <ClInclude Include="_Main\user.h" />
+    <ClInclude Include="_Main\vmt.h" />
     <ClInclude Include="xiv\Actor.h" />
+    <ClInclude Include="_Resources\resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Detours\src\creatwth.cpp" />
@@ -162,20 +162,20 @@
     <ClCompile Include="..\lua\print.c" />
     <ClCompile Include="ActionSystem\ForceQueue.cpp" />
     <ClCompile Include="ActionSystem\IconSwaps.cpp" />
-    <ClCompile Include="Console.cpp" />
     <ClCompile Include="Context.cpp" />
+    <ClCompile Include="LuaVM\Console.cpp" />
+    <ClCompile Include="LuaVM\VM.cpp" />
     <ClCompile Include="Market.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="RaptureSys.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Misc.cpp" />
-    <ClCompile Include="src\Debug.cpp" />
-    <ClCompile Include="src\SwapChain.cpp" />
-    <ClCompile Include="src\WndProc.cpp" />
-    <ClCompile Include="src\VM.cpp" />
+    <ClCompile Include="_Main\DirectX\SwapChain.cpp" />
+    <ClCompile Include="_Main\DirectX\WndProc.cpp" />
+    <ClCompile Include="_Main\Win32\main.cpp" />
+    <ClCompile Include="_Main\Win32\utils.cpp" />
+    <ClCompile Include="Misc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\project.rc" />
+    <ResourceCompile Include="_Resources\project.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

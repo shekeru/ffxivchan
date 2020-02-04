@@ -1,19 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Header Files\FFXIV">
-      <UniqueIdentifier>{973ae75d-676e-4b6e-857b-87fcc34f23e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Hooking">
-      <UniqueIdentifier>{4297a585-bf36-4fd8-9d43-78c5cc2b46a6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Extra Files">
       <UniqueIdentifier>{cf44d9ef-2459-4afd-bf8c-6a13e6bfb8e3}</UniqueIdentifier>
@@ -24,12 +14,6 @@
     <Filter Include="Extra Files\Detours">
       <UniqueIdentifier>{88d8ffa6-514c-43ac-8e54-3523d7ec01e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\System">
-      <UniqueIdentifier>{e5010dc4-de89-408f-a95f-8e37bc71b7c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{ed75defb-5f60-4004-9eea-e70b5fa3b326}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System Folders">
       <UniqueIdentifier>{f1b151b0-3add-4854-9fb9-4b229f1ca811}</UniqueIdentifier>
     </Filter>
@@ -39,14 +23,29 @@
     <Filter Include="Extra Files\Lua 5.1.5">
       <UniqueIdentifier>{d7ebd9e2-dc6d-4fc0-9ef5-33f94b2306bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\LuaVM">
-      <UniqueIdentifier>{9bd4bf32-55c8-4e27-9689-e2b322c3e195}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System Folders\User System">
       <UniqueIdentifier>{c23c7461-f5b4-4d9b-92a6-fac70232b652}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Logging">
-      <UniqueIdentifier>{ed4c7c88-91bb-4b19-a680-46835c349f8a}</UniqueIdentifier>
+    <Filter Include="System Folders\LuaVM">
+      <UniqueIdentifier>{9bd4bf32-55c8-4e27-9689-e2b322c3e195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source App">
+      <UniqueIdentifier>{e5010dc4-de89-408f-a95f-8e37bc71b7c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source App\Immediate Mode">
+      <UniqueIdentifier>{25a980c3-136f-407d-9118-f37ccf465430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source App\Windows API">
+      <UniqueIdentifier>{7588fec5-701c-4474-817f-684b9952e5cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source App\Basic Headers">
+      <UniqueIdentifier>{47bba1de-79bb-4f92-93cb-0ff0baa2d912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Additional Files">
+      <UniqueIdentifier>{ed75defb-5f60-4004-9eea-e70b5fa3b326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Whatever Files">
+      <UniqueIdentifier>{4297a585-bf36-4fd8-9d43-78c5cc2b46a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,9 +66,6 @@
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_draw.cpp">
       <Filter>Extra Files\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disasm.cpp">
       <Filter>Extra Files\Detours</Filter>
@@ -102,34 +98,16 @@
       <Filter>Extra Files\Detours</Filter>
     </ClCompile>
     <ClCompile Include="RaptureSys.cpp">
-      <Filter>Source Files\Hooking</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SwapChain.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WndProc.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VM.cpp">
-      <Filter>Source Files\LuaVM</Filter>
-    </ClCompile>
-    <ClCompile Include="Console.cpp">
-      <Filter>Source Files\LuaVM</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Debug.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Whatever Files</Filter>
     </ClCompile>
     <ClCompile Include="Market.cpp">
-      <Filter>Source Files\Hooking</Filter>
+      <Filter>Whatever Files</Filter>
     </ClCompile>
     <ClCompile Include="Network.cpp">
-      <Filter>Source Files\Hooking</Filter>
+      <Filter>Whatever Files</Filter>
     </ClCompile>
     <ClCompile Include="Context.cpp">
-      <Filter>Source Files\Hooking</Filter>
+      <Filter>Whatever Files</Filter>
     </ClCompile>
     <ClCompile Include="ActionSystem\ForceQueue.cpp">
       <Filter>System Folders\Action System</Filter>
@@ -230,29 +208,29 @@
     <ClCompile Include="..\lua\print.c">
       <Filter>Extra Files\Lua 5.1.5</Filter>
     </ClCompile>
+    <ClCompile Include="LuaVM\Console.cpp">
+      <Filter>System Folders\LuaVM</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaVM\VM.cpp">
+      <Filter>System Folders\LuaVM</Filter>
+    </ClCompile>
+    <ClCompile Include="_Main\DirectX\SwapChain.cpp">
+      <Filter>Source App\Immediate Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="_Main\DirectX\WndProc.cpp">
+      <Filter>Source App\Immediate Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="_Main\Win32\main.cpp">
+      <Filter>Source App\Windows API</Filter>
+    </ClCompile>
+    <ClCompile Include="_Main\Win32\utils.cpp">
+      <Filter>Source App\Windows API</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc.cpp">
+      <Filter>Whatever Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="res\resource.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="xiv\Actor.h">
-      <Filter>Header Files\FFXIV</Filter>
-    </ClInclude>
-    <ClInclude Include="xiv\ChatLog.h">
-      <Filter>Header Files\FFXIV</Filter>
-    </ClInclude>
-    <ClInclude Include="xiv\Quest.h">
-      <Filter>Header Files\FFXIV</Filter>
-    </ClInclude>
-    <ClInclude Include="xiv\Network.h">
-      <Filter>Header Files\FFXIV</Filter>
-    </ClInclude>
-    <ClInclude Include="xiv\Market.h">
-      <Filter>Header Files\FFXIV</Filter>
-    </ClInclude>
-    <ClInclude Include="xiv\types.h">
-      <Filter>Header Files\FFXIV</Filter>
-    </ClInclude>
     <ClInclude Include="ActionSystem\ActionManager.h">
       <Filter>System Folders\Action System</Filter>
     </ClInclude>
@@ -262,25 +240,46 @@
     <ClInclude Include="Managers.h">
       <Filter>System Folders</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\vmt.h">
-      <Filter>System Folders</Filter>
+    <ClInclude Include="LuaVM\Scripts.h">
+      <Filter>System Folders\LuaVM</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\base.h">
-      <Filter>System Folders</Filter>
+    <ClInclude Include="xiv\Actor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\user.h">
-      <Filter>Source Files\Logging</Filter>
+    <ClInclude Include="xiv\ChatLog.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\logs.h">
-      <Filter>Source Files\Logging</Filter>
+    <ClInclude Include="xiv\Market.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts.h">
-      <Filter>Source Files\LuaVM</Filter>
+    <ClInclude Include="xiv\Network.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xiv\Quest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xiv\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_Main\base.h">
+      <Filter>Source App\Basic Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="_Main\logs.h">
+      <Filter>Source App\Basic Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="_Main\user.h">
+      <Filter>Source App\Basic Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="_Main\vmt.h">
+      <Filter>Source App\Basic Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="_Resources\resource.h">
+      <Filter>Additional Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\project.rc">
-      <Filter>Resource Files</Filter>
+    <ResourceCompile Include="_Resources\project.rc">
+      <Filter>Additional Files</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include "user.h"
 #include "Quest.h"
-#include "Scripts.h"
+#include "LuaVM/Scripts.h"
 
 static int exIM_Overlay = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration
 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing

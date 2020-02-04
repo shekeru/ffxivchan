@@ -1,5 +1,5 @@
-#include "..\res\resource.h"
-#include "Scripts.h"
+#include "_Resources\resource.h"
+#include "LuaVM/Scripts.h"
 #include "user.h"
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
