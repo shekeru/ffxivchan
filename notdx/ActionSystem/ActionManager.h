@@ -1,19 +1,5 @@
 #pragma once
-#include "user.h"
-
-#define INSTALL(NAME, type, ...) \
-	class NAME { public: PVOID Location; \
-		static type Detour(__VA_ARGS__);\
-		decltype(&Detour) Call; \
-		void Attach() { \
-
-#define $ \
-	Call = decltype(&Detour)(Location); \
-	DetourAttach((void**) &Call, Detour); \
-	} ;} inline
-
-#define RESTORE(NAME, ...) \
-	return NAME.Call(this, __VA_ARGS__)
+#include "repl.h"
 
 class ActionSys;
 // Method: IsIconReplaceable
@@ -63,5 +49,5 @@ public:
 		::AllowRequestsGCD.Attach();
 		::IsIconReplaceable.Attach();
 		::GetIcon.Attach();
-	}
+	};
 };

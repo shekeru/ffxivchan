@@ -61,7 +61,7 @@ int ActionSys::Lancer(int action) {
 			// Brain Dead Rotation
 			if (lvl >= 4 && Combo->Is(Action::True_Thrust)) {
 				// Buffing Damage
-				if (lvl >= 18 && !effect(Status::Disembowel, 5.f))
+				if (lvl >= 18 && !effect(Status::Disembowel, 7.5f))
 					return GetIcon(Action::Disembowel);
 				return GetIcon(Action::Vorpal_Thrust);
 			}; if (lvl >= 26 && Combo->Is(Action::Vorpal_Thrust))

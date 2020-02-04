@@ -42,6 +42,9 @@
     <Filter Include="Source Files\LuaVM">
       <UniqueIdentifier>{9bd4bf32-55c8-4e27-9689-e2b322c3e195}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System Folders\User System">
+      <UniqueIdentifier>{c23c7461-f5b4-4d9b-92a6-fac70232b652}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
@@ -264,6 +267,12 @@
     </ClInclude>
     <ClInclude Include="ActionSystem\ActionManager.h">
       <Filter>System Folders\Action System</Filter>
+    </ClInclude>
+    <ClInclude Include="UserSystem\UserManager.h">
+      <Filter>System Folders\User System</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers.h">
+      <Filter>System Folders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

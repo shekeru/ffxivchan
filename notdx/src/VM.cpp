@@ -11,11 +11,7 @@ static int luaB_lactor(lua_State* L) {
 }
 
 static int luaB_test(lua_State* L) {
-	static Actor*& LocalActor = *game->ScanPattern
-		(Offsets::LOCAL_ACTOR, 3).Cast<Actor**>();
 	auto ptr = lua_touserdata(L, 1);
-	printf("USERDATA: (%p) with %p\n", 
-		LocalActor, ptr);
 	return 0;
 }
 

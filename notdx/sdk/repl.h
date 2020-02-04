@@ -29,8 +29,6 @@ public:
 namespace Offsets {
 	pattern QUEST_2 =
 		"48 8d 05 ? ? ? ? 48 8d 0c db 48";
-	pattern LOCAL_ACTOR =
-		"48 8b 05 ? ? ? ? 48 89 6c 24 60";
 	pattern HEAP_HANDLE =
 		"48 8b 0d ? ? ? ? 4c 8b c3 ba";
 	pattern SETS_REAL = 
@@ -48,20 +46,7 @@ namespace Offsets {
 	pattern SRUCT_MARKET =
 		"48 8d 05 ? ? ? ? 48 8b d9 48 89 01 48 81 c1 60 03";
 	pattern LUA =
-		"48 83 3D ? ? ? ? ? 8B 9E ? ? ? ? ";
-	pattern COMBO_INT64 = // Pretty Much on the Rapture Object
-		"48 89 2D ? ? ? ? 85 c0";
-	pattern JOB_GAUGE =
-		"48 8d 0d ? ? ? ? 0f 95 c2 e8";
+		"48 83 3D ? ? ? ? ? 8B 9E ? ? ? ?";
 }; 
 #include "Actor.h"
-class FFXIV {
-public:
-	Actor*& LocalActor = *game->ScanPattern(Offsets
-		::LOCAL_ACTOR, 3).Cast<Actor**>();
-	ComboArea* ComboSys = game->ScanPattern
-		(Offsets::COMBO_INT64, 3).Cast<ComboArea*>();
-	JobGauge* JobHud = game->ScanPattern
-		(Offsets::JOB_GAUGE, 3).Cast<JobGauge*>();
-	json tradecraft;
-}; inline FFXIV* xiv;
+#include "../Managers.h"

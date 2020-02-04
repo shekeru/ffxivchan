@@ -97,6 +97,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ActionSystem\ActionManager.h" />
+    <ClInclude Include="Managers.h" />
+    <ClInclude Include="UserSystem\UserManager.h" />
     <ClInclude Include="xiv\ChatLog.h" />
     <ClInclude Include="xiv\types.h" />
     <ClInclude Include="sdk\log.h" />
