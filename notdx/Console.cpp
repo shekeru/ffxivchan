@@ -1,3 +1,4 @@
+#include "Scripts.h"
 #include "user.h"
 
 void Strtrim(char* str) {

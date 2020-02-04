@@ -1,6 +1,6 @@
 #pragma once
 #include "types.h"
-#include "repl.h"
+#include "base.h"
 
 typedef struct Aura {
 	USHORT Type, Stacks;
@@ -37,7 +37,7 @@ public:
 			(uintptr_t(this) + AuraStatus);
 		for (int i = 0; i < 30; i++)
 			if (Effects[i].Type == value)
-				return margin <= Effects[i].Timer;
+				return Effects[i].Timer >= margin;
 		return false;
 	};
 };
@@ -48,8 +48,8 @@ class ComboArea {
 		_v9, NextSkill;
 public:
 	bool Is(int action, float margin = 0.f) {
-		return ActiveId == action 
-			&& Timer >= margin;
+		return ActiveId == action && 
+			abs(Timer) >= margin;
 	}; 
 	char Set(char success, int next) {
 		if (success || !next || !NextSkill)

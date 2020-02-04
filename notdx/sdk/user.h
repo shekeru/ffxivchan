@@ -1,6 +1,6 @@
 #pragma once
-#include "repl.h"
-#include "log.h"
+#include "vmt.h"
+#include "logs.h"
 // Fucking ImGUI autism
 #include <functional>
 #include <iostream>
@@ -68,3 +68,5 @@ namespace User {
 		} else NameOverlay(); SpinBotting();
 	};
 };
+
+#include "../Managers.h"

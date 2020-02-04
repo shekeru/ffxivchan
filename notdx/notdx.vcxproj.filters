@@ -45,6 +45,9 @@
     <Filter Include="System Folders\User System">
       <UniqueIdentifier>{c23c7461-f5b4-4d9b-92a6-fac70232b652}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Logging">
+      <UniqueIdentifier>{ed4c7c88-91bb-4b19-a680-46835c349f8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
@@ -229,23 +232,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sdk\base.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\repl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\user.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\vmt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="res\resource.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\log.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="xiv\Actor.h">
       <Filter>Header Files\FFXIV</Filter>
@@ -273,6 +261,21 @@
     </ClInclude>
     <ClInclude Include="Managers.h">
       <Filter>System Folders</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\vmt.h">
+      <Filter>System Folders</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\base.h">
+      <Filter>System Folders</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\user.h">
+      <Filter>Source Files\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\logs.h">
+      <Filter>Source Files\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts.h">
+      <Filter>Source Files\LuaVM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

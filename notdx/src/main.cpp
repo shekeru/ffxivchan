@@ -1,26 +1,11 @@
 #include "..\res\resource.h"
+#include "Scripts.h"
 #include "user.h"
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
 	game = new MemorySystem("ffxiv_dx11.exe"); xiv = new FFXIV();
 	Sleep(9750); vm.Connect(); sys.prevProc = (WNDPROC)
 		SetWindowLongPtr (sys.hWindow, GWLP_WNDPROC, (LONG_PTR) WndProc);
-	// Resources
-	//const HANDLE hbicon = ::LoadImage(
-	//	hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON,
-	//	::GetSystemMetrics(SM_CXICON),
-	//	::GetSystemMetrics(SM_CYICON),
-	//	0);
-	//if (hbicon)
-	//	::SendMessage(sys.hWindow, WM_SETICON, ICON_BIG, (LPARAM) hbicon);
-	//const HANDLE hsicon = ::LoadImage(
-	//	hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON,
-	//	::GetSystemMetrics(SM_CXSMICON),
-	//	::GetSystemMetrics(SM_CYSMICON),
-	//	0);
-	//if (hsicon)
-	//	::SendMessage(sys.hWindow, WM_SETICON, ICON_SMALL, (LPARAM) hsicon);
-	// Misc Testing
 	ifstream ifs("../game/lua/data/tradecraft.json"); 
 		ifs >> xiv->tradecraft; ifs.close();
 	//auto chat_pb = game->ScanPattern(Offsets::CHAT, 3);

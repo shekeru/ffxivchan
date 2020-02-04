@@ -1,5 +1,5 @@
-#pragma
-#include "repl.h"
+#pragma once
+#include "../Managers.h"
 
 class UserSys;
 class UserSys {

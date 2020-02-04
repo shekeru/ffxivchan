@@ -1,10 +1,11 @@
 #pragma once
 #include "imgui.h"
+#include "vmt.h"
 
 class Logging {
 public:
 	deque<char*> Items;
-	inline void Render() {
+	void Render() {
 		using namespace ImGui;
 		static bool scroll = false;
 		// Output Section
@@ -16,7 +17,7 @@ public:
 		if (scroll)
 			ImGui::SetScrollHereY(1.0f); 
 		scroll = 0; PopStyleVar(); EndChild();
-	}; inline void Log(const char* fmt...) {
+	}; void Log(const char* fmt...) {
 		va_list args; va_start(args, fmt);
 		auto buffer = new char[256];
 		vsprintf(buffer, fmt, args);
@@ -32,7 +33,7 @@ public:
 
 class LogWindow {
 public:
-	inline void Render() {
+	void Render() {
 		if (!IsActive) return;
 		using namespace ImGui;
 		static ImGuiStyle& style = ImGui::GetStyle();
@@ -51,7 +52,8 @@ public:
 		{ "SpawnWindow", new Logging() },
 		{ "SendAction", new Logging() },
 		{ "GetIcon", new Logging() },
-	}; 	bool IsActive;
+	}; bool IsActive;
 };
 // Macros
-#define show(EXP) User::log.windows[#EXP]->Log
+#define show(EXP) \
+	User::log.windows[#EXP]->Log

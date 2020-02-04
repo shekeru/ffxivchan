@@ -98,16 +98,16 @@
   <ItemGroup>
     <ClInclude Include="ActionSystem\ActionManager.h" />
     <ClInclude Include="Managers.h" />
+    <ClInclude Include="Scripts.h" />
     <ClInclude Include="UserSystem\UserManager.h" />
     <ClInclude Include="xiv\ChatLog.h" />
     <ClInclude Include="xiv\types.h" />
-    <ClInclude Include="sdk\log.h" />
+    <ClInclude Include="sdk\logs.h" />
     <ClInclude Include="xiv\Market.h" />
     <ClInclude Include="xiv\Network.h" />
     <ClInclude Include="xiv\Quest.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="sdk\base.h" />
-    <ClInclude Include="sdk\repl.h" />
     <ClInclude Include="sdk\user.h" />
     <ClInclude Include="sdk\vmt.h" />
     <ClInclude Include="xiv\Actor.h" />

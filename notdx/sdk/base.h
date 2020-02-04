@@ -33,6 +33,9 @@ public:
 #define ORIGINAL(type, location) \
 	static auto original = decltype(&type)(location)
 #define BINDING(type) static type _fastcall
+// Local Macros
+using namespace std;
+#define local static auto
 // Pointer Shit
 class IntPtr {
 public:
