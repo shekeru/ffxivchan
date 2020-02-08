@@ -80,7 +80,7 @@ void User::NameOverlay() {
 	SetNextWindowBgAlpha(0.0f); static ImGuiIO& io = ImGui::GetIO();
 	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
 	if (Begin("Testing Overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay)) 
-		Text("  Re: VerL, 20.1.28_Bones  "); ImGui::End();
+		Text("  Re: VerL, 20.2.5_Marcs  "); ImGui::End();
 };
 
 void User::QuestPanel() {

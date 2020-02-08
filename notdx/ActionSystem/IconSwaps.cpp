@@ -1,7 +1,7 @@
 #include "ActionManager.h"
 
-#define effect(value) \
-	xiv->LocalActor->HasAura(value)
+#define effect \
+	xiv->LocalActor->HasAura
 
 INT64 GetIcon::Detour(ActionSys* self, int action) {
 	if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
