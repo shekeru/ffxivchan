@@ -1,7 +1,7 @@
 #include "user.h"
 
 HANDLE* HeapHandle; 
-ULONG64 repl_A;
+ULONG64 opt_A;
 
 PVOID SendAction;
 
@@ -27,28 +27,33 @@ ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
 VOID WINAPI GatherCallback(ULONG64 nil);
 INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 	local eval = decltype(&hkSendAction)(SendAction);
+	UINT* value = (UINT*)(UINT64(Windows["Gathering"]) + 0x180);
 	for (auto it = Windows.begin(); it != Windows.end(); ++it)
 		if (it->second == obj) {
-			show(SendAction)("SendAction(%s), N: %i, ", it->first, N);
+			show(SendAction)("ptr: %p, SendAction(%s), N: %i, ", obj, it->first, N);
 			for (int i = 0; i < N * 2; i += 2)
 				show(SendAction)("(%x, %llx), ", arr[i] & 0xFFFFFFFF,
 					arr[i + 1]); show(SendAction)("%x\n", opt);
 		}
 	// Conditions
-	if (obj == Windows["ToDoList"])
-		return ToDoList(obj, N, (Spec*) arr, opt);
+	//if (obj == Windows["ToDoList"])
+	//	return ToDoList(obj, N, (Spec*) arr, opt);
 	if (obj == Windows["Gathering"] && int
 		(arr[1]) == 0x81 && !GATHERING[0]) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
 	} else if (obj == Windows["ContextMenu"]) {
 		// Only If Selected
-		if (N == 5 && arr[0] == 3i64 && arr[2] == 3i64 && arr[3] == repl_A) {
-			if (GATHERING[1] != -1 && (GATHERING[0] = 3i64)) {
-				CreateThread(0, 0, (LPTHREAD_START_ROUTINE)
-					GatherCallback, NULL, 0, 0);
-				return eval(obj, 1, ESC_SEQ, 1);
+		if (N == 5 //len: 5 
+			&& arr[0] == 3i64 && arr[2] == 3i64
+			&& arr[3] == opt_A) { // my option selected
+			if (GATHERING[1] != -1 && opt_A == 2) {
+				if (*value == 0x23340303) {
+					GATHERING[0] = 3i64; CreateThread(0, 0,
+						(LPTHREAD_START_ROUTINE) GatherCallback,
+						NULL, 0, 0); return eval(obj, 1, ESC_SEQ, 1);
+				}; GATHERING[0] = NULL;
 			}; 
-		}
+		};
 	};  return eval(obj, N, arr, opt);
 }
 
@@ -68,11 +73,11 @@ PVOID SetsCtxReal; const char* dString = "-- Debug: Action";
 __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 	local eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
 	if (ctx == Windows["ContextMenu"] && N && arr) {
-		if (N != 9 || GATHERING[1] == -1)
+		if (N != 9 || GATHERING[1] == -1) {
 			goto skip_insert;
-		printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
-		printf("Row Length: %llu\n", repl_A = (int) arr[1]);
-		if (N - repl_A == 7) { // no bools
+		};  printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
+		printf("Row Length: %llu\n", opt_A = (int) arr[1]);
+		if (N - opt_A == 7) { // no bools
 			// Init Memory
 			auto ptr = (UINT64*) HeapAlloc(*HeapHandle,
 				HEAP_ZERO_MEMORY, 16 * (N + 1));
@@ -85,7 +90,7 @@ __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 			ptr[2 * N] = arr[14]; ptr[1] += 1;
 			return eval(ctx, N + 1, ptr);
 		} else { // with bools
-			auto idx = 2 * (repl_A + 7);
+			auto idx = 2 * (opt_A + 7);
 			auto ptr = (UINT64*)HeapAlloc(*HeapHandle,
 				HEAP_ZERO_MEMORY, 16 * (N + 2));
 			printf("CASE_06: HEAP(%llx), ptr: %p\n", 
@@ -93,8 +98,8 @@ __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 			// Add Custom Row in 0x6
 			ptr[idx + 1] = (UINT64) dString;
 			ptr[idx] = arr[14]; ptr[1] += 1;
-			memcpy(2 + idx + ptr, arr + idx, 16 * repl_A);
-			ptr[2 + idx + 2 * repl_A] = 3i64;
+			memcpy(2 + idx + ptr, arr + idx, 16 * opt_A);
+			ptr[2 + idx + 2 * opt_A] = 3i64;
 			return eval(ctx, N + 2, ptr);
 		}
 	}; 
