@@ -4,7 +4,7 @@
 	xiv->LocalActor->HasAura
 
 INT64 GetIcon::Detour(ActionSys* self, int action) {
-	if (xiv->LocalActor) switch (xiv->LocalActor->JobId()) {
+	if (xiv->LocalActor) switch (xiv->LocalActor->ClassJob()) {
 		case Job::Paladin:
 		case Job::Gladiator:
 			return self->Gladiator(action);
@@ -26,7 +26,7 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 
 int ActionSys::Gladiator(int action) {
 	local Combo = xiv->ComboSys;
-	local &lvl = xiv->LocalActor->Level();
+	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Fast_Blade:
@@ -41,7 +41,7 @@ int ActionSys::Gladiator(int action) {
 
 int ActionSys::Marauder(int action) {
 	local Combo = xiv->ComboSys;
-	local &lvl = xiv->LocalActor->Level();
+	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
 		case Action::Heavy_Swing:
@@ -55,7 +55,7 @@ int ActionSys::Marauder(int action) {
 
 int ActionSys::Lancer(int action) {
 	local Combo = xiv->ComboSys;
-	local &lvl = xiv->LocalActor->Level();
+	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
 		case Action::True_Thrust:
@@ -73,7 +73,7 @@ int ActionSys::Lancer(int action) {
 
 
 int ActionSys::Archer(int action) {
-	local &lvl = xiv->LocalActor->Level();
+	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Heavy_Shot:
@@ -85,7 +85,7 @@ int ActionSys::Archer(int action) {
 
 int ActionSys::Rogue(int action) {
 	local Combo = xiv->ComboSys;
-	local &lvl = xiv->LocalActor->Level();
+	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Spinning_Edge:
@@ -98,7 +98,7 @@ int ActionSys::Rogue(int action) {
 int ActionSys::Samurai(int action) {
 	local Combo = xiv->ComboSys;
 	//local HUD = (SAM_HUD*)xiv->JobHud;
-	local &lvl = xiv->LocalActor->Level();
+	local &lvl = xiv->LocalActor->JobLevel();
 	// Instant-Cast/Non-Instant Switches, Harder
 	switch (action) {
 	case Action::Gekko:
@@ -123,7 +123,7 @@ int ActionSys::Samurai(int action) {
 int ActionSys::RedMage(int action) {
 	local Combo = xiv->ComboSys;
 	local HUD = (RDM_HUD*)xiv->JobHud;
-	local &lvl = xiv->LocalActor->Level();
+	local &lvl = xiv->LocalActor->JobLevel();
 	using namespace Status; using namespace Action;
 	// Instant-Cast/Non-Instant Switches, Harder
 	if (effect(Dualcast) || effect(Swiftcast)) switch (action) {

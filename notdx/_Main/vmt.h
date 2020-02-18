@@ -91,7 +91,8 @@ public:
 			GetModuleHandle(exe_name), &baseModule, sizeof(baseModule));
 		printf("ffxiv Executable Start -> %p\n", baseModule.lpBaseOfDll);
 	}
-	uintptr_t GetLocation(const char* signature) {
+	template<typename TYPE = int>
+	TYPE* GetLocation(const char* signature, int start = 0) {
 		static auto pattern_to_byte = [](const char* pattern) {
 			auto bytes = std::vector<int>{};
 			auto start = const_cast<char*>(pattern);
@@ -123,15 +124,14 @@ public:
 					found = false;
 					break;
 				}
+			} if (found) {
+				return (TYPE*)(scanBytes + i + start);
 			}
-			if (found) {
-				return uintptr_t(scanBytes + i);
-			}
-		}; return printf("SCAN FAILURE: %s\n", signature);
+		}; return (TYPE*) printf("SCAN FAILURE: %s\n", signature);
 	}
 	IntPtr ScanPattern(const char* signature, int size, int extra = 0)
 	{
-		auto offset = (int*)(GetLocation(signature) + size);
+		auto offset = GetLocation<int>(signature) + size;
 		return IntPtr(*offset + uintptr_t(offset) + 4 + extra);
 	}; void DetourAll();
 }; inline MemorySystem* game;
@@ -155,8 +155,8 @@ namespace Offsets {
 		"e8 ? ? ? ? 8b 44 24 20 c1 e8 05";
 	pattern SPAWNUI =
 		"48 8b ce e8 ? ? ? ? 48 8b 4d 4f";
-	pattern NETWORK =
-		"48 89 74 24 18 57 48 83 EC 50 8B F2 49 8B F8 41 0F B7 50 02 8B CE E8 ? ? 73 FF 0F B7 57 02 8D 42 ? 3D ? ? 00 00 0F 87 60 01 00 00 4C 8D 05";
+	//pattern NETWORK =
+//		"48 89 74 24 18 57 48 83 EC 50 8B F2 49 8B F8 41 0F B7 50 02 8B CE E8 ? ? 73 FF 0F B7 57 02 8D 42 ? 3D ? ? 00 00 0F 87 60 01 00 00 4C 8D 05";
 	pattern CHAT =
 		"48 8B 0D ? ? ? ? BA ? ? ? ? 48 83 C1 ? E8 ? ? ? ? 83 78 ? ? 0F 85 ? ? ? ? C6 05 ? ? ? ? ?";
 	pattern SRUCT_MARKET =

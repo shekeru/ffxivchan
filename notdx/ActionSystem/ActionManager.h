@@ -10,7 +10,8 @@ $ IsIconReplaceable;
 // Method: GetIcon
 INSTALL(GetIcon, INT64, ActionSys*, int)
 	Location = game->ScanPattern
-		("E8 ? ? ? ? F6 DB 8B C8", 1).Cast<PVOID>();
+		("E8 ? ? ? ? F6 DB 8B C8", 1)
+	.Cast<PVOID>();
 $ GetIcon;
 // Method: RequestAction
 INSTALL(RequestAction, char, ActionSys*, UINT, UINT, INT64, INT, UINT, INT)
