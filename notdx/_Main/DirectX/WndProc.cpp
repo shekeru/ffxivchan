@@ -16,8 +16,7 @@ void Interface::StartGUI(HWND descW) {
 	style.Colors[ImGuiCol_PlotLinesHovered] = ImVec4(235 / 255.0, 64 / 255.0, 52 / 255.0, 1.0f);
 	// Font Shit
 	ImGuiIO& io = ImGui::GetIO(); auto jap_shit = io.Fonts->
-		AddFontFromMemoryTTF(font_data, font_size, 18.f, NULL, 
-	io.Fonts->GetGlyphRangesJapanese()); 
+		AddFontFromMemoryTTF(font_data, font_size, 18.f, NULL); 
 	// Menu Toggle
 	RegisterHotkey(VK_INSERT, []() {
 		sys.IsOpen ^= 1;
