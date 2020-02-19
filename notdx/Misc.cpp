@@ -76,10 +76,13 @@ void User::MainMenuBar()
 }
 
 void User::NameOverlay() {
-	using namespace ImGui; static ImGuiIO& io = GetIO(); SetNextWindowBgAlpha(0.0f);
-	SetNextWindowPos(ImVec2(io.DisplaySize.x - 5, 0.f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
-	if (Begin("Testing Overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay)) 
-		Text("Re; VerL, Patch 5.2, Feb 18"); ImGui::End();
+	using namespace ImGui; static ImGuiIO& io = GetIO(); 
+	PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(7.f, 2.f));
+	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f), 
+		ImGuiCond_Always, ImVec2(1.0f, 0.0f)); SetNextWindowBgAlpha(0.0f);
+	Begin("test overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay);
+		Text("Re; VerL, Patch 5.2, Feb 18"); 
+	End(); PopStyleVar();
 };
 
 void User::QuestPanel() {
