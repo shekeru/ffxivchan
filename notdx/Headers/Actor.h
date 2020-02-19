@@ -13,8 +13,7 @@ typedef struct Aura {
 
 class Actor {
 public:
-	virtual void _unkvf();
-public:
+	void* _vtable;
 	char pad[152];
 	float X, Z, Y;
 	int nil;

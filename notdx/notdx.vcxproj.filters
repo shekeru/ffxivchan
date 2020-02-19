@@ -1,27 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Extra Files">
-      <UniqueIdentifier>{cf44d9ef-2459-4afd-bf8c-6a13e6bfb8e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Extra Files\ImGUI">
-      <UniqueIdentifier>{b87b2f54-1d2c-4fe1-8e0b-020bc37020cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Extra Files\Detours">
-      <UniqueIdentifier>{88d8ffa6-514c-43ac-8e54-3523d7ec01e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System Folders">
       <UniqueIdentifier>{f1b151b0-3add-4854-9fb9-4b229f1ca811}</UniqueIdentifier>
     </Filter>
     <Filter Include="System Folders\Action System">
       <UniqueIdentifier>{819b9ba7-d14c-4093-bf20-b0dcbd2a8175}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Extra Files\Lua 5.1.5">
-      <UniqueIdentifier>{d7ebd9e2-dc6d-4fc0-9ef5-33f94b2306bd}</UniqueIdentifier>
     </Filter>
     <Filter Include="System Folders\User System">
       <UniqueIdentifier>{c23c7461-f5b4-4d9b-92a6-fac70232b652}</UniqueIdentifier>
@@ -44,55 +28,74 @@
     <Filter Include="Source App\Additional Files">
       <UniqueIdentifier>{ed75defb-5f60-4004-9eea-e70b5fa3b326}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Import Folders">
+      <UniqueIdentifier>{cf44d9ef-2459-4afd-bf8c-6a13e6bfb8e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Import Folders\ImGUI">
+      <UniqueIdentifier>{b87b2f54-1d2c-4fe1-8e0b-020bc37020cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Import Folders\Detours">
+      <UniqueIdentifier>{88d8ffa6-514c-43ac-8e54-3523d7ec01e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Import Folders\Lua 5.1.5">
+      <UniqueIdentifier>{d7ebd9e2-dc6d-4fc0-9ef5-33f94b2306bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System Folders\Structures">
+      <UniqueIdentifier>{7619ecf0-060e-42c9-89ce-d39a0e6c4220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Whatever Files\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
-      <Filter>Extra Files\ImGUI</Filter>
+      <Filter>Import Folders\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\examples\imgui_impl_dx11.cpp">
-      <Filter>Extra Files\ImGUI</Filter>
+      <Filter>Import Folders\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_widgets.cpp">
-      <Filter>Extra Files\ImGUI</Filter>
+      <Filter>Import Folders\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\imgui.cpp">
-      <Filter>Extra Files\ImGUI</Filter>
+      <Filter>Import Folders\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_demo.cpp">
-      <Filter>Extra Files\ImGUI</Filter>
+      <Filter>Import Folders\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_draw.cpp">
-      <Filter>Extra Files\ImGUI</Filter>
+      <Filter>Import Folders\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disasm.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolarm.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolarm64.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolia64.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolx64.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\disolx86.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\image.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\modules.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\creatwth.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="..\Detours\src\detours.cpp">
-      <Filter>Extra Files\Detours</Filter>
+      <Filter>Import Folders\Detours</Filter>
     </ClCompile>
     <ClCompile Include="RaptureSys.cpp">
       <Filter>Whatever Files</Filter>
@@ -113,97 +116,97 @@
       <Filter>System Folders\Action System</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lapi.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lauxlib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lbaselib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lcode.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\ldblib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\ldebug.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\ldo.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\ldump.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lfunc.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lgc.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\linit.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\liolib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\llex.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lmathlib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lmem.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\loadlib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lobject.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lopcodes.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\loslib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lparser.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lstate.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lstring.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lstrlib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\ltable.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\ltablib.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\ltm.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\luac.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lundump.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lvm.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\lzio.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="..\lua\print.c">
-      <Filter>Extra Files\Lua 5.1.5</Filter>
+      <Filter>Import Folders\Lua 5.1.5</Filter>
     </ClCompile>
     <ClCompile Include="LuaVM\Console.cpp">
       <Filter>System Folders\LuaVM</Filter>
@@ -224,7 +227,7 @@
       <Filter>Source App</Filter>
     </ClCompile>
     <ClCompile Include="_Main\Win32\utils.cpp">
-      <Filter>Source App</Filter>
+      <Filter>Source App\Additional Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,29 +237,20 @@
     <ClInclude Include="UserSystem\UserManager.h">
       <Filter>System Folders\User System</Filter>
     </ClInclude>
-    <ClInclude Include="Managers.h">
-      <Filter>System Folders</Filter>
-    </ClInclude>
     <ClInclude Include="LuaVM\Scripts.h">
       <Filter>System Folders\LuaVM</Filter>
     </ClInclude>
-    <ClInclude Include="xiv\Actor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="xiv\ChatLog.h">
-      <Filter>Header Files</Filter>
+      <Filter>Whatever Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="xiv\Market.h">
-      <Filter>Header Files</Filter>
+      <Filter>Whatever Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="xiv\Network.h">
-      <Filter>Header Files</Filter>
+      <Filter>Whatever Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="xiv\Quest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="xiv\types.h">
-      <Filter>Header Files</Filter>
+      <Filter>Whatever Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_Main\base.h">
       <Filter>Source App\Basic Headers</Filter>
@@ -272,6 +266,15 @@
     </ClInclude>
     <ClInclude Include="_Resources\resource.h">
       <Filter>Source App\Additional Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Actor.h">
+      <Filter>System Folders\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Managers.h">
+      <Filter>System Folders</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\types.h">
+      <Filter>System Folders\Structures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

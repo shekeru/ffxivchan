@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./;../Detours/src;../imgui;../lua;../json/single_include;./_Main;./xiv;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Detours/src;../imgui;../lua;../json/single_include;./_Main;./Headers;./xiv;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
       <PrecompiledHeaderFile>user.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -84,7 +84,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;NOTDX_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./;../Detours/src;../imgui;../lua;../json/single_include;./_Main;./xiv;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Detours/src;../imgui;../lua;../json/single_include;./_Main;./Headers;./xiv;</AdditionalIncludeDirectories>
       <EnableModules>false</EnableModules>
       <PrecompiledHeaderFile>user.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -98,10 +98,10 @@
   <ItemGroup>
     <ClInclude Include="ActionSystem\ActionManager.h" />
     <ClInclude Include="LuaVM\Scripts.h" />
-    <ClInclude Include="Managers.h" />
+    <ClInclude Include="Headers\Managers.h" />
     <ClInclude Include="UserSystem\UserManager.h" />
     <ClInclude Include="xiv\ChatLog.h" />
-    <ClInclude Include="xiv\types.h" />
+    <ClInclude Include="Headers\types.h" />
     <ClInclude Include="_Main\logs.h" />
     <ClInclude Include="xiv\Market.h" />
     <ClInclude Include="xiv\Network.h" />
@@ -109,7 +109,7 @@
     <ClInclude Include="_Main\base.h" />
     <ClInclude Include="_Main\user.h" />
     <ClInclude Include="_Main\vmt.h" />
-    <ClInclude Include="xiv\Actor.h" />
+    <ClInclude Include="Headers\Actor.h" />
     <ClInclude Include="_Resources\resource.h" />
   </ItemGroup>
   <ItemGroup>

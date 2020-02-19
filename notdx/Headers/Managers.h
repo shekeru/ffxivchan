@@ -1,5 +1,4 @@
 #pragma once
-#include "vmt.h"
 #include "Actor.h"
 #include <detours.h>
 // More Macros
@@ -24,7 +23,8 @@ class FFXIV {
 public:
 // Double Pointers
 	Actor*& LocalActor = *game->ScanPattern
-		("48 8b 05 ? ? ? ? 48 89 6c 24 60", 3).Cast<Actor**>();
+		("48 8b 05 ? ? ? ? 48 89 6c 24 60", 3)
+	.Cast<Actor**>();
 	UserSys*& UIManager = *game->ScanPattern
 		("48 83 3D ? ? ? ? ? 8B 9E ? ? ? ?", 3, 1)
 	.Cast<UserSys**>();

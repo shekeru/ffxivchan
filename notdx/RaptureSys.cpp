@@ -117,6 +117,13 @@ char hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	return spawnW(obj, Name, flag, ex);
 };
 
+PVOID ACD_Testing;
+void hk_UpdateCD(__int64 a1, int a2, float fval) {
+	local eval = decltype(&hk_UpdateCD)(ACD_Testing);
+	printf("ptr: %p, id: %i, t: %f\n", a1, a2, fval);
+	eval(a1, a2, fval);
+};
+
 void Hooks::RaptureAttach() {
 	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
 	SetsCtxReal = game->ScanPattern(Offsets::SETS_REAL, 1).Cast<PVOID>();
@@ -126,4 +133,7 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&SetsCtxReal, hkSetsCtxReal);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&SendAction, hkSendAction);
+	// New
+	ACD_Testing = game->GetLocation("89 54 24 10 56 41 54 48");
+	DetourAttach(&ACD_Testing, hk_UpdateCD);
 }
