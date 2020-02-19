@@ -4,8 +4,7 @@
 class ActionSys;
 // Method: IsIconReplaceable
 INSTALL(IsIconReplaceable, char, int)
-	Location = (PVOID) game->GetLocation
-		("81 f9 2e 01 00 00 7f 39 81 f9");
+	Location = game->GetLocation("81 f9 2e 01 00 00 7f 39 81 f9");
 $ IsIconReplaceable;
 // Method: GetIcon
 INSTALL(GetIcon, INT64, ActionSys*, int)
@@ -15,8 +14,7 @@ INSTALL(GetIcon, INT64, ActionSys*, int)
 $ GetIcon;
 // Method: RequestAction
 INSTALL(RequestAction, char, ActionSys*, UINT, UINT, INT64, INT, UINT, INT)
-	Location = (PVOID) game->GetLocation
-		("40 53 55 57 41 54 41 57 48 83 ec 60");
+	Location = game->GetLocation("40 53 55 57 41 54 41 57 48 83 ec 60");
 $ RequestAction;
 // Method: AllowRequestsGCD
 INSTALL(AllowRequestsGCD, char, ActionSys*, UINT, UINT)

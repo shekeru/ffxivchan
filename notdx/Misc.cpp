@@ -4,7 +4,7 @@
 
 static int exIM_Overlay = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration
 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing
-| ImGuiWindowFlags_AlwaysAutoResize;
+| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
 
 #include <chrono>
 double check_elapsed(int times) {
@@ -40,8 +40,8 @@ void User::MainMenuBar()
 {
 	if (ImGui::BeginMainMenuBar())
 	{
-		if (ImGui::BeginMenu("eval(xiv)")) {
-			ImGui::MenuItem("version 0.2", "", false, false);
+		if (ImGui::BeginMenu("Re; VerL")) {
+			ImGui::MenuItem("fuck me", "", false, false);
 			ImGui::MenuItem("ImGui Demo", "", &sys.IsDemo);
 			ImGui::Separator(); ImGui::MenuItem("Options", "");
 			if (ImGui::BeginMenu("Colors"))
@@ -76,11 +76,10 @@ void User::MainMenuBar()
 }
 
 void User::NameOverlay() {
-	using namespace ImGui;
-	SetNextWindowBgAlpha(0.0f); static ImGuiIO& io = ImGui::GetIO();
-	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
+	using namespace ImGui; static ImGuiIO& io = GetIO(); SetNextWindowBgAlpha(0.0f);
+	SetNextWindowPos(ImVec2(io.DisplaySize.x - 5, 2.f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
 	if (Begin("Testing Overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay)) 
-		Text("[5.2] Re: VerL, Feb 18"); ImGui::End();
+		Text("Re; VerL, Patch 5.2, Feb 18"); ImGui::End();
 };
 
 void User::QuestPanel() {

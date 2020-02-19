@@ -3,6 +3,11 @@
 #include "user.h"
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
+	// Load Resource Files
+	HRSRC hRes = FindResource(hInstance, MAKEINTRESOURCE(IDR_FONT1), MAKEINTRESOURCE(TEXTFILE));
+	sys.font_data = LockResource(LoadResource(hInstance, hRes));
+	sys.font_size = SizeofResource(hInstance, hRes);
+	// Init Game Systems
 	game = new MemorySystem("ffxiv_dx11.exe"); xiv = new FFXIV(); 
 	Sleep(9750); sys.prevProc = (WNDPROC) SetWindowLongPtr(sys.hWindow, 
 		GWLP_WNDPROC, (LONG_PTR) WndProc); ifstream 

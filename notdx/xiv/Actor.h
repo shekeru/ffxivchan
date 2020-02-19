@@ -26,7 +26,7 @@ public:
 	bool HasAura(int value, float margin = 0.f) {
 		local offset = *game->GetLocation
 			("89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
-		local Effects = (Aura*) uintptr_t(this) + offset;
+		local Effects = (Aura*)(uintptr_t(this) + offset);
 		for (int i = 0; i < 30; i++)
 			if (Effects[i].Type == value)
 				return Effects[i].Timer >= margin

@@ -40,6 +40,7 @@ public:
 	// Locals Vars
 	ID3D11RenderTargetView* pTargetView;
 	WNDPROC prevProc; HWND hWindow;
+	PVOID font_data; int font_size;
 	// Fuck It
 	void ResizeTarget() {
 		ID3D11Texture2D *pBackBuffer;

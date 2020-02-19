@@ -2,6 +2,7 @@
 #include "imgui_internal.h"
 #include "examples/imgui_impl_win32.h"
 #include "examples/imgui_impl_dx11.h"
+#include "_Resources/resource.h"
 
 void Interface::StartGUI(HWND descW) {
 	ctx = ImGui::CreateContext();
@@ -14,9 +15,9 @@ void Interface::StartGUI(HWND descW) {
 	style.Colors[ImGuiCol_CheckMark] = ImVec4(132 / 255.0, 209 / 255.0, 96 / 255.0, 1.0f);
 	style.Colors[ImGuiCol_PlotLinesHovered] = ImVec4(235 / 255.0, 64 / 255.0, 52 / 255.0, 1.0f);
 	// Font Shit
-	//ImGuiIO& io = ImGui::GetIO();
-	//auto jap_shit = io.Fonts->AddFontFromFileTTF("meiryo_00.ttf", 16.f, NULL);
-	//ImGui::SetCurrentFont(jap_shit);
+	ImGuiIO& io = ImGui::GetIO(); auto jap_shit = io.Fonts->
+		AddFontFromMemoryTTF(font_data, font_size, 18.f, NULL, 
+	io.Fonts->GetGlyphRangesJapanese()); 
 	// Menu Toggle
 	RegisterHotkey(VK_INSERT, []() {
 		sys.IsOpen ^= 1;

@@ -35,17 +35,14 @@
     <Filter Include="Source App\Immediate Mode">
       <UniqueIdentifier>{25a980c3-136f-407d-9118-f37ccf465430}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source App\Windows API">
-      <UniqueIdentifier>{7588fec5-701c-4474-817f-684b9952e5cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source App\Basic Headers">
       <UniqueIdentifier>{47bba1de-79bb-4f92-93cb-0ff0baa2d912}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Additional Files">
-      <UniqueIdentifier>{ed75defb-5f60-4004-9eea-e70b5fa3b326}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Whatever Files">
       <UniqueIdentifier>{4297a585-bf36-4fd8-9d43-78c5cc2b46a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source App\Additional Files">
+      <UniqueIdentifier>{ed75defb-5f60-4004-9eea-e70b5fa3b326}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -220,14 +217,14 @@
     <ClCompile Include="_Main\DirectX\WndProc.cpp">
       <Filter>Source App\Immediate Mode</Filter>
     </ClCompile>
-    <ClCompile Include="_Main\Win32\main.cpp">
-      <Filter>Source App\Windows API</Filter>
-    </ClCompile>
-    <ClCompile Include="_Main\Win32\utils.cpp">
-      <Filter>Source App\Windows API</Filter>
-    </ClCompile>
     <ClCompile Include="Misc.cpp">
       <Filter>Whatever Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_Main\Win32\main.cpp">
+      <Filter>Source App</Filter>
+    </ClCompile>
+    <ClCompile Include="_Main\Win32\utils.cpp">
+      <Filter>Source App</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,12 +271,12 @@
       <Filter>Source App\Basic Headers</Filter>
     </ClInclude>
     <ClInclude Include="_Resources\resource.h">
-      <Filter>Additional Files</Filter>
+      <Filter>Source App\Additional Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="_Resources\project.rc">
-      <Filter>Additional Files</Filter>
+      <Filter>Source App\Additional Files</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -1,8 +1,9 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by notdx.rc
-#define TEXTFILE   256
-#define IDR_DATA1  255
+#define TEXTFILE 256
+#define IDR_DATA1 255
+#define IDR_FONT1 102
 #define IDI_ICON1 101
 // Next default values for new objects
 #ifdef APSTUDIO_INVOKED

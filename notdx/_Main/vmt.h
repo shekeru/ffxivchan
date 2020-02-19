@@ -131,8 +131,8 @@ public:
 	}
 	IntPtr ScanPattern(const char* signature, int size, int extra = 0)
 	{
-		auto offset = GetLocation<int>(signature) + size;
-		return IntPtr(*offset + uintptr_t(offset) + 4 + extra);
+		auto offset = GetLocation<int>(signature, size); return 
+			IntPtr(*offset + uintptr_t(offset) + 4 + extra);
 	}; void DetourAll();
 }; inline MemorySystem* game;
 // Move Somewhere Else?
