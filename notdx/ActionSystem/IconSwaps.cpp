@@ -8,6 +8,7 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 		case Job::Paladin:
 		case Job::Gladiator:
 			return self->Gladiator(action);
+		case Job::Warrior:
 		case Job::Marauder:
 			return self->Marauder(action);
 		case Job::Dragoon:

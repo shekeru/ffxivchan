@@ -117,12 +117,34 @@ char hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	return spawnW(obj, Name, flag, ex);
 };
 
-PVOID ACD_Testing;
-void hk_UpdateCD(__int64 a1, int a2, float fval) {
-	local eval = decltype(&hk_UpdateCD)(ACD_Testing);
-	printf("ptr: %p, id: %i, t: %f\n", a1, a2, fval);
-	eval(a1, a2, fval);
+PVOID NumToScreen;
+void hk_NumToScreen(__int64 ptr, __int64 idx, int val) {
+	local eval = decltype(&hk_NumToScreen)(NumToScreen);
+	if (val == 47) {
+		const int N = 16; PVOID Stack[N];
+		RtlCaptureStackBackTrace(0, N, Stack, 0);
+		printf("ptr: %p, idx: %i, v: %i \n", ptr, idx, val);
+		for (int i = 0; i < N; i++)
+			printf(" [+] frame: %p\n", Stack[i]);
+	}; eval(ptr, idx, val);
 };
+
+// group -> -1: none, 0: gen, 1: action, 2: item
+struct HotbarSlot {
+	int subtype, resource, group, ID, 
+		tracking, can_use, _6, _7;
+	int percent, _9, display, quantity, 
+		_12, _13, _14, _15;
+};
+
+PVOID RSU_1;
+INT64 hk_RSU_1(INT64 a1, INT64 a2, INT64 a3, INT64 a4, INT64 a5, UINT out, UINT a7) {
+	local eval = decltype(&hk_RSU_1)(RSU_1);
+	if (out == 191) {
+		printf("ptr: %p, %p, %p, \n [+] %p, %p, %i, %i\n",
+			a1, a2, a3, a4, a5, out, a7);
+	}; return eval(a1, a2, a3, a4, a5, out, a7);
+}
 
 void Hooks::RaptureAttach() {
 	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
@@ -134,6 +156,8 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&SendAction, hkSendAction);
 	// New
-	ACD_Testing = game->GetLocation("89 54 24 10 56 41 54 48");
-	DetourAttach(&ACD_Testing, hk_UpdateCD);
+	RSU_1 = game->GetLocation("48 89 4c 24 08 55 57 41 56 41 57");
+	//DetourAttach(&RSU_1, hk_RSU_1);
+	//NumToScreen = game->GetLocation("3b 51 08 7d 15 48 8b 41 20 48 63 d2 44 39");
+	//DetourAttach(&NumToScreen, hk_NumToScreen);
 }
