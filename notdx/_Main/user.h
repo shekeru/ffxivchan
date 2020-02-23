@@ -43,7 +43,7 @@ public:
 	PVOID font_data; int font_size;
 	// Fuck It
 	void ResizeTarget() {
-		ID3D11Texture2D *pBackBuffer;
+		static ID3D11Texture2D *pBackBuffer;
 		pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 		pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pTargetView);
 		pBackBuffer->Release();
