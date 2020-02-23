@@ -22,7 +22,7 @@ INT64 ToDoList(PVOID obj, INT64 len, Spec* arr, INT64 flags) {
 	}; return Send(obj, len, arr, flags);
 }
 
-ULONG64 GATHERING[2]{ 0i64, -1 };
+ULONG64 GATHERING[2] = { 0i64, -1 };
 ULONG64 ESC_SEQ[2] = { 3i64, 0x1ffffffff };
 VOID WINAPI GatherCallback(ULONG64 nil);
 INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
@@ -107,13 +107,17 @@ skip_insert:
 	return eval(ctx, N, arr);
 }
 
-PVOID SpawnWindow;
+PVOID SpawnWindow; 
+ULONG64 CONFIRM_A [2] = { 3i64, 7i64 };
 char hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	local spawnW = decltype(&hkSpawnWindow)(SpawnWindow); Windows[Name] = obj;
-	show(SpawnWindow)("at: %p, %s, Flag: %i, Ex: %x\n", obj, Name, flag, ex);
+	show(SpawnWindow)("[%p] %s, flag: %i, ex: %x\n", obj, Name, flag, ex);
 	local sendA = decltype(&hkSendAction)(SendAction);
+	// Intercept
+	if (Windows["ContentsFinderConfirm"] == obj)
+		sendA(obj, 1, CONFIRM_A, 1);
 	if (Windows["SalvageResult"] == obj)
-		sendA(obj, 1, ESC_SEQ, 1);
+		sendA(obj, 1, ESC_SEQ, 0);
 	return spawnW(obj, Name, flag, ex);
 };
 
