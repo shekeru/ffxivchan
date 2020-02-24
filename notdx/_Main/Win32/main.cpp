@@ -13,6 +13,7 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
 		GWLP_WNDPROC, (LONG_PTR) WndProc); ifstream 
 	ifs("../game/lua/data/tradecraft.json"); ifs 
 		>> xiv->tradecraft; ifs.close();
+	DebugActiveProcessStop(GetProcessId(0));
 	//auto chat_pb = game->ScanPattern(Offsets::CHAT, 3);
 	//auto chat = chat_pb[0x2C10][0x16D8 + 0x48].Cast<ChatLog>();
 	//printf("chat_pb, chats: %p, %p\n", chat_pb, chat);
@@ -31,7 +32,7 @@ EXTERN_C HRESULT WINAPI CreateDXGIFactory(REFIID riid, void** ppFactory)
 	decltype(&CreateDXGIFactory) original = DynLib
 		{ "C:\\Windows\\System32\\dxgi.dll" }["CreateDXGIFactory"];
 	auto value = original(riid, ppFactory); VMT::Factory = new VMT(*ppFactory);
-	printf("CreateDXGIFactory() -> %p, yields %x\n", original, *ppFactory);
+	printf("CreateDXGIFactory() -> ptr: %p, v: %x\n", ppFactory, *ppFactory);
 	VMT::Factory->HookVM(Hooks::CreateSwapChain, 10); 
 	VMT::Factory->ApplyVMT(); return value;
 }
@@ -41,9 +42,22 @@ EXTERN_C HRESULT WINAPI CreateDXGIFactory1(REFIID riid, void** ppFactory)
 #pragma EXPORT
 	decltype(&CreateDXGIFactory1) original = DynLib
 	{ "C:\\Windows\\System32\\dxgi.dll" }["CreateDXGIFactory1"];
-	printf("should Never Be called {CreateDXGIFactory1}"); 
+		printf("should Never Be called {CreateDXGIFactory1}"); 
 	return original(riid, ppFactory);
 }
+
+PVOID oDebugActiveProcess;
+BOOL _stdcall hkDebugActiveProcess(DWORD dwProcessId) {
+	ORIGINAL(hkDebugActiveProcess, oDebugActiveProcess); auto self = GetProcessId(0);
+	printf("Debugger requested by proc(%i), in %i\n", dwProcessId, self);
+	return dwProcessId == self ? true : original(dwProcessId);
+}
+
+PVOID oIsDebuggerPresent;
+BOOL _stdcall hkIsDebuggerPresent() {
+	printf("no debugger\n");
+	return false;
+};
 
 BOOL APIENTRY DllMain(
 	HMODULE hInstance,
@@ -55,6 +69,15 @@ BOOL APIENTRY DllMain(
 	case DLL_PROCESS_ATTACH:
 		Utils::EnableConsole();
 		DisableThreadLibraryCalls(hInstance);
+		// Testing
+		DetourRestoreAfterWith(); DetourTransactionBegin();
+		DetourUpdateThread(GetCurrentThread());
+		oIsDebuggerPresent = GetProcAddress(GetModuleHandle("kernel32.dll"), "IsDebuggerPresent");
+		oDebugActiveProcess = GetProcAddress(GetModuleHandle("kernel32.dll"), "DebugActiveProcess");
+		DetourAttach(&oDebugActiveProcess, hkDebugActiveProcess);
+		DetourAttach(&oIsDebuggerPresent, hkIsDebuggerPresent);
+		DetourTransactionCommit();
+		// Meh
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)
 			ModuleEntry, hInstance, 0, 0); break;
 	case DLL_PROCESS_DETACH:

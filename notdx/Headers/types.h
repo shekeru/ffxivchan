@@ -66,6 +66,7 @@ namespace Action {
 		Vorpal_Thrust = 78,
 		Full_Thrust = 84,
 		Disembowel = 87,
+		Chaos_Thrust = 88,
 		// RNG
 		Heavy_Shot = 97,
 		Straight_Shot = 98,

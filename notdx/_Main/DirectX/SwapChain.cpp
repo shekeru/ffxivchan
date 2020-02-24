@@ -1,15 +1,34 @@
 #include <ActionSystem/ActionManager.h>
 #include "user.h"
 
+//PVOID oDebugActiveProcess;
+//BOOL _stdcall hkDebugActiveProcess(DWORD dwProcessId) {
+//	ORIGINAL(hkDebugActiveProcess, oDebugActiveProcess); auto self = GetProcessId(0);
+//	printf("Debugger requested by proc(%i), in %i\n", dwProcessId, self);
+//	return dwProcessId == self ? true : original(dwProcessId);
+//}
+//
+//PVOID oIsDebuggerPresent;
+//BOOL _stdcall hkIsDebuggerPresent() {
+//	printf("no debugger\n");
+//	return false;
+//};
+
 void MemorySystem::DetourAll(){
+	HMODULE Kernel32 = GetModuleHandle("kernel32.dll");
+	// Initialize Detours
 	DetourRestoreAfterWith(); DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	// Attaching Detours
-	ActionSys::Attach();
-	using namespace Hooks;
-	RaptureAttach(); NetworkAttach();
-	MarketAttach(); ContextAttach();
-	// Detours Post
+	//oIsDebuggerPresent = GetProcAddress(Kernel32, "IsDebuggerPresent");
+	//oDebugActiveProcess = GetProcAddress(Kernel32, "DebugActiveProcess");
+	//printf("%p - %p\n", oIsDebuggerPresent, oDebugActiveProcess);
+	//DetourAttach(&oDebugActiveProcess, hkDebugActiveProcess); 
+	//DetourAttach(&oIsDebuggerPresent, hkIsDebuggerPresent); 
+	// Poorly Implemented Shit
+	using namespace Hooks; ActionSys::Attach();
+	RaptureAttach(); NetworkAttach(); MarketAttach(); ContextAttach();
+	// Detours Final
 	DetourTransactionCommit();
 };
 
@@ -18,12 +37,12 @@ void MemorySystem::DetourAll(){
 HRESULT _fastcall Hooks::CreateSwapChain(IDXGIFactory* pFactory, ID3D11Device *pDevice,
 	DXGI_SWAP_CHAIN_DESC *pDesc, IDXGISwapChain **ppSwapChain)
 {
-	static auto eval = VMT::Factory->GetOriginalMethod(CreateSwapChain);
+	local eval = VMT::Factory->GetOriginalMethod(CreateSwapChain);
 	auto value = eval(pFactory, pDevice, pDesc, ppSwapChain);
 	(sys.pDevice = pDevice)->GetImmediateContext(&sys.pImmediateContext);
-	printf("dx11[cswc]: %x, ctx: %x, chain %x\n", pDevice, sys.pImmediateContext, 
-		sys.pSwapChain = *ppSwapChain); sys.StartGUI(pDesc->OutputWindow);
-	game->DetourAll(); VMT::SwapChain = new VMT(sys.pSwapChain);
+	printf("CreateSwapChain() -> swc: %p, d3d: %x \n", sys.pSwapChain 
+		= *ppSwapChain, pDevice); sys.StartGUI(pDesc->OutputWindow);
+	VMT::SwapChain = new VMT(sys.pSwapChain); game->DetourAll();
 	VMT::SwapChain->HookVM(Hooks::Present, 8);
 	VMT::SwapChain->ApplyVMT(); return value;
 }

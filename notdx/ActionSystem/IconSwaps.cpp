@@ -59,12 +59,14 @@ int ActionSys::Lancer(int action) {
 	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
+		// Buffing Damage
+		case Action::Disembowel:
+			if (lvl >= 50 && Combo->Is(Action::Disembowel))
+				return GetIcon(Action::Chaos_Thrust);
+			return GetIcon(Action::Disembowel);
 		case Action::True_Thrust:
 			// Brain Dead Rotation
 			if (lvl >= 4 && Combo->Is(Action::True_Thrust)) {
-				// Buffing Damage
-				if (lvl >= 18 && !effect(Status::Disembowel, 7.5f))
-					return GetIcon(Action::Disembowel);
 				return GetIcon(Action::Vorpal_Thrust);
 			}; if (lvl >= 26 && Combo->Is(Action::Vorpal_Thrust))
 				return GetIcon(Action::Full_Thrust);

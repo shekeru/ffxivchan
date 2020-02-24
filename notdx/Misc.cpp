@@ -77,7 +77,7 @@ void User::MainMenuBar()
 
 void User::NameOverlay() {
 	using namespace ImGui; static ImGuiIO& io = GetIO(); 
-	PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8.f, 2.f));
+	PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(7.f, 1.f));
 	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f), 
 		ImGuiCond_Always, ImVec2(1.0f, 0.0f)); SetNextWindowBgAlpha(0.0f);
 	Begin("test overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay);
