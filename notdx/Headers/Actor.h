@@ -19,19 +19,29 @@ public:
 	int nil;
 	float Spin;
 public:
+	int& TargetID() {
+		return *(int*)(uintptr_t(this) + 496);
+	}
+	int& EntityId() {
+		return *(int*)(uintptr_t(this) + 116);
+	}
 	Attribute(UCHAR, ClassJob, "? ? ? ? 8b da 88 99 ? ? ? ? 48 8b f9", 0);
 	Attribute(UCHAR, JobLevel, "38 88 ? ? ? ? 73 08 32 c0", 2);
 	//Attribute(Aura*, AuraList, "89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
 	bool HasAura(int value, float margin = 0.f) {
 		local offset = *game->GetLocation
 			("89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
-		local Effects = (Aura*)(uintptr_t(this) + offset);
+		auto Effects = (Aura*)(uintptr_t(this) + offset);
+		if (value == Status::VenomousBite)
+			printf("where: %p\n", Effects);
 		for (int i = 0; i < 30; i++)
 			if (Effects[i].Type == value)
 				return Effects[i].Timer >= margin
 					|| Effects[i].Timer < NULL;
 		return false;
 	};
+	// Target Testing
+	Actor* TargetPtr();
 };
 
 class ComboArea {

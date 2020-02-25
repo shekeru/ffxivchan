@@ -1,31 +1,12 @@
 #include <ActionSystem/ActionManager.h>
 #include "user.h"
 
-//PVOID oDebugActiveProcess;
-//BOOL _stdcall hkDebugActiveProcess(DWORD dwProcessId) {
-//	ORIGINAL(hkDebugActiveProcess, oDebugActiveProcess); auto self = GetProcessId(0);
-//	printf("Debugger requested by proc(%i), in %i\n", dwProcessId, self);
-//	return dwProcessId == self ? true : original(dwProcessId);
-//}
-//
-//PVOID oIsDebuggerPresent;
-//BOOL _stdcall hkIsDebuggerPresent() {
-//	printf("no debugger\n");
-//	return false;
-//};
-
 void MemorySystem::DetourAll(){
 	HMODULE Kernel32 = GetModuleHandle("kernel32.dll");
 	// Initialize Detours
 	DetourRestoreAfterWith(); DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	// Attaching Detours
-	//oIsDebuggerPresent = GetProcAddress(Kernel32, "IsDebuggerPresent");
-	//oDebugActiveProcess = GetProcAddress(Kernel32, "DebugActiveProcess");
-	//printf("%p - %p\n", oIsDebuggerPresent, oDebugActiveProcess);
-	//DetourAttach(&oDebugActiveProcess, hkDebugActiveProcess); 
-	//DetourAttach(&oIsDebuggerPresent, hkIsDebuggerPresent); 
-	// Poorly Implemented Shit
 	using namespace Hooks; ActionSys::Attach();
 	RaptureAttach(); NetworkAttach(); MarketAttach(); ContextAttach();
 	// Detours Final

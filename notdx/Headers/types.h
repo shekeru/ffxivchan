@@ -70,6 +70,7 @@ namespace Action {
 		// RNG
 		Heavy_Shot = 97,
 		Straight_Shot = 98,
+		Venomous_Bite = 100,
 		// ROG
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
@@ -107,6 +108,8 @@ namespace Status {
 		Power_Surge = 120,
 		// RNG
 		StraightShotReady = 122,
+		VenomousBite = 124,
+		Windbite = 129,
 		// Caster
 		Swiftcast = 167,
 		VerfireReady = 1234,

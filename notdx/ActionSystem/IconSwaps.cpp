@@ -1,5 +1,14 @@
 #include "ActionManager.h"
 
+Actor* Actor::TargetPtr() {
+	int& target = TargetID(); if (target)
+	for (int i = 0; i <= 423; i++) {
+		auto ptr = xiv->CharMap[i];
+		if (ptr && target == ptr->EntityId())
+				return ptr;
+	}; return NULL;
+}
+
 #define effect \
 	xiv->LocalActor->HasAura
 
@@ -67,9 +76,13 @@ int ActionSys::Lancer(int action) {
 		case Action::True_Thrust:
 			// Brain Dead Rotation
 			if (lvl >= 4 && Combo->Is(Action::True_Thrust)) {
+				if (lvl >= 18 && !effect(Status::Disembowel, 7.5f))
+					return GetIcon(Action::Disembowel);
 				return GetIcon(Action::Vorpal_Thrust);
 			}; if (lvl >= 26 && Combo->Is(Action::Vorpal_Thrust))
 				return GetIcon(Action::Full_Thrust);
+			if (lvl >= 50 && Combo->Is(Action::Disembowel))
+				return GetIcon(Action::Chaos_Thrust);
 			return GetIcon(Action::True_Thrust);
 	};  return GetIcon(action);
 };
@@ -77,12 +90,17 @@ int ActionSys::Lancer(int action) {
 
 int ActionSys::Archer(int action) {
 	local &lvl = xiv->LocalActor->JobLevel();
+	auto target = xiv->LocalActor->TargetPtr();
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Heavy_Shot:
 		// Brain Dead Rotation
 		if (lvl >= 2 && effect(Status::StraightShotReady))
-			return GetIcon(Action::Straight_Shot); break;
+			return GetIcon(Action::Straight_Shot);
+		if (lvl >= 6 && target) {
+			if (!target->HasAura(Status::VenomousBite))
+				return GetIcon(Action::Venomous_Bite);
+		}; break;
 	}; return GetIcon(action);
 };
 

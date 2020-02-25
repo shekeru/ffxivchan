@@ -35,6 +35,10 @@ public:
 	JobGauge* JobHud = game->ScanPattern
 		("48 8d 0d ? ? ? ? 0f 95 c2 e8", 3)
 	.Cast<JobGauge*>();
+// Testing
+	Actor** CharMap = game->ScanPattern
+		("48 8d 1d ? ? ? ? 48 8b 1c c3 8b d7", 3)
+	.Cast<Actor**>();
 // Move this
 	FFXIV() {
 		printf("LocalActor*: %p\n", &LocalActor);

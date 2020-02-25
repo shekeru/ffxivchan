@@ -46,16 +46,8 @@ EXTERN_C HRESULT WINAPI CreateDXGIFactory1(REFIID riid, void** ppFactory)
 	return original(riid, ppFactory);
 }
 
-PVOID oDebugActiveProcess;
-BOOL _stdcall hkDebugActiveProcess(DWORD dwProcessId) {
-	ORIGINAL(hkDebugActiveProcess, oDebugActiveProcess); auto self = GetProcessId(0);
-	printf("Debugger requested by proc(%i), in %i\n", dwProcessId, self);
-	return dwProcessId == self ? true : original(dwProcessId);
-}
-
 PVOID oIsDebuggerPresent;
 BOOL _stdcall hkIsDebuggerPresent() {
-	printf("no debugger\n");
 	return false;
 };
 
@@ -73,8 +65,6 @@ BOOL APIENTRY DllMain(
 		DetourRestoreAfterWith(); DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
 		oIsDebuggerPresent = GetProcAddress(GetModuleHandle("kernel32.dll"), "IsDebuggerPresent");
-		oDebugActiveProcess = GetProcAddress(GetModuleHandle("kernel32.dll"), "DebugActiveProcess");
-		DetourAttach(&oDebugActiveProcess, hkDebugActiveProcess);
 		DetourAttach(&oIsDebuggerPresent, hkIsDebuggerPresent);
 		DetourTransactionCommit();
 		// Meh
