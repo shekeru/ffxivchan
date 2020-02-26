@@ -32,8 +32,6 @@ public:
 		local offset = *game->GetLocation
 			("89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
 		auto Effects = (Aura*)(uintptr_t(this) + offset);
-		if (value == Status::VenomousBite)
-			printf("where: %p\n", Effects);
 		for (int i = 0; i < 30; i++)
 			if (Effects[i].Type == value)
 				return Effects[i].Timer >= margin

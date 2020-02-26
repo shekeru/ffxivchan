@@ -46,7 +46,7 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 		if (N == 5 //len: 5 
 			&& arr[0] == 3i64 && arr[2] == 3i64
 			&& arr[3] == opt_A) { // my option selected
-			if (GATHERING[1] != -1 && opt_A == 2) {
+			if (GATHERING[1] != -1 && opt_A == 1) {
 				if (*value == 0x23340303) {
 					GATHERING[0] = 3i64; CreateThread(0, 0,
 						(LPTHREAD_START_ROUTINE) GatherCallback,
@@ -73,7 +73,7 @@ PVOID SetsCtxReal; const char* dString = "-- Debug: Action";
 __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 	local eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
 	if (ctx == Windows["ContextMenu"] && N && arr) {
-		if (N != 9 || GATHERING[1] == -1) {
+		if (N != 8 || GATHERING[1] == -1) {
 			goto skip_insert;
 		};  printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
 		printf("Row Length: %llu\n", opt_A = (int) arr[1]);
@@ -85,7 +85,7 @@ __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 				*HeapHandle, ptr); memcpy(ptr, arr, N * 16);
 			// Add Custom Row in 0x26
 			ptr[2 * N + 1] = (UINT64) dString;
-			if(N == 9 && GATHERING[1] != -1)
+			if(N == 8 && GATHERING[1] != -1)
 				ptr[2 * N + 1] = (UINT64) AutoGather;
 			ptr[2 * N] = arr[14]; ptr[1] += 1;
 			return eval(ctx, N + 1, ptr);
