@@ -171,7 +171,7 @@
     <ClCompile Include="_Main\DirectX\SwapChain.cpp" />
     <ClCompile Include="_Main\DirectX\WndProc.cpp" />
     <ClCompile Include="_Main\Win32\main.cpp" />
-    <ClCompile Include="_Main\Win32\utils.cpp" />
+    <ClCompile Include="_Main\Win32\Terminal.cpp" />
     <ClCompile Include="Misc.cpp" />
   </ItemGroup>
   <ItemGroup>

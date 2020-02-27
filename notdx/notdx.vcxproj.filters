@@ -19,9 +19,6 @@
     <Filter Include="Source App\Immediate Mode">
       <UniqueIdentifier>{25a980c3-136f-407d-9118-f37ccf465430}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source App\Basic Headers">
-      <UniqueIdentifier>{47bba1de-79bb-4f92-93cb-0ff0baa2d912}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Whatever Files">
       <UniqueIdentifier>{4297a585-bf36-4fd8-9d43-78c5cc2b46a6}</UniqueIdentifier>
     </Filter>
@@ -46,6 +43,12 @@
     <Filter Include="Whatever Files\Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source App\Debug Mode">
+      <UniqueIdentifier>{2e1d4978-8b2a-43ca-af95-26893448a671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source App\Core Headers">
+      <UniqueIdentifier>{47bba1de-79bb-4f92-93cb-0ff0baa2d912}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -226,8 +229,8 @@
     <ClCompile Include="_Main\Win32\main.cpp">
       <Filter>Source App</Filter>
     </ClCompile>
-    <ClCompile Include="_Main\Win32\utils.cpp">
-      <Filter>Source App\Additional Files</Filter>
+    <ClCompile Include="_Main\Win32\Terminal.cpp">
+      <Filter>Source App\Debug Mode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,16 +256,16 @@
       <Filter>Whatever Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_Main\base.h">
-      <Filter>Source App\Basic Headers</Filter>
+      <Filter>Source App\Core Headers</Filter>
     </ClInclude>
     <ClInclude Include="_Main\logs.h">
-      <Filter>Source App\Basic Headers</Filter>
+      <Filter>Source App\Core Headers</Filter>
     </ClInclude>
     <ClInclude Include="_Main\user.h">
-      <Filter>Source App\Basic Headers</Filter>
+      <Filter>Source App\Core Headers</Filter>
     </ClInclude>
     <ClInclude Include="_Main\vmt.h">
-      <Filter>Source App\Basic Headers</Filter>
+      <Filter>Source App\Core Headers</Filter>
     </ClInclude>
     <ClInclude Include="_Resources\resource.h">
       <Filter>Source App\Additional Files</Filter>

@@ -42,6 +42,8 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 		(arr[1]) == 0x81 && !GATHERING[0]) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
 	} else if (obj == Windows["ContextMenu"]) {
+		if(N == 5)
+			game->StackTrace();
 		// Only If Selected
 		if (N == 5 //len: 5 
 			&& arr[0] == 3i64 && arr[2] == 3i64
@@ -72,7 +74,7 @@ const char* AutoGather = "Action: Gather All";
 PVOID SetsCtxReal; const char* dString = "-- Debug: Action";
 __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 	local eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
-	if (ctx == Windows["ContextMenu"] && N && arr) {
+	if (ctx == Windows["ContextMenu"] && N && arr) { 
 		if (N != 8 || GATHERING[1] == -1) {
 			goto skip_insert;
 		};  printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
@@ -125,11 +127,6 @@ PVOID NumToScreen;
 void hk_NumToScreen(__int64 ptr, __int64 idx, int val) {
 	local eval = decltype(&hk_NumToScreen)(NumToScreen);
 	if (val == 47) {
-		const int N = 16; PVOID Stack[N];
-		RtlCaptureStackBackTrace(0, N, Stack, 0);
-		printf("ptr: %p, idx: %i, v: %i \n", ptr, idx, val);
-		for (int i = 0; i < N; i++)
-			printf(" [+] frame: %p\n", Stack[i]);
 	}; eval(ptr, idx, val);
 };
 
@@ -150,6 +147,32 @@ INT64 hk_RSU_1(INT64 a1, INT64 a2, INT64 a3, INT64 a4, INT64 a5, UINT out, UINT 
 	}; return eval(a1, a2, a3, a4, a5, out, a7);
 }
 
+typedef PVOID CtxFn; int CtxSize;
+PVOID CtxVectorInit; CtxFn* CtxCallback;
+CtxFn* hkCtxVectorInit(CtxFn*& ref, INT64 len) {
+	ORIGINAL(hkCtxVectorInit, CtxVectorInit); return 
+		CtxCallback = original(ref, CtxSize = len);
+}
+
+PVOID CtxAssign;
+DWORD* hkCtxAssign
+(__int64 a1, __int64 a2, __int64 a3, __int64 a4, __int64 a5)
+{
+	ORIGINAL(hkCtxAssign, CtxAssign);
+	auto v = original(a1, a2, a3, a4, a5);
+	printf("%p, %p, %p, %p, %p \n\n", a1, a2, a3, a4, a5);
+	return v;
+};
+
+PVOID CTX_UP_9;
+DWORD* hkCTX_UP_9(__int64 a1, DWORD *a2, __int64 a3, INT64 a4, INT64 a5)
+{
+	ORIGINAL(hkCTX_UP_9, CTX_UP_9);
+	auto v = original(a1, a2, a3, a4, a5);
+	printf("%p, %p, %p, %p \n\n", a1, a2, a3, v);
+	return v;
+};
+
 void Hooks::RaptureAttach() {
 	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
 	SetsCtxReal = game->ScanPattern(Offsets::SETS_REAL, 1).Cast<PVOID>();
@@ -160,7 +183,13 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&SendAction, hkSendAction);
 	// New
-	RSU_1 = game->GetLocation("48 89 4c 24 08 55 57 41 56 41 57");
+	//RSU_1 = game->GetLocation("48 89 4c 24 08 55 57 41 56 41 57");
+	CtxVectorInit = game->ScanPattern
+		("e8 ? ? ? ? 48 8b 43 08 48 2b 03 48 c1 f8 03", 1)
+	.Cast<PVOID>(); DetourAttach(&CtxVectorInit, hkCtxVectorInit);
+	// fuck
+	CTX_UP_9 = game->ScanPattern("4c 8d 05 ? ? ? ? 48 8b cf 8d 53 35 e8", 3)
+	.Cast<PVOID>(); DetourAttach(&CTX_UP_9, hkCTX_UP_9);
 	//DetourAttach(&RSU_1, hk_RSU_1);
 	//NumToScreen = game->GetLocation("3b 51 08 7d 15 48 8b 41 20 48 63 d2 44 39");
 	//DetourAttach(&NumToScreen, hk_NumToScreen);
