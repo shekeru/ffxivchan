@@ -86,17 +86,8 @@ public:
 }; class MemorySystem {
 public:
 	MODULEINFO baseModule;
-	MemorySystem(const char* exe_name) {
-		GetModuleInformation(GetCurrentProcess(),
-			GetModuleHandle(exe_name), &baseModule, sizeof(baseModule));
-		printf("ffxiv Executable Start -> %p\n", baseModule.lpBaseOfDll);
-	}; void StackTrace() {
-		const int N = 24; PVOID Stack[N];
-		RtlCaptureStackBackTrace(0, N, Stack, 0);
-		for (int i = 1; i < N && Stack[i]; i++)
-			printf(" [%i] frame: %p / %x \n", i+1, Stack[i], 
-				uintptr_t(Stack[i]) - uintptr_t(baseModule.lpBaseOfDll));
-	}; template<typename TYPE = int>
+	MemorySystem(const char* exe_name); void StackTrace();
+	template<typename TYPE = int>
 	TYPE* GetLocation(const char* signature, int start = 0) {
 		local pattern_to_byte = [](const char* pattern) {
 			auto bytes = std::vector<int>{};

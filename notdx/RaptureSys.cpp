@@ -1,9 +1,15 @@
 #include "user.h"
 
+PVOID SendAction;
 HANDLE* HeapHandle; 
 ULONG64 opt_A;
 
-PVOID SendAction;
+typedef PVOID CtxFn; int CtxSize;
+PVOID CtxVectorInit; CtxFn* CtxCallback;
+CtxFn* hkCtxVectorInit(CtxFn*& ref, INT64 len) {
+	ORIGINAL(hkCtxVectorInit, CtxVectorInit); return
+		CtxCallback = original(ref, CtxSize = len);
+}
 
 class Spec {
 	// 3 = Int?
@@ -42,8 +48,6 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 		(arr[1]) == 0x81 && !GATHERING[0]) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
 	} else if (obj == Windows["ContextMenu"]) {
-		if(N == 5)
-			game->StackTrace();
 		// Only If Selected
 		if (N == 5 //len: 5 
 			&& arr[0] == 3i64 && arr[2] == 3i64
@@ -75,6 +79,8 @@ PVOID SetsCtxReal; const char* dString = "-- Debug: Action";
 __int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
 	local eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
 	if (ctx == Windows["ContextMenu"] && N && arr) { 
+		//printf("ptr: %p, len: %i\n", CtxCallback, CtxSize);
+		printf("N: %i, arr: %x\n", N, arr);
 		if (N != 8 || GATHERING[1] == -1) {
 			goto skip_insert;
 		};  printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
@@ -147,13 +153,6 @@ INT64 hk_RSU_1(INT64 a1, INT64 a2, INT64 a3, INT64 a4, INT64 a5, UINT out, UINT 
 	}; return eval(a1, a2, a3, a4, a5, out, a7);
 }
 
-typedef PVOID CtxFn; int CtxSize;
-PVOID CtxVectorInit; CtxFn* CtxCallback;
-CtxFn* hkCtxVectorInit(CtxFn*& ref, INT64 len) {
-	ORIGINAL(hkCtxVectorInit, CtxVectorInit); return 
-		CtxCallback = original(ref, CtxSize = len);
-}
-
 PVOID CtxAssign;
 DWORD* hkCtxAssign
 (__int64 a1, __int64 a2, __int64 a3, __int64 a4, __int64 a5)
@@ -164,13 +163,28 @@ DWORD* hkCtxAssign
 	return v;
 };
 
-PVOID CTX_UP_9;
-DWORD* hkCTX_UP_9(__int64 a1, DWORD *a2, __int64 a3, INT64 a4, INT64 a5)
-{
-	ORIGINAL(hkCTX_UP_9, CTX_UP_9);
-	auto v = original(a1, a2, a3, a4, a5);
-	printf("%p, %p, %p, %p \n\n", a1, a2, a3, v);
-	return v;
+
+PVOID UiCounter; PVOID UiTable[256];
+__int64 hkUiCounter(__int64 table, __int64 unk, void* winPtr) {
+	ORIGINAL(hkUiCounter, UiCounter);
+	auto value = original(table, unk, winPtr);
+	if (value > 1) {
+		UiTable[IntPtr(table)[0x808].Cast<DWORD>()] = winPtr;
+		//printf("t: %p, %p <%p> -> %x\n", table, unk, winPtr);
+	}
+	return value;
+}
+
+PVOID CTX_UP_5; // 7: right click
+__int64 hkCTX_UP_5(__int64 ptr, UINT type, UINT len, __int64 data,
+	__int64 obj, __int64 a6, UINT16 uID, int a8) {
+	ORIGINAL(hkCTX_UP_5, CTX_UP_5);
+	if (type == 7) {
+		printf("ref: %p, len: %i, arr: %p\n", ptr, len, data);
+		printf("a5: %p, a6: %p, a7: %i, a8: %i\n", obj, a6, uID, a8);
+		if(UiTable[uID])
+			printf("potential window: %p, %s \n", UiTable[uID], (char*)UiTable[uID] + 8);
+	}; return original(ptr, type, len, data, obj, a6, uID, a8);
 };
 
 void Hooks::RaptureAttach() {
@@ -188,8 +202,10 @@ void Hooks::RaptureAttach() {
 		("e8 ? ? ? ? 48 8b 43 08 48 2b 03 48 c1 f8 03", 1)
 	.Cast<PVOID>(); DetourAttach(&CtxVectorInit, hkCtxVectorInit);
 	// fuck
-	CTX_UP_9 = game->ScanPattern("4c 8d 05 ? ? ? ? 48 8b cf 8d 53 35 e8", 3)
-	.Cast<PVOID>(); DetourAttach(&CTX_UP_9, hkCTX_UP_9);
+	CTX_UP_5 = game->GetLocation("4c 89 4c 24 20 44 89 44 24 18 53 55 56 57 48 81");
+	DetourAttach(&CTX_UP_5, hkCTX_UP_5);
+	UiCounter = game->ScanPattern("e8 ? ? ? ? 48 8b cb e8 ? ? ? ? e9 e4 00", 1)
+		.Cast<PVOID>(); 	DetourAttach(&UiCounter, hkUiCounter);
 	//DetourAttach(&RSU_1, hk_RSU_1);
 	//NumToScreen = game->GetLocation("3b 51 08 7d 15 48 8b 41 20 48 63 d2 44 39");
 	//DetourAttach(&NumToScreen, hk_NumToScreen);

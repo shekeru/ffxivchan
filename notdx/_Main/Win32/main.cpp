@@ -3,12 +3,12 @@
 #include "user.h"
 
 VOID WINAPI ModuleEntry(HMODULE hInstance) {
+	game = new MemorySystem("ffxiv_dx11.exe"); xiv = new FFXIV();
 	// Load Resource Files
 	HRSRC hRes = FindResource(hInstance, MAKEINTRESOURCE(IDR_FONT1), MAKEINTRESOURCE(TEXTFILE));
 	sys.font_data = LockResource(LoadResource(hInstance, hRes));
 	sys.font_size = SizeofResource(hInstance, hRes);
 	// Init Game Systems
-	game = new MemorySystem("ffxiv_dx11.exe"); xiv = new FFXIV(); 
 	Sleep(9750); sys.prevProc = (WNDPROC) SetWindowLongPtr(sys.hWindow, 
 		GWLP_WNDPROC, (LONG_PTR) WndProc); ifstream 
 	ifs("../game/lua/data/tradecraft.json"); ifs 
@@ -62,11 +62,9 @@ BOOL APIENTRY DllMain(
 		Utils::EnableConsole();
 		DisableThreadLibraryCalls(hInstance);
 		// Testing
-		DetourRestoreAfterWith(); DetourTransactionBegin();
-		DetourUpdateThread(GetCurrentThread());
+		DetourRestoreAfterWith(); DetourTransactionBegin(); DetourUpdateThread(GetCurrentThread());
 		oIsDebuggerPresent = GetProcAddress(GetModuleHandle("kernel32.dll"), "IsDebuggerPresent");
-		DetourAttach(&oIsDebuggerPresent, hkIsDebuggerPresent);
-		DetourTransactionCommit();
+		DetourAttach(&oIsDebuggerPresent, hkIsDebuggerPresent); DetourTransactionCommit();
 		// Meh
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)
 			ModuleEntry, hInstance, 0, 0); break;

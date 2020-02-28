@@ -232,6 +232,9 @@
     <ClCompile Include="_Main\Win32\Terminal.cpp">
       <Filter>Source App\Debug Mode</Filter>
     </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Source App\Debug Mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionSystem\ActionManager.h">
