@@ -1,22 +1,19 @@
 #include "user.h"
 
-PVOID SendAction;
-HANDLE* HeapHandle; 
-ULONG64 opt_A;
-
-typedef PVOID CtxFn; int CtxSize;
-PVOID CtxVectorInit; CtxFn* CtxCallback;
-CtxFn* hkCtxVectorInit(CtxFn*& ref, INT64 len) {
-	ORIGINAL(hkCtxVectorInit, CtxVectorInit); return
-		CtxCallback = original(ref, CtxSize = len);
-}
-
 class Spec {
 	// 3 = Int?
 	// 6 = char*?
 public:
 	ULONG64 Type, Value;
 };
+
+PVOID SendAction; Spec* LastCtx;
+typedef PVOID CtxFn; int CtxSize;
+PVOID CtxVectorInit; CtxFn* CtxCallback;
+CtxFn* hkCtxVectorInit(CtxFn*& ref, INT64 len) {
+	ORIGINAL(hkCtxVectorInit, CtxVectorInit); return
+		CtxCallback = original(ref, CtxSize = len);
+}; const char* AutoGather = "Action: Gather All";
 
 INT64 ToDoList(PVOID obj, INT64 len, Spec* arr, INT64 flags) {
 	local Send = decltype(&ToDoList)(SendAction);
@@ -34,13 +31,10 @@ VOID WINAPI GatherCallback(ULONG64 nil);
 INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 	local eval = decltype(&hkSendAction)(SendAction);
 	UINT* value = (UINT*)(UINT64(Windows["Gathering"]) + 0x180);
-	for (auto it = Windows.begin(); it != Windows.end(); ++it)
-		if (it->second == obj) {
-			show(SendAction)("ptr: %p, SendAction(%s), N: %i, ", obj, it->first, N);
-			for (int i = 0; i < N * 2; i += 2)
-				show(SendAction)("(%x, %llx), ", arr[i] & 0xFFFFFFFF,
-					arr[i + 1]); show(SendAction)("%x\n", opt);
-		}
+	show(SendAction)("ptr: %p, SendAction(%s), N: %i, ", obj, (char*) obj + 8, N);
+		for (int i = 0; i < N * 2; i += 2)
+			show(SendAction)("(%x, %llx), ", arr[i] & 0xFFFFFFFF,
+				arr[i + 1]); show(SendAction)("%x\n", opt);
 	// Conditions
 	//if (obj == Windows["ToDoList"])
 	//	return ToDoList(obj, N, (Spec*) arr, opt);
@@ -48,11 +42,9 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 		(arr[1]) == 0x81 && !GATHERING[0]) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
 	} else if (obj == Windows["ContextMenu"]) {
-		// Only If Selected
-		if (N == 5 //len: 5 
-			&& arr[0] == 3i64 && arr[2] == 3i64
-			&& arr[3] == opt_A) { // my option selected
-			if (GATHERING[1] != -1 && opt_A == 1) {
+		// Check for validity, then specific string ref
+		if (N == 5 && arr[0] == 3i64 && arr[2] == 3i64 && GATHERING[1] != -1) {
+			if (LastCtx[int(arr[3])+7].Value == (ULONG64)AutoGather) {
 				if (*value == 0x23340303) {
 					GATHERING[0] = 3i64; CreateThread(0, 0,
 						(LPTHREAD_START_ROUTINE) GatherCallback,
@@ -72,19 +64,16 @@ VOID WINAPI GatherCallback(ULONG64 nil) {
 		eval(Windows["Gathering"], 1, GATHERING, 1); 
 		Sleep(1250);
 	}; GATHERING[1] = -1; GATHERING[0] = 0;
-}
+};
 
-PVOID SpawnWindow; 
-ULONG64 CONFIRM_A [2] = { 3i64, 7i64 };
-char hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
-	local spawnW = decltype(&hkSpawnWindow)(SpawnWindow); Windows[Name] = obj;
-	show(SpawnWindow)("[%p] %s, flag: %i, ex: %x\n", obj, Name, flag, ex);
+PVOID WindowReady; ULONG64 CONFIRM_A [2] { 3i64, 7i64 };
+char hkWindowReady(PVOID obj, char* Name, UCHAR flag, UINT ex) {
+	local spawnW = decltype(&hkWindowReady)(WindowReady);
 	local sendA = decltype(&hkSendAction)(SendAction);
-	// Intercept
 	if (Windows["ContentsFinderConfirm"] == obj)
 		sendA(obj, 1, CONFIRM_A, 1);
 	if (Windows["SalvageResult"] == obj)
-		sendA(obj, 1, ESC_SEQ, 0);
+		sendA(obj, 1, ESC_SEQ, 1);
 	return spawnW(obj, Name, flag, ex);
 };
 
@@ -123,27 +112,26 @@ DWORD* hkCtxAssign
 };
 
 
-PVOID UiCounter; PVOID UiTable[256];
-__int64 hkUiCounter(__int64 table, __int64 unk, void* winPtr) {
-	ORIGINAL(hkUiCounter, UiCounter);
-	auto value = original(table, unk, winPtr);
-	if (value > 1) {
-		printf("t: %p, %p <%p> -> %x\n", table, unk, winPtr);
-		UiTable[IntPtr(table)[0x808].Cast<DWORD>()] = winPtr;
-	}; return value;
+PVOID SpawnWindow; PVOID UiTable[256]; PVOID SuperClass;
+__int64 hkSpawnWindow(void* super, void* ptr, const char* str) {
+	ORIGINAL(hkSpawnWindow, SpawnWindow); auto value = original(super, ptr, str); 
+	UiTable[value] = ptr; local sendA = decltype(&hkSendAction)(SendAction);
+	Windows[str] = ptr; SuperClass = super; show(SpawnWindow)
+		("ptr: %p <%s>, id: %i\n", ptr, str, value); return value;
 }
 
 // 0x41 ->  6, NULL -> 38
-PVOID CTX_UP_5; // 7: right click
-const char* AutoGather = "Action: Gather All";
-__int64 hkCTX_UP_5(void* ptr, UINT signal, UINT last, Spec* data,
+// 11Au -> Create Desythn?
+PVOID CtxSets_R5; // 7: right click
+__int64 hkCtxSets_R5(void* ptr, UINT signal, UINT last, Spec* data,
 	void* ctxList, INT64 zone, UINT16 uID, int flag) {
-	ORIGINAL(hkCTX_UP_5, CTX_UP_5); if (signal == 7) {
-		const char* inject = NULL; auto parent = (char*)UiTable[uID];
-		if (parent == Windows["Gathering"]) 
+	ORIGINAL(hkCtxSets_R5, CtxSets_R5); auto parent = (char*)UiTable[uID];
+	if (signal == 7) {
+		const char* inject = NULL; LastCtx = data;
+		if (parent == Windows["Gathering"])
 			inject = AutoGather;
-		printf("potential window: %p, %s \n", parent, 
-			parent ? parent + 8 : 0);
+		printf("potential window: %i -> %p, %s \n", uID, 
+			parent, parent ? parent + 8 : 0);
 		if (parent && inject) {
 			ULONG64& length = data[0].Value; Spec* Body = data + 7;
 			if (length < last - 7) {
@@ -153,27 +141,23 @@ __int64 hkCTX_UP_5(void* ptr, UINT signal, UINT last, Spec* data,
 					{ 3, 1 }; last += 1;
 			}; Body[length] = Spec{ Body[0].Type, (ULONG64)
 				inject }; length += 1; last += 1;
-		}
+		} 
 	}; return original(ptr, signal, last, data, ctxList, zone, uID, flag);
 };
 
 void Hooks::RaptureAttach() {
-	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
-	SendAction = game->ScanPattern(Offsets::SENDACTION, 1).Cast<PVOID>();
-	SpawnWindow = game->ScanPattern(Offsets::SPAWNUI, 4).Cast<PVOID>();
+	CtxSets_R5 = game->GetLocation("4c 89 4c 24 20 44 89 44 24 18 53 55 56 57 48 81");
+	SpawnWindow = game->ScanPattern("e8 ? ? ? ? 85 c0 75 1d 48 8b 0b", 1).Cast<PVOID>();
+	CtxVectorInit = game->ScanPattern("e8 ? ? ? ? 48 8b 43 08 48 2b 03 48 c1 f8 03", 1).Cast<PVOID>();
+	WindowReady = game->ScanPattern("48 8b ce e8 ? ? ? ? 48 8b 4d 4f", 4).Cast<PVOID>();
+	SendAction = game->ScanPattern("e8 ? ? ? ? 8b 44 24 20 c1 e8 05", 1).Cast<PVOID>();
 	// Attachments
+	DetourAttach(&CtxSets_R5, hkCtxSets_R5);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
+	DetourAttach(&CtxVectorInit, hkCtxVectorInit);
+	DetourAttach(&WindowReady, hkWindowReady);
 	DetourAttach(&SendAction, hkSendAction);
 	// New
-	//RSU_1 = game->GetLocation("48 89 4c 24 08 55 57 41 56 41 57");
-	CtxVectorInit = game->ScanPattern
-		("e8 ? ? ? ? 48 8b 43 08 48 2b 03 48 c1 f8 03", 1)
-	.Cast<PVOID>(); DetourAttach(&CtxVectorInit, hkCtxVectorInit);
-	// fuck
-	CTX_UP_5 = game->GetLocation("4c 89 4c 24 20 44 89 44 24 18 53 55 56 57 48 81");
-	DetourAttach(&CTX_UP_5, hkCTX_UP_5);
-	UiCounter = game->ScanPattern("e8 ? ? ? ? 48 8b cb e8 ? ? ? ? e9 e4 00", 1)
-		.Cast<PVOID>(); 	DetourAttach(&UiCounter, hkUiCounter);
 	//DetourAttach(&RSU_1, hk_RSU_1);
 	//NumToScreen = game->GetLocation("3b 51 08 7d 15 48 8b 41 20 48 63 d2 44 39");
 	//DetourAttach(&NumToScreen, hk_NumToScreen);

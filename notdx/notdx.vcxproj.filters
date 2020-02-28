@@ -282,6 +282,9 @@
     <ClInclude Include="Headers\types.h">
       <Filter>System Folders\Structures</Filter>
     </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Whatever Files\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="_Resources\project.rc">
