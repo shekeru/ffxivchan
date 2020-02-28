@@ -74,47 +74,6 @@ VOID WINAPI GatherCallback(ULONG64 nil) {
 	}; GATHERING[1] = -1; GATHERING[0] = 0;
 }
 
-const char* AutoGather = "Action: Gather All";
-PVOID SetsCtxReal; const char* dString = "-- Debug: Action";
-__int64 hkSetsCtxReal(PVOID ctx, int N, UINT64* arr) {
-	local eval = decltype(&hkSetsCtxReal)(SetsCtxReal);
-	if (ctx == Windows["ContextMenu"] && N && arr) { 
-		//printf("ptr: %p, len: %i\n", CtxCallback, CtxSize);
-		printf("N: %i, arr: %x\n", N, arr);
-		if (N != 8 || GATHERING[1] == -1) {
-			goto skip_insert;
-		};  printf("SETS_REAL: %p, %i, %p\n", ctx, N, arr);
-		printf("Row Length: %llu\n", opt_A = (int) arr[1]);
-		if (N - opt_A == 7) { // no bools
-			// Init Memory
-			auto ptr = (UINT64*) HeapAlloc(*HeapHandle,
-				HEAP_ZERO_MEMORY, 16 * (N + 1));
-			printf("CASE_26: HEAP(%llx), ptr: %p\n", 
-				*HeapHandle, ptr); memcpy(ptr, arr, N * 16);
-			// Add Custom Row in 0x26
-			ptr[2 * N + 1] = (UINT64) dString;
-			if(N == 8 && GATHERING[1] != -1)
-				ptr[2 * N + 1] = (UINT64) AutoGather;
-			ptr[2 * N] = arr[14]; ptr[1] += 1;
-			return eval(ctx, N + 1, ptr);
-		} else { // with bools
-			auto idx = 2 * (opt_A + 7);
-			auto ptr = (UINT64*)HeapAlloc(*HeapHandle,
-				HEAP_ZERO_MEMORY, 16 * (N + 2));
-			printf("CASE_06: HEAP(%llx), ptr: %p\n", 
-				*HeapHandle, ptr); memcpy(ptr, arr, idx * 8);
-			// Add Custom Row in 0x6
-			ptr[idx + 1] = (UINT64) dString;
-			ptr[idx] = arr[14]; ptr[1] += 1;
-			memcpy(2 + idx + ptr, arr + idx, 16 * opt_A);
-			ptr[2 + idx + 2 * opt_A] = 3i64;
-			return eval(ctx, N + 2, ptr);
-		}
-	}; 
-skip_insert:
-	return eval(ctx, N, arr);
-}
-
 PVOID SpawnWindow; 
 ULONG64 CONFIRM_A [2] = { 3i64, 7i64 };
 char hkSpawnWindow(PVOID obj, char* Name, UCHAR flag, UINT ex) {
@@ -169,31 +128,40 @@ __int64 hkUiCounter(__int64 table, __int64 unk, void* winPtr) {
 	ORIGINAL(hkUiCounter, UiCounter);
 	auto value = original(table, unk, winPtr);
 	if (value > 1) {
+		printf("t: %p, %p <%p> -> %x\n", table, unk, winPtr);
 		UiTable[IntPtr(table)[0x808].Cast<DWORD>()] = winPtr;
-		//printf("t: %p, %p <%p> -> %x\n", table, unk, winPtr);
-	}
-	return value;
+	}; return value;
 }
 
+// 0x41 ->  6, NULL -> 38
 PVOID CTX_UP_5; // 7: right click
-__int64 hkCTX_UP_5(__int64 ptr, UINT type, UINT len, __int64 data,
-	__int64 obj, __int64 a6, UINT16 uID, int a8) {
-	ORIGINAL(hkCTX_UP_5, CTX_UP_5);
-	if (type == 7) {
-		printf("ref: %p, len: %i, arr: %p\n", ptr, len, data);
-		printf("a5: %p, a6: %p, a7: %i, a8: %i\n", obj, a6, uID, a8);
-		if(UiTable[uID])
-			printf("potential window: %p, %s \n", UiTable[uID], (char*)UiTable[uID] + 8);
-	}; return original(ptr, type, len, data, obj, a6, uID, a8);
+const char* AutoGather = "Action: Gather All";
+__int64 hkCTX_UP_5(void* ptr, UINT signal, UINT last, Spec* data,
+	void* ctxList, INT64 zone, UINT16 uID, int flag) {
+	ORIGINAL(hkCTX_UP_5, CTX_UP_5); if (signal == 7) {
+		const char* inject = NULL; auto parent = (char*)UiTable[uID];
+		if (parent == Windows["Gathering"]) 
+			inject = AutoGather;
+		printf("potential window: %p, %s \n", parent, 
+			parent ? parent + 8 : 0);
+		if (parent && inject) {
+			ULONG64& length = data[0].Value; Spec* Body = data + 7;
+			if (length < last - 7) {
+				memmove(Body + length + 1, Body + length,
+					sizeof(Body) * length);
+				Body[2 * (length + 1)] = Spec
+					{ 3, 1 }; last += 1;
+			}; Body[length] = Spec{ Body[0].Type, (ULONG64)
+				inject }; length += 1; last += 1;
+		}
+	}; return original(ptr, signal, last, data, ctxList, zone, uID, flag);
 };
 
 void Hooks::RaptureAttach() {
 	HeapHandle = game->ScanPattern(Offsets::HEAP_HANDLE, 3).Cast<HANDLE*>();
-	SetsCtxReal = game->ScanPattern(Offsets::SETS_REAL, 1).Cast<PVOID>();
 	SendAction = game->ScanPattern(Offsets::SENDACTION, 1).Cast<PVOID>();
 	SpawnWindow = game->ScanPattern(Offsets::SPAWNUI, 4).Cast<PVOID>();
 	// Attachments
-	DetourAttach(&SetsCtxReal, hkSetsCtxReal);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&SendAction, hkSendAction);
 	// New
