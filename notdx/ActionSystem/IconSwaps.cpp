@@ -20,6 +20,8 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 		case Job::Warrior:
 		case Job::Marauder:
 			return self->Marauder(action);
+		case Job::Pugilist:
+			return self->Pugilist(action);
 		case Job::Dragoon:
 		case Job::Lancer:
 			return self->Lancer(action);
@@ -60,6 +62,20 @@ int ActionSys::Marauder(int action) {
 			if(lvl >= 26 && Combo->Is(Action::Maim))
 				return GetIcon(Action::Storms_Path);
 			break;
+	}; return GetIcon(action);
+};
+
+int ActionSys::Pugilist(int action) {
+	local Combo = xiv->ComboSys; local &lvl 
+		= xiv->LocalActor->JobLevel();
+	// Pretty Simple Combo Checking
+	switch (action) {
+	case Action::Bootshine:
+		if (lvl >= 4 && Combo->Is(Action::Bootshine))
+			return GetIcon(Action::True_Strike);
+		if (lvl >= 6 && Combo->Is(Action::True_Strike))
+			return GetIcon(Action::Snap_Punch);
+		break;
 	}; return GetIcon(action);
 };
 

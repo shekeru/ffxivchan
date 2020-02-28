@@ -7,13 +7,14 @@ public:
 	ULONG64 Type, Value;
 };
 
-PVOID SendAction; Spec* LastCtx;
+PVOID SendAction; 
 typedef PVOID CtxFn; int CtxSize;
 PVOID CtxVectorInit; CtxFn* CtxCallback;
 CtxFn* hkCtxVectorInit(CtxFn*& ref, INT64 len) {
 	ORIGINAL(hkCtxVectorInit, CtxVectorInit); return
 		CtxCallback = original(ref, CtxSize = len);
 }; const char* AutoGather = "Action: Gather All";
+	Spec* LastCtx; char* CtxCaller;
 
 INT64 ToDoList(PVOID obj, INT64 len, Spec* arr, INT64 flags) {
 	local Send = decltype(&ToDoList)(SendAction);
@@ -41,8 +42,7 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 	if (obj == Windows["Gathering"] && int
 		(arr[1]) == 0x81 && !GATHERING[0]) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
-	} else if (obj == Windows["ContextMenu"]) {
-		// Check for validity, then specific string ref
+	} else if (obj == Windows["ContextMenu"] && CtxCaller == Windows["Gathering"]) {
 		if (N == 5 && arr[0] == 3i64 && arr[2] == 3i64 && GATHERING[1] != -1) {
 			if (LastCtx[int(arr[3])+7].Value == (ULONG64)AutoGather) {
 				if (*value == 0x23340303) {
@@ -125,14 +125,13 @@ __int64 hkSpawnWindow(void* super, void* ptr, const char* str) {
 PVOID CtxSets_R5; // 7: right click
 __int64 hkCtxSets_R5(void* ptr, UINT signal, UINT last, Spec* data,
 	void* ctxList, INT64 zone, UINT16 uID, int flag) {
-	ORIGINAL(hkCtxSets_R5, CtxSets_R5); auto parent = (char*)UiTable[uID];
-	if (signal == 7) {
-		const char* inject = NULL; LastCtx = data;
-		if (parent == Windows["Gathering"])
+	ORIGINAL(hkCtxSets_R5, CtxSets_R5); if (signal == 7) {
+		const char* inject = NULL; CtxCaller = (char*) UiTable[uID];
+		if (CtxCaller == Windows["Gathering"])
 			inject = AutoGather;
-		printf("potential window: %i -> %p, %s \n", uID, 
-			parent, parent ? parent + 8 : 0);
-		if (parent && inject) {
+		LastCtx = data; printf("potential window: %i -> %p, %s \n", 
+			uID, CtxCaller, CtxCaller ? CtxCaller + 8 : 0);
+		if (CtxCaller && inject) {
 			ULONG64& length = data[0].Value; Spec* Body = data + 7;
 			if (length < last - 7) {
 				memmove(Body + length + 1, Body + length,

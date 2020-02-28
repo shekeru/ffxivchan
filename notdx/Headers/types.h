@@ -61,6 +61,10 @@ namespace Action {
 		Maim = 37,
 		Overpower = 41,
 		Storms_Path = 42,
+		// PGL
+		Bootshine = 53,
+		True_Strike = 54,
+		Snap_Punch = 56,
 		// LNC
 		True_Thrust = 75,
 		Vorpal_Thrust = 78,
