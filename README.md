@@ -1,8 +1,8 @@
 # xiv meme hack (Re: VerL)
-i seriously don't know what i even want out of this. 
-some ppl code bots that teleport and automatically do shit. 
-but the game is actually fun to play. 
-so this does a mild amnt of nothing. 
+i seriously don't know what i even want out of this.
+some ppl code bots that teleport and automatically do shit.
+but the game is actually fun to play.
+so this does a mild amnt of nothing.
 ## Features
 - Lua Repl (actually really useless)
 - Load Lua Scripts (partially done, only loads _boot.lua)

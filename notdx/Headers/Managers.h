@@ -25,9 +25,10 @@ public:
 	Actor*& LocalActor = *game->ScanPattern
 		("48 8b 05 ? ? ? ? 48 89 6c 24 60", 3)
 	.Cast<Actor**>();
-	UserSys*& UIManager = *game->ScanPattern
-		("48 83 3D ? ? ? ? ? 8B 9E ? ? ? ?", 3, 1)
-	.Cast<UserSys**>();
+	// actually related to lua state
+	//UserSys*& UIManager = *game->ScanPattern
+	//	("48 83 3D ? ? ? ? ? 8B 9E ? ? ? ?", 3, 1)
+	//.Cast<UserSys**>();
 // Normal Pointers
 	ComboArea* ComboSys = game->ScanPattern
 		("48 89 2D ? ? ? ? 85 c0", 3)

@@ -105,8 +105,7 @@ PVOID CtxAssign;
 DWORD* hkCtxAssign
 (__int64 a1, __int64 a2, __int64 a3, __int64 a4, __int64 a5)
 {
-	ORIGINAL(hkCtxAssign, CtxAssign);
-	auto v = original(a1, a2, a3, a4, a5);
+	ORIGINAL(hkCtxAssign, CtxAssign); auto v = original(a1, a2, a3, a4, a5);
 	printf("%p, %p, %p, %p, %p \n\n", a1, a2, a3, a4, a5);
 	return v;
 };
@@ -123,12 +122,13 @@ __int64 hkSpawnWindow(void* super, void* ptr, const char* str) {
 // 0x41 ->  6, NULL -> 38
 // 11Au -> Create Desythn?
 PVOID CtxSets_R5; // 7: right click
-__int64 hkCtxSets_R5(void* ptr, UINT signal, UINT last, Spec* data,
+__int64 hkCtxSets_R5(void* rAtkM, UINT signal, UINT last, Spec* data,
 	void* ctxList, INT64 zone, UINT16 uID, int flag) {
 	ORIGINAL(hkCtxSets_R5, CtxSets_R5); if (signal == 7) {
 		const char* inject = NULL; CtxCaller = (char*) UiTable[uID];
 		if (CtxCaller == Windows["Gathering"])
 			inject = AutoGather;
+		//printf("super: %p, ptr: %p\n", SuperClass, rAtkM);
 		LastCtx = data; printf("potential window: %i -> %p, %s \n", 
 			uID, CtxCaller, CtxCaller ? CtxCaller + 8 : 0);
 		if (CtxCaller && inject) {
@@ -141,7 +141,7 @@ __int64 hkCtxSets_R5(void* ptr, UINT signal, UINT last, Spec* data,
 			}; Body[length] = Spec{ Body[0].Type, (ULONG64)
 				inject }; length += 1; last += 1;
 		} 
-	}; return original(ptr, signal, last, data, ctxList, zone, uID, flag);
+	}; return original(rAtkM, signal, last, data, ctxList, zone, uID, flag);
 };
 
 void Hooks::RaptureAttach() {
