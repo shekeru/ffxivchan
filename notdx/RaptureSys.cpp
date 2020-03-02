@@ -7,7 +7,7 @@ public:
 	ULONG64 Type, Value;
 };
 
-PVOID SendAction; 
+PVOID SendAction;
 typedef PVOID CtxFn; int CtxSize;
 PVOID CtxVectorInit; CtxFn* CtxCallback;
 CtxFn* hkCtxVectorInit(CtxFn*& ref, INT64 len) {
@@ -44,7 +44,7 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
 	} else if (obj == Windows["ContextMenu"] && CtxCaller == Windows["Gathering"]) {
 		if (N == 5 && arr[0] == 3i64 && arr[2] == 3i64 && GATHERING[1] != -1) {
-			if (LastCtx[int(arr[3])+7].Value == (ULONG64)AutoGather) {
+			if (LastCtx && LastCtx[int(arr[3])+7].Value == (ULONG64)AutoGather) {
 				if (*value == 0x23340303) {
 					GATHERING[0] = 3i64; CreateThread(0, 0,
 						(LPTHREAD_START_ROUTINE) GatherCallback,
@@ -121,30 +121,33 @@ __int64 hkSpawnWindow(void* super, void* ptr, const char* str) {
 
 // 0x41 ->  6, NULL -> 38
 // 11Au -> Create Desythn?
-PVOID CtxSets_R5; // 7: right click
-__int64 hkCtxSets_R5(void* rAtkM, UINT signal, UINT last, Spec* data,
+HANDLE ProcHeap;  PVOID CtxSets_R5; // 7: right click
+__int64 hkCtxSets_R5(void* rAtkM, UINT signal, UINT size, Spec* data,
 	void* ctxList, INT64 zone, UINT16 uID, int flag) {
 	ORIGINAL(hkCtxSets_R5, CtxSets_R5); if (signal == 7) {
+		if (LastCtx && HeapFree(ProcHeap, 0, LastCtx)) LastCtx = NULL;
 		const char* inject = NULL; CtxCaller = (char*) UiTable[uID];
 		if (CtxCaller == Windows["Gathering"])
 			inject = AutoGather;
 		//printf("super: %p, ptr: %p\n", SuperClass, rAtkM);
-		LastCtx = data; printf("potential window: %i -> %p, %s \n", 
+		printf("dt: %p, window: %i -> %p, %s \n", data, 
 			uID, CtxCaller, CtxCaller ? CtxCaller + 8 : 0);
-		if (CtxCaller && inject) {
-			ULONG64& length = data[0].Value; Spec* Body = data + 7;
-			if (length < last - 7) {
-				memmove(Body + length + 1, Body + length,
-					sizeof(Body) * length);
-				Body[2 * (length + 1)] = Spec
-					{ 3, 1 }; last += 1;
-			}; Body[length] = Spec{ Body[0].Type, (ULONG64)
-				inject }; length += 1; last += 1;
+		if (CtxCaller && inject && data) {
+			bool condition = data->Value < size - 7;
+			Spec *New = (Spec*) HeapAlloc(ProcHeap, HEAP_ZERO_MEMORY, 
+				16 * (size + 1 + condition)), *Body = New + 7;
+			memcpy(New, data, 16 * size); if (condition) {
+				memmove(Body + New->Value + 1, Body + New->Value, 16 * New->Value);
+				Body[2 * (New->Value + 1)] = Spec{ 3, 1 }; size += 1;
+			}; Body[New->Value] = Spec{ Body[0].Type, (ULONG64)
+				inject }; New->Value += 1; size += 1; data = LastCtx = New;
 		} 
-	}; return original(rAtkM, signal, last, data, ctxList, zone, uID, flag);
+	}; return original(rAtkM, signal, size, data, ctxList, zone, uID, flag);
 };
 
 void Hooks::RaptureAttach() {
+	printf("Process Heap: %x\n", ProcHeap = GetProcessHeap());
+	// Fuck Me
 	CtxSets_R5 = game->GetLocation("4c 89 4c 24 20 44 89 44 24 18 53 55 56 57 48 81");
 	SpawnWindow = game->ScanPattern("e8 ? ? ? ? 85 c0 75 1d 48 8b 0b", 1).Cast<PVOID>();
 	CtxVectorInit = game->ScanPattern("e8 ? ? ? ? 48 8b 43 08 48 2b 03 48 c1 f8 03", 1).Cast<PVOID>();
