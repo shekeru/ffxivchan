@@ -72,8 +72,8 @@ char hkWindowReady(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	local sendA = decltype(&hkSendAction)(SendAction);
 	if (Windows["ContentsFinderConfirm"] == obj)
 		sendA(obj, 1, CONFIRM_A, 1);
-	if (Windows["SalvageResult"] == obj)
-		sendA(obj, 1, ESC_SEQ, 1);
+	//if (Windows["SalvageResult"] == obj)
+	//	sendA(obj, 1, ESC_SEQ, 1);
 	return spawnW(obj, Name, flag, ex);
 };
 
@@ -115,7 +115,7 @@ PVOID SpawnWindow; PVOID UiTable[256]; PVOID SuperClass;
 __int64 hkSpawnWindow(void* super, void* ptr, const char* str) {
 	ORIGINAL(hkSpawnWindow, SpawnWindow); auto value = original(super, ptr, str); 
 	UiTable[value] = ptr; local sendA = decltype(&hkSendAction)(SendAction);
-	Windows[str] = ptr; SuperClass = super; show(SpawnWindow)
+	SuperClass = super; Windows[str] = ptr; show(SpawnWindow)
 		("ptr: %p <%s>, id: %i\n", ptr, str, value); return value;
 }
 

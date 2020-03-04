@@ -61,6 +61,7 @@ namespace Action {
 		Maim = 37,
 		Overpower = 41,
 		Storms_Path = 42,
+		Inner_Beast = 49,
 		// PGL
 		Bootshine = 53,
 		True_Strike = 54,
@@ -75,6 +76,8 @@ namespace Action {
 		Heavy_Shot = 97,
 		Straight_Shot = 98,
 		Venomous_Bite = 100,
+		// WAR
+		Mythril_Tempest = 1560,
 		// ROG
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
@@ -106,6 +109,10 @@ namespace Action {
 
 namespace Status {
 	enum Status {
+		// PGL
+		Opo_Form = 107,
+		Raptor_Form = 108,
+		Coeurl_Form = 109,
 		// LNC
 		Life_Surge = 116,
 		Chaos_Thrust = 118,

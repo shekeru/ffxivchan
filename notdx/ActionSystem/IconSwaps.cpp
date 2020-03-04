@@ -52,16 +52,22 @@ int ActionSys::Gladiator(int action) {
 
 
 int ActionSys::Marauder(int action) {
-	local Combo = xiv->ComboSys;
+	local HUD = (WAR_HUD*)xiv->JobHud;
 	local &lvl = xiv->LocalActor->JobLevel();
+	local Combo = xiv->ComboSys;
 	// Pretty Simple Combo Checking
 	switch (action) {
 		case Action::Heavy_Swing:
 			if (lvl >= 4 && Combo->Is(Action::Heavy_Swing))
 				return GetIcon(Action::Maim);
-			if(lvl >= 26 && Combo->Is(Action::Maim))
+			if (lvl >= 26 && Combo->Is(Action::Maim))
 				return GetIcon(Action::Storms_Path);
-			break;
+			if (lvl >= 35 && HUD->Has(50))
+				return GetIcon(Action::Inner_Beast);
+			return GetIcon(Action::Heavy_Swing);
+		case Action::Overpower:
+			if (lvl >= 40 && Combo->Is(Action::Overpower))
+				return GetIcon(Action::Mythril_Tempest); break;
 	}; return GetIcon(action);
 };
 

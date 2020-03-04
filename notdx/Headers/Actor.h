@@ -62,6 +62,15 @@ class JobGauge {
 	void* vfunc_talle_1;
 };
 
+class WAR_HUD : JobGauge {
+public:
+	UCHAR BeastGauge;
+public:
+	bool Has(int level) {
+		return BeastGauge >= level;
+	};
+};
+
 class RDM_HUD: JobGauge {
 public:
 	UCHAR WhiteMana, BlackMana;
