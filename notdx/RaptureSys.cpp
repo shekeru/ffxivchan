@@ -37,7 +37,7 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 			show(SendAction)("(%x, %llx), ", arr[i] & 0xFFFFFFFF,
 				arr[i + 1]); show(SendAction)("%x\n", opt);
 	// Conditions
-	//if (obj == Windows["ToDoList"])
+	// if (obj == Windows["ToDoList"])
 	//	return ToDoList(obj, N, (Spec*) arr, opt);
 	if (obj == Windows["Gathering"] && int
 		(arr[1]) == 0x81 && !GATHERING[0]) {
@@ -71,9 +71,9 @@ char hkWindowReady(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	local spawnW = decltype(&hkWindowReady)(WindowReady);
 	local sendA = decltype(&hkSendAction)(SendAction);
 	if (Windows["ContentsFinderConfirm"] == obj)
-		sendA(obj, 1, CONFIRM_A, 1);
-	//if (Windows["SalvageResult"] == obj)
-	//	sendA(obj, 1, ESC_SEQ, 1);
+		return sendA(obj, 1, CONFIRM_A, 0);
+	if (Windows["SalvageResult"] == obj)
+		return sendA(obj, 1, ESC_SEQ, 0);
 	return spawnW(obj, Name, flag, ex);
 };
 

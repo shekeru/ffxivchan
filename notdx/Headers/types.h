@@ -77,7 +77,7 @@ namespace Action {
 		Straight_Shot = 98,
 		Venomous_Bite = 100,
 		// WAR
-		Mythril_Tempest = 1560,
+		Mythril_Tempest = 16462,
 		// ROG
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
