@@ -61,7 +61,9 @@ namespace Action {
 		Maim = 37,
 		Overpower = 41,
 		Storms_Path = 42,
+		Storms_Eye = 45,
 		Inner_Beast = 49,
+		Steel_Cyclone = 51,
 		// PGL
 		Bootshine = 53,
 		True_Strike = 54,
@@ -109,6 +111,8 @@ namespace Action {
 
 namespace Status {
 	enum Status {
+		// MRD
+		Storms_Eye = 90,
 		// PGL
 		Opo_Form = 107,
 		Raptor_Form = 108,

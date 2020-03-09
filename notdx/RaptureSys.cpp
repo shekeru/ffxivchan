@@ -71,17 +71,10 @@ char hkWindowReady(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	local spawnW = decltype(&hkWindowReady)(WindowReady);
 	local sendA = decltype(&hkSendAction)(SendAction);
 	if (Windows["ContentsFinderConfirm"] == obj)
-		return sendA(obj, 1, CONFIRM_A, 0);
+		sendA(obj, 1, CONFIRM_A, 1);
 	if (Windows["SalvageResult"] == obj)
-		return sendA(obj, 1, ESC_SEQ, 0);
+		sendA(obj, 1, ESC_SEQ, 1);
 	return spawnW(obj, Name, flag, ex);
-};
-
-PVOID NumToScreen;
-void hk_NumToScreen(__int64 ptr, __int64 idx, int val) {
-	local eval = decltype(&hk_NumToScreen)(NumToScreen);
-	if (val == 47) {
-	}; eval(ptr, idx, val);
 };
 
 // group -> -1: none, 0: gen, 1: action, 2: item
@@ -91,25 +84,6 @@ struct HotbarSlot {
 	int percent, _9, display, quantity, 
 		_12, _13, _14, _15;
 };
-
-PVOID RSU_1;
-INT64 hk_RSU_1(INT64 a1, INT64 a2, INT64 a3, INT64 a4, INT64 a5, UINT out, UINT a7) {
-	local eval = decltype(&hk_RSU_1)(RSU_1);
-	if (out == 191) {
-		printf("ptr: %p, %p, %p, \n [+] %p, %p, %i, %i\n",
-			a1, a2, a3, a4, a5, out, a7);
-	}; return eval(a1, a2, a3, a4, a5, out, a7);
-}
-
-PVOID CtxAssign;
-DWORD* hkCtxAssign
-(__int64 a1, __int64 a2, __int64 a3, __int64 a4, __int64 a5)
-{
-	ORIGINAL(hkCtxAssign, CtxAssign); auto v = original(a1, a2, a3, a4, a5);
-	printf("%p, %p, %p, %p, %p \n\n", a1, a2, a3, a4, a5);
-	return v;
-};
-
 
 PVOID SpawnWindow; PVOID UiTable[256]; PVOID SuperClass;
 __int64 hkSpawnWindow(void* super, void* ptr, const char* str) {
@@ -159,8 +133,4 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&CtxVectorInit, hkCtxVectorInit);
 	DetourAttach(&WindowReady, hkWindowReady);
 	DetourAttach(&SendAction, hkSendAction);
-	// New
-	//DetourAttach(&RSU_1, hk_RSU_1);
-	//NumToScreen = game->GetLocation("3b 51 08 7d 15 48 8b 41 20 48 63 d2 44 39");
-	//DetourAttach(&NumToScreen, hk_NumToScreen);
 }

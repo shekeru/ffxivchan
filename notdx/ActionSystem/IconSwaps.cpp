@@ -62,12 +62,17 @@ int ActionSys::Marauder(int action) {
 				return GetIcon(Action::Maim);
 			if (lvl >= 26 && Combo->Is(Action::Maim))
 				return GetIcon(Action::Storms_Path);
+			if (lvl >= 50 && !effect(Status::Storms_Eye, 2.5f))
+				return GetIcon(Action::Storms_Eye);
 			if (lvl >= 35 && HUD->Has(50))
 				return GetIcon(Action::Inner_Beast);
 			return GetIcon(Action::Heavy_Swing);
 		case Action::Overpower:
 			if (lvl >= 40 && Combo->Is(Action::Overpower))
-				return GetIcon(Action::Mythril_Tempest); break;
+				return GetIcon(Action::Mythril_Tempest);
+			if (lvl >= 45 && HUD->Has(50))
+				return GetIcon(Action::Steel_Cyclone);
+			return GetIcon(Action::Overpower);
 	}; return GetIcon(action);
 };
 
@@ -77,11 +82,11 @@ int ActionSys::Pugilist(int action) {
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Bootshine:
-		if (lvl >= 4 && Combo->Is(Action::Bootshine))
+		if (lvl >= 4 && effect(Status::Raptor_Form))
 			return GetIcon(Action::True_Strike);
-		if (lvl >= 6 && Combo->Is(Action::True_Strike))
+		if (lvl >= 6 && effect(Status::Coeurl_Form))
 			return GetIcon(Action::Snap_Punch);
-		break;
+		return GetIcon(Action::Bootshine);
 	}; return GetIcon(action);
 };
 
