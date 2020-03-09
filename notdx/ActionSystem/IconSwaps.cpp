@@ -61,9 +61,8 @@ int ActionSys::Marauder(int action) {
 			if (lvl >= 4 && Combo->Is(Action::Heavy_Swing))
 				return GetIcon(Action::Maim);
 			if (lvl >= 26 && Combo->Is(Action::Maim))
-				return GetIcon(Action::Storms_Path);
-			if (lvl >= 50 && !effect(Status::Storms_Eye, 2.5f))
-				return GetIcon(Action::Storms_Eye);
+				return GetIcon(lvl >= 50 && !effect(Status::Storms_Eye, 2.5f) 
+					? Action::Storms_Eye : Action::Storms_Path);
 			if (lvl >= 35 && HUD->Has(50))
 				return GetIcon(Action::Inner_Beast);
 			return GetIcon(Action::Heavy_Swing);
