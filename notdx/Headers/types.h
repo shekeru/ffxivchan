@@ -78,6 +78,7 @@ namespace Action {
 		Heavy_Shot = 97,
 		Straight_Shot = 98,
 		Venomous_Bite = 100,
+		Windbite = 113,
 		// WAR
 		Mythril_Tempest = 16462,
 		// ROG

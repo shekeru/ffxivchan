@@ -65,9 +65,13 @@ void User::MainMenuBar()
 				vm.DoFile("_boot.lua");
 			}; ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Alpha Features")) {
+		if (ImGui::BeginMenu("Stable Features")) {
 			ImGui::MenuItem("Log Window", "", &log.IsActive);
 			ImGui::MenuItem("Test, Quests", "", &sys.IsQuest);
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Alpha Features")) {
+			ImGui::MenuItem("Music Panel", "", &sys.IsMusic);
 			ImGui::MenuItem("SpinBot", "", &sys.IsSpin);
 			ImGui::EndMenu();
 		}
@@ -81,7 +85,7 @@ void User::NameOverlay() {
 	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f), 
 		ImGuiCond_Always, ImVec2(1.0f, 0.0f)); SetNextWindowBgAlpha(0.0f);
 	Begin("test overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay);
-		Text("Re; VerL, Patch 5.2, Mar 06"); End(); PopStyleVar();
+		Text("Re; VerL, Patch 5.21, Mar 10"); End(); PopStyleVar();
 };
 
 void User::QuestPanel() {
@@ -112,4 +116,25 @@ void User::QuestPanel() {
 			Text(item.c_str()); NextColumn();
 		}
 	}; Columns(1); End();
+};
+
+static char text[1024 * 16]{};
+void User::MusicPanel() {
+	if (!sys.IsMusic) return; 
+	static ImGuiStyle& style = ImGui::GetStyle();
+	ImGui::SetNextWindowSize(ImVec2(640, 440), ImGuiCond_Appearing);
+	ImGui::Begin("Music Panel", &sys.IsRepl, ImGuiWindowFlags_NoCollapse);
+	// Output Section
+	ImGui::InputTextMultiline("##music", text, IM_ARRAYSIZE(text));
+	ImGui::SetItemDefaultFocus();
+	if (ImGui::Button("Play Test")) {
+		auto ptr = text;
+		while (isprint(*ptr)) {
+			if (isupper(*ptr)) {
+				CallWindowProc(sys.prevProc, sys.hWindow, WM_KEYDOWN, *ptr, 0);
+				CallWindowProc(sys.prevProc, sys.hWindow, WM_KEYUP, *ptr, 0);
+			}
+		}
+	}
+	ImGui::End();
 };

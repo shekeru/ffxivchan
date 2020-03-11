@@ -25,6 +25,7 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 		case Job::Dragoon:
 		case Job::Lancer:
 			return self->Lancer(action);
+		case Job::Bard:
 		case Job::Archer:
 			return self->Archer(action);
 		case Job::Rogue:
@@ -126,6 +127,8 @@ int ActionSys::Archer(int action) {
 		if (lvl >= 6 && target) {
 			if (!target->HasAura(Status::VenomousBite))
 				return GetIcon(Action::Venomous_Bite);
+			if (lvl >= 30 && !target->HasAura(Status::Windbite))
+				return GetIcon(Action::Windbite);
 		}; break;
 	}; return GetIcon(action);
 };

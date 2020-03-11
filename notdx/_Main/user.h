@@ -30,9 +30,7 @@ public:
 	ImGuiContext* ctx;
 	void StartGUI(HWND descW);
 	// Pretty Much Global Vars
-	bool IsOpen, Stop, IsDemo, 
-		IsRepl = true, IsSpin, 
-	IsQuest;
+	bool IsOpen, Stop, IsDemo, IsRepl, IsSpin, IsQuest, IsMusic;
 	// Needed Vars
 	ID3D11Device* pDevice;
 	ID3D11DeviceContext* pImmediateContext;
@@ -55,9 +53,9 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
 inline map<string, PVOID> Windows;
 // User Components
 namespace User {
-	void MainMenuBar(), NameOverlay(), 
-		LuaConsole(), SpinBotting(), QuestPanel();
-	inline LogWindow log = LogWindow();
+	void MainMenuBar(), NameOverlay(),
+		LuaConsole(), SpinBotting(), QuestPanel(), 
+	MusicPanel(); inline LogWindow log = LogWindow();
 	inline void GenerateFrame() {
 		if (sys.IsOpen) {
 			log.Render();
@@ -66,6 +64,6 @@ namespace User {
 				ImGui::ShowDemoWindow(&sys.IsDemo);
 			// Misc Shit
 			MainMenuBar(); LuaConsole(); QuestPanel();
-		} else NameOverlay(); SpinBotting();
+		} else NameOverlay(); SpinBotting(); MusicPanel();
 	};
 };
