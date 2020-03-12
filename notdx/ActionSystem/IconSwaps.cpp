@@ -177,6 +177,8 @@ int ActionSys::RedMage(int action) {
 	using namespace Status; using namespace Action;
 	// Instant-Cast/Non-Instant Switches, Harder
 	if (effect(Dualcast) || effect(Swiftcast)) switch (action) {
+	case Scatter:
+		return GetIcon(Scatter);
 	case Jolt: 
 	// White Mana Need (Veraero)
 		if (lvl >= 10 && !effect(VerstoneReady)) {
@@ -199,7 +201,7 @@ int ActionSys::RedMage(int action) {
 			return GetIcon(Verfire);
 		return GetIcon(Jolt);
 		// Flip AoE, based on mana needs
-	case Verthunder_II:
+	case Scatter:
 		return (lvl >= 22 && HUD->WhiteMana <= HUD->BlackMana)
 			? GetIcon(Veraero_II) : GetIcon(Verthunder_II);
 		// Melee Section

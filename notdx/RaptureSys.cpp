@@ -70,9 +70,9 @@ PVOID WindowReady; ULONG64 CONFIRM_A [2] { 3i64, 7i64 };
 char hkWindowReady(PVOID obj, char* Name, UCHAR flag, UINT ex) {
 	local spawnW = decltype(&hkWindowReady)(WindowReady);
 	local sendA = decltype(&hkSendAction)(SendAction);
-	if (Windows["ContentsFinderConfirm"] == obj)
+	if (!strcmp(Name, "ContentsFinderConfirm"))
 		sendA(obj, 1, CONFIRM_A, 1);
-	if (Windows["SalvageResult"] == obj)
+	if (!strcmp(Name, "SalvageResult"))
 		sendA(obj, 1, ESC_SEQ, 1);
 	return spawnW(obj, Name, flag, ex);
 };

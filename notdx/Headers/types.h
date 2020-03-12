@@ -101,6 +101,7 @@ namespace Action {
 		Verthunder = 7505,
 		Corps_Corps = 7506,
 		Veraero = 7507,
+		Scatter = 7509,
 		Verfire = 7510,
 		Verstone = 7511,
 		Zwerchhau = 7512,
