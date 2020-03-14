@@ -1,4 +1,4 @@
-#include <ActionSystem/ActionManager.h>
+#include <Managers.h>
 #include "user.h"
 
 void MemorySystem::DetourAll(){
@@ -7,7 +7,7 @@ void MemorySystem::DetourAll(){
 	DetourRestoreAfterWith(); DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	// Attaching Detours
-	using namespace Hooks; ActionSys::Attach();
+	using namespace Hooks; ActionSys::Attach(); ZoomSys::Attach();
 	RaptureAttach(); NetworkAttach(); MarketAttach(); ContextAttach();
 	// Detours Final
 	DetourTransactionCommit();

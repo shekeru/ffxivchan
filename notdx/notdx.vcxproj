@@ -104,6 +104,7 @@
     <ClInclude Include="Window.h" />
     <ClInclude Include="xiv\ChatLog.h" />
     <ClInclude Include="Headers\types.h" />
+    <ClInclude Include="ZoomSystem\ZoomManager.h" />
     <ClInclude Include="_Main\logs.h" />
     <ClInclude Include="xiv\Market.h" />
     <ClInclude Include="xiv\Network.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="RaptureSys.cpp" />
+    <ClCompile Include="ZoomSystem\UpdateCamera.cpp" />
     <ClCompile Include="_Main\DirectX\SwapChain.cpp" />
     <ClCompile Include="_Main\DirectX\WndProc.cpp" />
     <ClCompile Include="_Main\Win32\main.cpp" />

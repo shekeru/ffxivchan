@@ -16,8 +16,9 @@
 #define RESTORE(NAME, ...) \
 	return NAME.Call(this, __VA_ARGS__)
 // Manager Headers
-#include "ActionSystem/ActionManager.h"
 #include "UserSystem/UserManager.h"
+#include "ActionSystem/ActionManager.h"
+#include "ZoomSystem/ZoomManager.h"
 // Game Pointers
 class FFXIV {
 public:

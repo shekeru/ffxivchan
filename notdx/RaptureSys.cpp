@@ -119,6 +119,20 @@ __int64 hkCtxSets_R5(void* rAtkM, UINT signal, UINT size, Spec* data,
 	}; return original(rAtkM, signal, size, data, ctxList, zone, uID, flag);
 };
 
+PVOID FlagSwitch;
+__int64 FlagWriter(void* ptr, int state, char* skill, unsigned int action, int ex) {
+	ORIGINAL(FlagWriter, FlagSwitch);
+	printf("ptr: %p, %s (%i) -> %i\n", ptr, skill, action, state);
+	return original(ptr, state, skill, action, ex);
+}
+
+PVOID CAST2;
+void hkCAST2(void* ptr) {
+	ORIGINAL(hkCAST2, CAST2);
+	printf("cast2: %p\n", ptr);
+	//original(ptr);
+}
+
 void Hooks::RaptureAttach() {
 	printf("Process Heap: %x\n", ProcHeap = GetProcessHeap());
 	// Fuck Me
@@ -127,10 +141,14 @@ void Hooks::RaptureAttach() {
 	CtxVectorInit = game->ScanPattern("e8 ? ? ? ? 48 8b 43 08 48 2b 03 48 c1 f8 03", 1).Cast<PVOID>();
 	WindowReady = game->ScanPattern("48 8b ce e8 ? ? ? ? 48 8b 4d 4f", 4).Cast<PVOID>();
 	SendAction = game->ScanPattern("e8 ? ? ? ? 8b 44 24 20 c1 e8 05", 1).Cast<PVOID>();
+	FlagSwitch = game->ScanPattern("cf 89 44 24 20 e8 ? ? ? ? b0 01", 6).Cast<PVOID>();
+	CAST2 = game->GetLocation("40 53 48 83 ec 20 83 b9 30 09 00 00 00 48 8b d9 7e 57 48");
 	// Attachments
 	DetourAttach(&CtxSets_R5, hkCtxSets_R5);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
 	DetourAttach(&CtxVectorInit, hkCtxVectorInit);
 	DetourAttach(&WindowReady, hkWindowReady);
 	DetourAttach(&SendAction, hkSendAction);
+	DetourAttach(&FlagSwitch, FlagWriter);
+	//DetourAttach(&CAST2, hkCAST2);
 }

@@ -17,6 +17,7 @@ void MemorySystem::StackTrace() {
 	const int N = 24; PVOID Stack[N];
 	RtlCaptureStackBackTrace(1, N, Stack, 0);
 	for (int i = 0; i < N && Stack[i]; i++)
-		printf(" [%i] frame: %p / %x \n", i + 1, Stack[i],
-			uintptr_t(Stack[i]) - uintptr_t(baseModule.lpBaseOfDll));
+		printf(" [%i] frame: %p / %p \n", i + 1, Stack[i], 
+			uintptr_t(Stack[i]) - uintptr_t(baseModule.lpBaseOfDll) 
+		+ 0x140000000);
 };

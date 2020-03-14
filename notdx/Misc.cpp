@@ -71,6 +71,7 @@ void User::MainMenuBar()
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Alpha Features")) {
+			ImGui::MenuItem("Zoom Settings", "", &sys.IsZoom);
 			ImGui::MenuItem("Music Panel", "", &sys.IsMusic);
 			ImGui::MenuItem("SpinBot", "", &sys.IsSpin);
 			ImGui::EndMenu();
@@ -123,7 +124,7 @@ void User::MusicPanel() {
 	if (!sys.IsMusic) return; 
 	static ImGuiStyle& style = ImGui::GetStyle();
 	ImGui::SetNextWindowSize(ImVec2(640, 440), ImGuiCond_Appearing);
-	ImGui::Begin("Music Panel", &sys.IsRepl, ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin("Music Panel", &sys.IsMusic, ImGuiWindowFlags_NoCollapse);
 	// Output Section
 	ImGui::InputTextMultiline("##music", text, IM_ARRAYSIZE(text));
 	ImGui::SetItemDefaultFocus();

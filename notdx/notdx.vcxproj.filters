@@ -50,6 +50,9 @@
     <Filter Include="Source App\Core Headers">
       <UniqueIdentifier>{47bba1de-79bb-4f92-93cb-0ff0baa2d912}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System Folders\Zoom System">
+      <UniqueIdentifier>{b6bd9a46-b08f-4a1f-b05c-398ccc33a3b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
@@ -235,6 +238,9 @@
     <ClCompile Include="Memory.cpp">
       <Filter>Source App\Debug Mode</Filter>
     </ClCompile>
+    <ClCompile Include="ZoomSystem\UpdateCamera.cpp">
+      <Filter>System Folders\Zoom System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionSystem\ActionManager.h">
@@ -284,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Whatever Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZoomSystem\ZoomManager.h">
+      <Filter>System Folders\Zoom System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
