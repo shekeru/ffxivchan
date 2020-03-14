@@ -7,13 +7,15 @@ Actor* Actor::TargetPtr() {
 		if (ptr && target == ptr->EntityId())
 				return ptr;
 	}; return NULL;
-}
+}; UCHAR lvl;
 
 #define effect \
 	xiv->LocalActor->HasAura
 
 INT64 GetIcon::Detour(ActionSys* self, int action) {
-	if (xiv->LocalActor) switch (xiv->LocalActor->ClassJob()) {
+	if (xiv->LocalActor) {
+		lvl = xiv->LocalActor->JobLevel();
+	switch (xiv->LocalActor->ClassJob()) {
 		case Job::Paladin:
 		case Job::Gladiator:
 			return self->Gladiator(action);
@@ -34,12 +36,12 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 			return self->Samurai(action);
 		case Job::Red_Mage:
 			return self->RedMage(action);
+		}
 	}; return self->GetIcon(action);
 };
 
 int ActionSys::Gladiator(int action) {
 	local Combo = xiv->ComboSys;
-	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Fast_Blade:
@@ -53,9 +55,8 @@ int ActionSys::Gladiator(int action) {
 
 
 int ActionSys::Marauder(int action) {
-	local HUD = (WAR_HUD*)xiv->JobHud;
-	local &lvl = xiv->LocalActor->JobLevel();
 	local Combo = xiv->ComboSys;
+	local HUD = (WAR_HUD*)xiv->JobHud;
 	// Pretty Simple Combo Checking
 	switch (action) {
 		case Action::Heavy_Swing:
@@ -77,8 +78,7 @@ int ActionSys::Marauder(int action) {
 };
 
 int ActionSys::Pugilist(int action) {
-	local Combo = xiv->ComboSys; local &lvl 
-		= xiv->LocalActor->JobLevel();
+	local Combo = xiv->ComboSys; 
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Bootshine:
@@ -92,7 +92,6 @@ int ActionSys::Pugilist(int action) {
 
 int ActionSys::Lancer(int action) {
 	local Combo = xiv->ComboSys;
-	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
 		// Buffing Damage
@@ -116,7 +115,6 @@ int ActionSys::Lancer(int action) {
 
 
 int ActionSys::Archer(int action) {
-	local &lvl = xiv->LocalActor->JobLevel();
 	auto target = xiv->LocalActor->TargetPtr();
 	// Pretty Simple Combo Checking
 	switch (action) {
@@ -135,7 +133,6 @@ int ActionSys::Archer(int action) {
 
 int ActionSys::Rogue(int action) {
 	local Combo = xiv->ComboSys;
-	local &lvl = xiv->LocalActor->JobLevel();
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Spinning_Edge:
@@ -147,8 +144,6 @@ int ActionSys::Rogue(int action) {
 
 int ActionSys::Samurai(int action) {
 	local Combo = xiv->ComboSys;
-	//local HUD = (SAM_HUD*)xiv->JobHud;
-	local &lvl = xiv->LocalActor->JobLevel();
 	// Instant-Cast/Non-Instant Switches, Harder
 	switch (action) {
 	case Action::Gekko:
@@ -173,7 +168,6 @@ int ActionSys::Samurai(int action) {
 int ActionSys::RedMage(int action) {
 	local Combo = xiv->ComboSys;
 	local HUD = (RDM_HUD*)xiv->JobHud;
-	local &lvl = xiv->LocalActor->JobLevel();
 	using namespace Status; using namespace Action;
 	// Instant-Cast/Non-Instant Switches, Harder
 	if (effect(Dualcast) || effect(Swiftcast)) switch (action) {
