@@ -22,6 +22,8 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 		case Job::Warrior:
 		case Job::Marauder:
 			return self->Marauder(action);
+		case Job::Dark_Knight:
+			return self->DarkKnight(action);
 		case Job::Pugilist:
 			return self->Pugilist(action);
 		case Job::Dragoon:
@@ -74,6 +76,19 @@ int ActionSys::Marauder(int action) {
 			if (lvl >= 45 && HUD->Has(50))
 				return GetIcon(Action::Steel_Cyclone);
 			return GetIcon(Action::Overpower);
+	}; return GetIcon(action);
+};
+
+int ActionSys::DarkKnight(int action) {
+	local Combo = xiv->ComboSys;
+	// Pretty Simple Combo Checking
+	switch (action) {
+	case Action::Hard_Slash:
+		if (lvl >= 2 && Combo->Is(Action::Hard_Slash))
+			return GetIcon(Action::Syphon_Strike);
+		if (lvl >= 26 && Combo->Is(Action::Syphon_Strike))
+			return GetIcon(Action::Souleater);
+		break;
 	}; return GetIcon(action);
 };
 

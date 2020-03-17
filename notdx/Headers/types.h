@@ -85,6 +85,10 @@ namespace Action {
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
 		Gust_Slash = 2242,
+		// DRK
+		Hard_Slash = 3617,
+		Syphon_Strike = 3623,
+		Souleater = 3632,
 		// SAM
 		Hakaze = 7477,
 		Jinpu = 7478,
