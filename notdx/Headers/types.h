@@ -112,6 +112,22 @@ namespace Action {
 		Redoublement = 7516,
 		Verthunder_II = 16524,
 		Veraero_II = 16525,
+		// DNC
+		Cascade = 15989,
+		Fountain = 15990,
+		Reverse_Cascade = 15991,
+		Fountainfall,
+		Windmill,
+		Bladeshower,
+		Rising_Windmill,
+		Bloodshower,
+		Standard_Step = 15997,
+		Technical_Step = 15998,
+		Emboite = 15999,
+		Entrechat,
+		Jete = 16001,
+		Pirouette = 16002,
+		Closed_Position = 16006,
 	};
 };
 
@@ -139,6 +155,11 @@ namespace Status {
 		// Samurai
 		Jinpu = 1298,
 		Shifu = 1299,
+		// DNC
+		FlourishingCascade = 1814,
+		FlourishingFountain = 1815,
+		FlourishingWindmill = 1816,
+		FlourishingShower = 1817,
 		// Changes
 		Disembowel = 1914,
 	};

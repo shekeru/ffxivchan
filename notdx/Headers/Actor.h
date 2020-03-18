@@ -79,3 +79,16 @@ public:
 		return WhiteMana >= level && BlackMana >= level;
 	};
 };
+
+class DNC_HUD : JobGauge {
+public:
+	USHORT Feathers;
+	UCHAR Steps[4], Idx;
+public:
+	int Forwards(int dance) {
+		UCHAR phase = Steps[Idx]; 
+		if (phase && dance & 1)
+			phase += 1;
+		return dance + phase;
+	}
+};

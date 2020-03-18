@@ -32,5 +32,5 @@ void Hooks::MarketAttach() {
 	N_41_fn = Market[0x8 * 41].Cast<PVOID>();
 	// Market (Window System)
 	//DetourAttach(&(PVOID&)N_41_fn, N_41);
-	DetourAttach(&N_47_fn, N_47);
+	//DetourAttach(&N_47_fn, N_47);
 }

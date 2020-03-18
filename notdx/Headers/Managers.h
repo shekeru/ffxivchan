@@ -44,5 +44,6 @@ public:
 // Move this
 	FFXIV() {
 		printf("LocalActor*: %p\n", &LocalActor);
+		printf("JobHud: %p\n", JobHud);
 	}; json tradecraft;
 }; inline FFXIV* xiv;

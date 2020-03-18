@@ -39,6 +39,7 @@ public:
 	int Rogue(int);
 	int Samurai(int);
 	int RedMage(int);
+	int Dancer(int);
 // Methods
 	INT64 GetIcon(int action) {
 		RESTORE(::GetIcon, action);

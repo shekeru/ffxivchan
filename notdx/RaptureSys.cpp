@@ -149,6 +149,6 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&CtxVectorInit, hkCtxVectorInit);
 	DetourAttach(&WindowReady, hkWindowReady);
 	DetourAttach(&SendAction, hkSendAction);
-	DetourAttach(&FlagSwitch, FlagWriter);
+	//DetourAttach(&FlagSwitch, FlagWriter);
 	//DetourAttach(&CAST2, hkCAST2);
 }

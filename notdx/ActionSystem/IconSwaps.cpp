@@ -11,6 +11,8 @@ Actor* Actor::TargetPtr() {
 
 #define effect \
 	xiv->LocalActor->HasAura
+#define Combo \
+	xiv->ComboSys
 
 INT64 GetIcon::Detour(ActionSys* self, int action) {
 	if (xiv->LocalActor) {
@@ -38,12 +40,13 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 			return self->Samurai(action);
 		case Job::Red_Mage:
 			return self->RedMage(action);
+		case Job::Dancer:
+			return self->Dancer(action);
 		}
 	}; return self->GetIcon(action);
 };
 
 int ActionSys::Gladiator(int action) {
-	local Combo = xiv->ComboSys;
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Fast_Blade:
@@ -57,7 +60,6 @@ int ActionSys::Gladiator(int action) {
 
 
 int ActionSys::Marauder(int action) {
-	local Combo = xiv->ComboSys;
 	local HUD = (WAR_HUD*)xiv->JobHud;
 	// Pretty Simple Combo Checking
 	switch (action) {
@@ -80,7 +82,6 @@ int ActionSys::Marauder(int action) {
 };
 
 int ActionSys::DarkKnight(int action) {
-	local Combo = xiv->ComboSys;
 	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Hard_Slash:
@@ -93,8 +94,6 @@ int ActionSys::DarkKnight(int action) {
 };
 
 int ActionSys::Pugilist(int action) {
-	local Combo = xiv->ComboSys; 
-	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Bootshine:
 		if (lvl >= 4 && effect(Status::Raptor_Form))
@@ -106,8 +105,6 @@ int ActionSys::Pugilist(int action) {
 };
 
 int ActionSys::Lancer(int action) {
-	local Combo = xiv->ComboSys;
-	// Pretty Simple Combo Checking
 	switch (action) {
 		// Buffing Damage
 		case Action::Disembowel:
@@ -131,7 +128,6 @@ int ActionSys::Lancer(int action) {
 
 int ActionSys::Archer(int action) {
 	auto target = xiv->LocalActor->TargetPtr();
-	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Heavy_Shot:
 		// Brain Dead Rotation
@@ -147,8 +143,6 @@ int ActionSys::Archer(int action) {
 };
 
 int ActionSys::Rogue(int action) {
-	local Combo = xiv->ComboSys;
-	// Pretty Simple Combo Checking
 	switch (action) {
 	case Action::Spinning_Edge:
 		if (lvl >= 4 && Combo->Is(Action::Spinning_Edge))
@@ -158,7 +152,6 @@ int ActionSys::Rogue(int action) {
 };
 
 int ActionSys::Samurai(int action) {
-	local Combo = xiv->ComboSys;
 	// Instant-Cast/Non-Instant Switches, Harder
 	switch (action) {
 	case Action::Gekko:
@@ -181,7 +174,6 @@ int ActionSys::Samurai(int action) {
 
 
 int ActionSys::RedMage(int action) {
-	local Combo = xiv->ComboSys;
 	local HUD = (RDM_HUD*)xiv->JobHud;
 	using namespace Status; using namespace Action;
 	// Instant-Cast/Non-Instant Switches, Harder
@@ -219,6 +211,34 @@ int ActionSys::RedMage(int action) {
 			return GetIcon(Zwerchhau);
 		if (lvl >= 50 && Combo->Is(Zwerchhau))
 			return GetIcon(Redoublement);
+	}; return GetIcon(action);
+};
+
+int ActionSys::Dancer(int action) {
+	local HUD = (DNC_HUD*) xiv->JobHud;
+	switch(action) {
+	// Single Target
+	case Action::Cascade:
+		if (lvl >= 2 && Combo->Is(Action::Cascade))
+			return Action::Fountain;
+		if (effect(Status::FlourishingCascade))
+			return Action::Reverse_Cascade;
+		if (effect(Status::FlourishingFountain))
+			return Action::Fountainfall;
+		return Action::Cascade;
+	// AoE Rotation
+	case Action::Windmill:
+		if (lvl >= 25 && Combo->Is(Action::Windmill))
+			return Action::Bladeshower;
+		if (effect(Status::FlourishingWindmill))
+			return Action::Rising_Windmill;
+		if (effect(Status::FlourishingShower))
+			return Action::Bloodshower;
+		return Action::Windmill;
+	// Multi-Step Dance
+	case Action::Standard_Step:
+	case Action::Technical_Step:
+		return GetIcon(HUD->Forwards(action));
 	}; return GetIcon(action);
 };
 
