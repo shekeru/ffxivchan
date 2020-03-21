@@ -82,11 +82,11 @@ void User::MainMenuBar()
 
 void User::NameOverlay() {
 	using namespace ImGui; static ImGuiIO& io = GetIO(); 
-	PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(7.f, 1.f));
+	PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(6.f, 1.f));
 	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f), 
 		ImGuiCond_Always, ImVec2(1.0f, 0.0f)); SetNextWindowBgAlpha(0.0f);
 	Begin("test overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay);
-		Text("Re; VerL, Patch 5.21, Mar 17"); End(); PopStyleVar();
+		Text("Re; VerL, Patch 5.21, Mar 21"); End(); PopStyleVar();
 };
 
 void User::QuestPanel() {

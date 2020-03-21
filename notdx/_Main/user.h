@@ -40,13 +40,7 @@ public:
 	ID3D11RenderTargetView* pTargetView;
 	WNDPROC prevProc; HWND hWindow;
 	PVOID font_data; int font_size;
-	// Fuck It
-	void ResizeTarget() {
-		static ID3D11Texture2D *pBackBuffer;
-		pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-		pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pTargetView);
-		pBackBuffer->Release();
-	}
+	void ResizeTarget();
 private:
 	function<void(void)> Hotkeys[256]; KeyState Keymap[256];
 }; inline Interface sys; LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

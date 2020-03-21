@@ -30,10 +30,18 @@ HRESULT _fastcall Hooks::CreateSwapChain(IDXGIFactory* pFactory, ID3D11Device *p
 
 HRESULT _fastcall Hooks::Present(IDXGISwapChain *pChain, UINT SyncInterval, UINT Flags)
 {
-	static auto eval = VMT::SwapChain->GetOriginalMethod(Present);
+	local eval = VMT::SwapChain->GetOriginalMethod(Present); sys.ResizeTarget();
 	ImGui_ImplWin32_NewFrame(); ImGui_ImplDX11_NewFrame(); ImGui::NewFrame();
 	User::GenerateFrame(); ImGui::EndFrame(); ImGui::Render();
 	sys.pImmediateContext->OMSetRenderTargets(1, &sys.pTargetView, NULL);
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	return eval(pChain, SyncInterval, Flags);
+}
+
+void Interface::ResizeTarget() {
+	static ID3D11Texture2D *pBackBuffer; if (pSwapChain && pDevice && !pBackBuffer) {
+		pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+		pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pTargetView);
+		pBackBuffer->Release(); printf("Resize target check\n");
+	};
 }

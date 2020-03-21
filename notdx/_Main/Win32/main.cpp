@@ -18,7 +18,6 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
 	//auto chat = chat_pb[0x2C10][0x16D8 + 0x48].Cast<ChatLog>();
 	//printf("chat_pb, chats: %p, %p\n", chat_pb, chat);
 	while (!sys.Stop) {
-		sys.ResizeTarget();
 		Sleep(1000);
 	}; sys.~Interface();
 FreeLibrary:
