@@ -14,7 +14,7 @@ CtxFn* hkCtxVectorInit(CtxFn*& ref, INT64 len) {
 	ORIGINAL(hkCtxVectorInit, CtxVectorInit); return
 		CtxCallback = original(ref, CtxSize = len);
 }; const char* AutoGather = "Action: Gather All";
-	Spec* LastCtx; char* CtxCaller;
+	Spec* CtxMenu; char* CtxCaller;
 
 INT64 ToDoList(PVOID obj, INT64 len, Spec* arr, INT64 flags) {
 	local Send = decltype(&ToDoList)(SendAction);
@@ -44,7 +44,7 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) {
 		GATHERING[1] = arr[3] & 0xFFFFFFFF;
 	} else if (obj == Windows["ContextMenu"] && CtxCaller == Windows["Gathering"]) {
 		if (N == 5 && arr[0] == 3i64 && arr[2] == 3i64 && GATHERING[1] != -1) {
-			if (LastCtx && LastCtx[int(arr[3])+7].Value == (ULONG64)AutoGather) {
+			if (CtxMenu && CtxMenu[int(arr[3])+7].Value == (ULONG64)AutoGather) {
 				if (*value == 0x23340303) {
 					GATHERING[0] = 3i64; CreateThread(0, 0,
 						(LPTHREAD_START_ROUTINE) GatherCallback,
@@ -94,27 +94,25 @@ __int64 hkSpawnWindow(void* super, void* ptr, const char* str) {
 }
 
 // 0x41 ->  6, NULL -> 38
-// 11Au -> Create Desythn?
+// Various Mouse Actions here
 HANDLE ProcHeap;  PVOID CtxSets_R5; // 7: right click
 __int64 hkCtxSets_R5(void* rAtkM, UINT signal, UINT size, Spec* data,
 	void* ctxList, INT64 zone, UINT16 uID, int flag) {
 	ORIGINAL(hkCtxSets_R5, CtxSets_R5); if (signal == 7) {
-		if (LastCtx && HeapFree(ProcHeap, 0, LastCtx)) LastCtx = NULL;
+		if(!CtxMenu) CtxMenu = (Spec*) HeapAlloc(ProcHeap, HEAP_ZERO_MEMORY, 592);
 		const char* inject = NULL; CtxCaller = (char*) UiTable[uID];
+		// Context Menu Injections
 		if (CtxCaller == Windows["Gathering"])
 			inject = AutoGather;
-		//printf("super: %p, ptr: %p\n", SuperClass, rAtkM);
-		printf("dt: %p, window: %i -> %p, %s \n", data, 
-			uID, CtxCaller, CtxCaller ? CtxCaller + 8 : 0);
+		//printf("dt: %p, window: %i -> %p, %s \n", data, 
+		//	uID, CtxCaller, CtxCaller ? CtxCaller + 8 : 0);
 		if (CtxCaller && inject && data) {
-			bool condition = data->Value < size - 7;
-			Spec *New = (Spec*) HeapAlloc(ProcHeap, HEAP_ZERO_MEMORY, 
-				16 * (size + 1 + condition)), *Body = New + 7;
-			memcpy(New, data, 16 * size); if (condition) {
-				memmove(Body + New->Value + 1, Body + New->Value, 16 * New->Value);
-				Body[2 * (New->Value + 1)] = Spec{ 3, 1 }; size += 1;
-			}; Body[New->Value] = Spec{ Body[0].Type, (ULONG64)
-				inject }; New->Value += 1; size += 1; data = LastCtx = New;
+			Spec *Body = CtxMenu + 7; memcpy(CtxMenu, data, 16 * size); 
+			if (data->Value < size - 7) {
+				memmove(Body + CtxMenu->Value + 1, Body + CtxMenu->Value, 16 * CtxMenu->Value);
+				Body[2 * (CtxMenu->Value + 1)] = Spec{ 3, 1 }; size += 1;
+			}; Body[CtxMenu->Value] = Spec{ Body[0].Type, (ULONG64) inject }; 
+			CtxMenu->Value += 1; size += 1; data = CtxMenu;
 		} 
 	}; return original(rAtkM, signal, size, data, ctxList, zone, uID, flag);
 };
