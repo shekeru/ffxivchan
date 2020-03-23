@@ -7,9 +7,13 @@ typedef struct Aura {
 	FLOAT Timer; UINT CastId;
 } Aura;
 
-#define Attribute(TYPE, NAME, SIG, IX) \
+#define FieldRef(TYPE, NAME, SIG, IX) \
 	TYPE& NAME() { local offset = *game->GetLocation \
 	(SIG, IX); return *(TYPE*)(uintptr_t(this) + offset); }
+
+#define FieldPtr(TYPE, NAME, SIG, IX) \
+	TYPE* NAME() { local offset = *game->GetLocation \
+	(SIG, IX); return (TYPE*)(uintptr_t(this) + offset); }
 
 class Actor {
 public:
@@ -25,21 +29,19 @@ public:
 	int& EntityId() {
 		return *(int*)(uintptr_t(this) + 116);
 	}
-	Attribute(UCHAR, ClassJob, "? ? ? ? 8b da 88 99 ? ? ? ? 48 8b f9", 0);
-	Attribute(UCHAR, JobLevel, "38 88 ? ? ? ? 73 08 32 c0", 2);
-	//Attribute(Aura*, AuraList, "89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
-	bool HasAura(int value, float margin = 0.f) {
-		local offset = *game->GetLocation
-			("89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
-		auto Effects = (Aura*)(uintptr_t(this) + offset);
-		for (int i = 0; i < 30; i++)
-			if (Effects[i].Type == value)
-				return Effects[i].Timer >= margin
-					|| Effects[i].Timer < NULL;
-		return false;
-	};
+	// Pointers
+	FieldPtr(Aura, AuraList, "89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
+	// Refrences
+	FieldRef(EntityFlag::Mask, StatusFlags, "f6 80 ? ? 00 00 02 74 18 ba", 2);
+	FieldRef(UCHAR, ClassJob, "? ? ? ? 8b da 88 99 ? ? ? ? 48 8b f9", 0);
+	FieldRef(UCHAR, JobLevel, "38 88 ? ? ? ? 73 08 32 c0", 2);
 	// Target Testing
+	bool HasAura(int value, float margin = 0.f, UINT castSrc = 0);
 	Actor* TargetPtr();
+	bool IsEnemy() {
+		return StatusFlags() & 
+			EntityFlag::Hostile;
+	};
 };
 
 class ComboArea {

@@ -79,6 +79,15 @@ namespace Action {
 		Straight_Shot = 98,
 		Venomous_Bite = 100,
 		Windbite = 113,
+		// CNJ
+		Stone = 119,
+		Cure = 120,
+		Aero = 121,
+		Medica = 124,
+		Raise = 125,
+		Esuna = 126,
+		MedicaII = 133,
+		Regen = 137,
 		// WAR
 		Mythril_Tempest = 16462,
 		// ROG
@@ -147,6 +156,11 @@ namespace Status {
 		StraightShotReady = 122,
 		VenomousBite = 124,
 		Windbite = 129,
+		// CNJ
+		Aero = 143,
+		AeroII = 144,
+		MedicaII = 150,
+		Regen = 158,
 		// Caster
 		Swiftcast = 167,
 		VerfireReady = 1234,
@@ -162,5 +176,18 @@ namespace Status {
 		FlourishingShower = 1817,
 		// Changes
 		Disembowel = 1914,
+	};
+};
+
+namespace EntityFlag {
+	enum Mask : char {
+		None = '\0',
+		Hostile = 1 << 0,
+		InCombat = 1 << 1,
+		WeaponOut = 1 << 2,
+		_UNKNOWN_8_POS = 1 << 3,
+		PartyMember = 1 << 4,
+		AllianceMember = 1 << 5,
+		Friend = 1 << 6
 	};
 };

@@ -33,6 +33,7 @@ public:
 	int Marauder(int);
 	int Gladiator(int);
 	int DarkKnight(int);
+	int Conjurer(int);
 	int Pugilist(int);
 	int Lancer(int);
 	int Archer(int);

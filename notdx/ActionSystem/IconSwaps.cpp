@@ -7,7 +7,7 @@ Actor* Actor::TargetPtr() {
 		if (ptr && target == ptr->EntityId())
 				return ptr;
 	}; return NULL;
-}; UCHAR lvl;
+}; Actor* target; UCHAR lvl;
 
 #define effect \
 	xiv->LocalActor->HasAura
@@ -18,6 +18,9 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 	if (xiv->LocalActor) {
 		lvl = xiv->LocalActor->JobLevel();
 	switch (xiv->LocalActor->ClassJob()) {
+		case Job::Conjurer:
+		case Job::White_Mage:
+			return self->Conjurer(action);
 		case Job::Paladin:
 		case Job::Gladiator:
 			return self->Gladiator(action);
@@ -125,9 +128,32 @@ int ActionSys::Lancer(int action) {
 	};  return GetIcon(action);
 };
 
+int ActionSys::Conjurer(int action) {
+	target = xiv->LocalActor->TargetPtr();
+	switch (action) {
+	case Action::Stone:
+		if (lvl >= 4 && target) {
+			if (target->HasAura(Status::Aero)
+				|| target->HasAura(Status::AeroII)); 
+			else return GetIcon(Action::Aero);
+		}; return GetIcon(Action::Stone);
+	case Action::Cure:
+		if (lvl >= 25 && target 
+			&& !target->HasAura(Status::Regen))
+				return GetIcon(Action::Regen);
+		return GetIcon(Action::Cure);
+	case Action::Medica:
+		if (lvl >= 50 && !effect(Status::MedicaII))
+			return GetIcon(Action::MedicaII);
+		return GetIcon(Action::Medica);
+	//case Action::Esuna:
+		//if(lvl >= 12 && target && target->)
+	}; return GetIcon(action);
+};
+
 
 int ActionSys::Archer(int action) {
-	auto target = xiv->LocalActor->TargetPtr();
+	target = xiv->LocalActor->TargetPtr();
 	switch (action) {
 	case Action::Heavy_Shot:
 		// Brain Dead Rotation
@@ -244,4 +270,14 @@ int ActionSys::Dancer(int action) {
 
 char IsIconReplaceable::Detour(int action) {
 	return 1;
+};
+
+bool Actor::HasAura(int value, float margin, UINT castSrc) {
+	auto Effects = AuraList(); if (!castSrc)
+		castSrc = xiv->LocalActor->EntityId();
+	// might be 60??
+	for (int i = 0; i < 30; i++)
+		if (Effects[i].Type == value && Effects[i].CastId == castSrc)
+			return Effects[i].Timer >= margin || Effects[i].Timer <= NULL;
+	return false;
 };
