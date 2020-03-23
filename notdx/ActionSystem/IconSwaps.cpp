@@ -138,6 +138,8 @@ int ActionSys::Conjurer(int action) {
 			else return GetIcon(Action::Aero);
 		}; return GetIcon(Action::Stone);
 	case Action::Cure:
+		if (!target || target->IsType(EntityType::Monster))
+			target = xiv->LocalActor;
 		if (lvl >= 25 && target 
 			&& !target->HasAura(Status::Regen))
 				return GetIcon(Action::Regen);
@@ -146,8 +148,9 @@ int ActionSys::Conjurer(int action) {
 		if (lvl >= 50 && !effect(Status::MedicaII))
 			return GetIcon(Action::MedicaII);
 		return GetIcon(Action::Medica);
-	//case Action::Esuna:
-		//if(lvl >= 12 && target && target->)
+	case Action::Esuna:
+		if (lvl >= 12 && target && !target->CurrentHP())
+			return GetIcon(Action::Raise); break;
 	}; return GetIcon(action);
 };
 

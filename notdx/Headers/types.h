@@ -85,8 +85,9 @@ namespace Action {
 		Aero = 121,
 		Medica = 124,
 		Raise = 125,
-		Esuna = 126,
+		//Esuna = 126,
 		MedicaII = 133,
+		FluidAura = 134,
 		Regen = 137,
 		// WAR
 		Mythril_Tempest = 16462,
@@ -121,6 +122,9 @@ namespace Action {
 		Redoublement = 7516,
 		Verthunder_II = 16524,
 		Veraero_II = 16525,
+		// Role SHit
+		Esuna = 7568,
+		Rescue = 7571,
 		// DNC
 		Cascade = 15989,
 		Fountain = 15990,
@@ -179,15 +183,25 @@ namespace Status {
 	};
 };
 
-namespace EntityFlag {
+namespace CombatFlags {
 	enum Mask : char {
 		None = '\0',
-		Hostile = 1 << 0,
+		IsAggressive = 1 << 0,
 		InCombat = 1 << 1,
-		WeaponOut = 1 << 2,
+		WeaponUnsheathed = 1 << 2,
 		_UNKNOWN_8_POS = 1 << 3,
 		PartyMember = 1 << 4,
 		AllianceMember = 1 << 5,
-		Friend = 1 << 6
+		Friend = 1 << 6,
+		IsCasting = 1 << 7
 	};
 };
+
+namespace EntityType {
+	enum Type : char {
+		Unknown = '\0',
+		Player = 1 << 0,
+		Monster = 1 << 1,
+		NonPlayer = 1 << 2,
+	};
+}
