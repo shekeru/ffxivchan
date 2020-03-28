@@ -74,6 +74,13 @@ public:
 	};
 };
 
+class WHM_HUD : JobGauge {
+public:
+	USHORT _UNK;
+	USHORT Timer;
+	UCHAR Lily;
+};
+
 class RDM_HUD: JobGauge {
 public:
 	UCHAR WhiteMana, BlackMana;

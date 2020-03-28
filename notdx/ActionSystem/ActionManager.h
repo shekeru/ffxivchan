@@ -32,10 +32,11 @@ class ActionSys {
 public:
 	int Marauder(int);
 	int Gladiator(int);
+	int Astrologian(int);
 	int DarkKnight(int);
-	int Conjurer(int);
+	int WhiteMage(int);
 	int Pugilist(int);
-	int Lancer(int);
+	int Dragoon(int);
 	int Archer(int);
 	int Rogue(int);
 	int Samurai(int);

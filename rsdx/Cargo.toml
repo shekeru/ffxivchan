@@ -1,0 +1,14 @@
+[package]
+name = "rsdx"
+version = "0.1.0"
+authors = ["slut"]
+
+[lib]
+name = "dxgi"
+crate-type = ["dylib"]
+
+[dependencies]
+#kernel32-sys = "0.2.2"
+user32-sys = "0.2.0"
+winapi = {version = "0.3.8", features = ["minwindef", "winuser", "libloaderapi"]}
+#libc = "0.2"

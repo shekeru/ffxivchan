@@ -87,6 +87,7 @@ namespace Action {
 		Raise = 125,
 		//Esuna = 126,
 		MedicaII = 133,
+		CureII = 135,
 		FluidAura = 134,
 		Regen = 137,
 		// WAR
@@ -95,6 +96,10 @@ namespace Action {
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
 		Gust_Slash = 2242,
+		// AST
+		Malefic = 3596,
+		Combust = 3599,
+		Ascend = 3603,
 		// DRK
 		Hard_Slash = 3617,
 		Syphon_Strike = 3623,
@@ -122,7 +127,7 @@ namespace Action {
 		Redoublement = 7516,
 		Verthunder_II = 16524,
 		Veraero_II = 16525,
-		// Role SHit
+		// Role Shit
 		Esuna = 7568,
 		Rescue = 7571,
 		// DNC
@@ -141,6 +146,8 @@ namespace Action {
 		Jete = 16001,
 		Pirouette = 16002,
 		Closed_Position = 16006,
+		// WHM
+		Afflatus_Solace = 16531,
 	};
 };
 
@@ -164,9 +171,15 @@ namespace Status {
 		Aero = 143,
 		AeroII = 144,
 		MedicaII = 150,
+		Freecure = 155,
 		Regen = 158,
-		// Caster
 		Swiftcast = 167,
+		// AST
+		Combust = 838,
+		Dinural_Sect = 839,
+		Nocturnal_Sect = 840,
+		CombustII = 843,
+		// RDM?
 		VerfireReady = 1234,
 		VerstoneReady = 1235,
 		Dualcast = 1249,

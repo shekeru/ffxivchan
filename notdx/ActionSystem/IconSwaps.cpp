@@ -20,20 +20,22 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 	switch (xiv->LocalActor->ClassJob()) {
 		case Job::Conjurer:
 		case Job::White_Mage:
-			return self->Conjurer(action);
+			return self->WhiteMage(action);
 		case Job::Paladin:
 		case Job::Gladiator:
 			return self->Gladiator(action);
 		case Job::Warrior:
 		case Job::Marauder:
 			return self->Marauder(action);
+		case Job::Astrologian:
+			return self->Astrologian(action);
 		case Job::Dark_Knight:
 			return self->DarkKnight(action);
 		case Job::Pugilist:
 			return self->Pugilist(action);
 		case Job::Dragoon:
 		case Job::Lancer:
-			return self->Lancer(action);
+			return self->Dragoon(action);
 		case Job::Bard:
 		case Job::Archer:
 			return self->Archer(action);
@@ -107,7 +109,7 @@ int ActionSys::Pugilist(int action) {
 	}; return GetIcon(action);
 };
 
-int ActionSys::Lancer(int action) {
+int ActionSys::Dragoon(int action) {
 	switch (action) {
 		// Buffing Damage
 		case Action::Disembowel:
@@ -128,11 +130,26 @@ int ActionSys::Lancer(int action) {
 	};  return GetIcon(action);
 };
 
-int ActionSys::Conjurer(int action) {
+int ActionSys::Astrologian(int action) {
+	target = xiv->LocalActor->TargetPtr();
+	switch (action) {
+	case Action::Malefic:
+		if (lvl >= 4 && target && target->IsType(EntityType::Monster)) {
+			if (target->HasAura(Status::Combust) || target->HasAura
+				(Status::CombustII)); else return GetIcon(Action::Combust);
+		}; return GetIcon(Action::Malefic);
+	case Action::Esuna:
+		if (lvl >= 12 && target && !target->CurrentHP())
+			return GetIcon(Action::Ascend); break;
+	}; return GetIcon(action);
+};
+
+int ActionSys::WhiteMage(int action) {
+	local HUD = (WHM_HUD*) xiv->JobHud;
 	target = xiv->LocalActor->TargetPtr();
 	switch (action) {
 	case Action::Stone:
-		if (lvl >= 4 && target) {
+		if (lvl >= 4 && target && target->IsType(EntityType::Monster)) {
 			if (target->HasAura(Status::Aero)
 				|| target->HasAura(Status::AeroII)); 
 			else return GetIcon(Action::Aero);
@@ -144,6 +161,10 @@ int ActionSys::Conjurer(int action) {
 			&& !target->HasAura(Status::Regen))
 				return GetIcon(Action::Regen);
 		return GetIcon(Action::Cure);
+	case Action::CureII:
+		if (lvl >= 52 && HUD->Lily && !effect(Status::Freecure))
+			return GetIcon(Action::Afflatus_Solace);
+		return GetIcon(Action::CureII);
 	case Action::Medica:
 		if (lvl >= 50 && !effect(Status::MedicaII))
 			return GetIcon(Action::MedicaII);
