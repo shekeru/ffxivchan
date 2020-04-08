@@ -8,7 +8,8 @@ name = "dxgi"
 crate-type = ["dylib"]
 
 [dependencies]
-#kernel32-sys = "0.2.2"
+winapi = {version = "0.3.8", features = ["minwindef", "winuser", "libloaderapi", "dxgi", "d3d11"]}
+lazy_static = "1.4.0"
+kernel32-sys = "0.2.2"
 user32-sys = "0.2.0"
-winapi = {version = "0.3.8", features = ["minwindef", "winuser", "libloaderapi"]}
-#libc = "0.2"
+detour = "0.7.1"

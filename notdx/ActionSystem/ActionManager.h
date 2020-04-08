@@ -35,12 +35,14 @@ public:
 	int Astrologian(int);
 	int DarkKnight(int);
 	int WhiteMage(int);
+	int BlackMage(int);
 	int Pugilist(int);
 	int Dragoon(int);
 	int Archer(int);
 	int Rogue(int);
 	int Samurai(int);
 	int RedMage(int);
+	int GunBreaker(int);
 	int Dancer(int);
 // Methods
 	INT64 GetIcon(int action) {

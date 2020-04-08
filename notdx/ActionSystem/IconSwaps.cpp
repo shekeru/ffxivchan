@@ -21,6 +21,9 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 		case Job::Conjurer:
 		case Job::White_Mage:
 			return self->WhiteMage(action);
+		case Job::Black_Mage:
+		case Job::Thaumaturge:
+			return self->BlackMage(action);
 		case Job::Paladin:
 		case Job::Gladiator:
 			return self->Gladiator(action);
@@ -45,6 +48,8 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 			return self->Samurai(action);
 		case Job::Red_Mage:
 			return self->RedMage(action);
+		case Job::Gunbreaker:
+			return self->GunBreaker(action);
 		case Job::Dancer:
 			return self->Dancer(action);
 		}
@@ -60,6 +65,9 @@ int ActionSys::Gladiator(int action) {
 		if (lvl >= 26 && Combo->Is(Action::Riot_Blade))
 			return GetIcon(Action::Rage_of_Halon);
 		break;
+	case Action::Total_Eclipse:
+		if (lvl >= 40 && Combo->Is(Action::Total_Eclipse))
+			return GetIcon(Action::Prominence); break;
 	}; return GetIcon(action);
 };
 
@@ -101,9 +109,11 @@ int ActionSys::DarkKnight(int action) {
 int ActionSys::Pugilist(int action) {
 	switch (action) {
 	case Action::Bootshine:
-		if (lvl >= 4 && effect(Status::Raptor_Form))
+		if (lvl >= 4 && effect(Status::Raptor_Form)) {
+			if (lvl >= 18 && !effect(Status::Twin_Snakes, 1.0f))
+				return GetIcon(Action::Twin_Snakes);
 			return GetIcon(Action::True_Strike);
-		if (lvl >= 6 && effect(Status::Coeurl_Form))
+		} if (lvl >= 6 && effect(Status::Coeurl_Form))
 			return GetIcon(Action::Snap_Punch);
 		return GetIcon(Action::Bootshine);
 	}; return GetIcon(action);
@@ -133,14 +143,24 @@ int ActionSys::Dragoon(int action) {
 int ActionSys::Astrologian(int action) {
 	target = xiv->LocalActor->TargetPtr();
 	switch (action) {
+	case Action::Benefic:
+		if (!target || target->IsType(EntityType::Monster))
+			target = xiv->LocalActor;
+		if (lvl >= 34 && effect(Status::Dinural_Sect)
+			&& !target->HasAura(Status::Aspected_Benefic))
+			return GetIcon(Action::Aspected_Benefic); break;
 	case Action::Malefic:
 		if (lvl >= 4 && target && target->IsType(EntityType::Monster)) {
 			if (target->HasAura(Status::Combust) || target->HasAura
 				(Status::CombustII)); else return GetIcon(Action::Combust);
 		}; return GetIcon(Action::Malefic);
+	case Action::Helios:
+		if (lvl >= 42 && !effect(Status::Aspected_Helios))
+			return GetIcon(Action::Aspected_Helios); break;
 	case Action::Esuna:
 		if (lvl >= 12 && target && !target->CurrentHP())
-			return GetIcon(Action::Ascend); break;
+			if (!target->IsType(EntityType::Monster))
+				return GetIcon(Action::Ascend); break;
 	}; return GetIcon(action);
 };
 
@@ -157,8 +177,7 @@ int ActionSys::WhiteMage(int action) {
 	case Action::Cure:
 		if (!target || target->IsType(EntityType::Monster))
 			target = xiv->LocalActor;
-		if (lvl >= 25 && target 
-			&& !target->HasAura(Status::Regen))
+		if (lvl >= 25 && !target->HasAura(Status::Regen))
 				return GetIcon(Action::Regen);
 		return GetIcon(Action::Cure);
 	case Action::CureII:
@@ -171,10 +190,23 @@ int ActionSys::WhiteMage(int action) {
 		return GetIcon(Action::Medica);
 	case Action::Esuna:
 		if (lvl >= 12 && target && !target->CurrentHP())
-			return GetIcon(Action::Raise); break;
+			if(!target->IsType(EntityType::Monster))
+				return GetIcon(Action::Raise); break;
 	}; return GetIcon(action);
 };
 
+int ActionSys::BlackMage(int action) {
+	local HUD = (BLM_HUD*)xiv->JobHud;
+	target = xiv->LocalActor->TargetPtr();
+	switch (action) {
+	case Action::Fire:
+		if (lvl >= 34 && !HUD->Fire())
+			return Action::Fire_III;
+	case Action::Blizzard:
+		if (lvl >= 40 && !HUD->Ice())
+			return Action::Blizzard_III;
+	}; return GetIcon(action);
+}
 
 int ActionSys::Archer(int action) {
 	target = xiv->LocalActor->TargetPtr();
@@ -197,6 +229,8 @@ int ActionSys::Rogue(int action) {
 	case Action::Spinning_Edge:
 		if (lvl >= 4 && Combo->Is(Action::Spinning_Edge))
 			return GetIcon(Action::Gust_Slash);
+		if (lvl >= 26 && Combo->Is(Action::Gust_Slash))
+			return GetIcon(Action::Aeolian_Edge);
 		return GetIcon(Action::Spinning_Edge);
 	}; return GetIcon(action);
 };
@@ -269,19 +303,19 @@ int ActionSys::Dancer(int action) {
 	switch(action) {
 	// Single Target
 	case Action::Cascade:
-		if (lvl >= 2 && Combo->Is(Action::Cascade))
-			return Action::Fountain;
 		if (effect(Status::FlourishingCascade))
 			return Action::Reverse_Cascade;
+		if (lvl >= 2 && Combo->Is(Action::Cascade))
+			return Action::Fountain;
 		if (effect(Status::FlourishingFountain))
 			return Action::Fountainfall;
 		return Action::Cascade;
 	// AoE Rotation
 	case Action::Windmill:
-		if (lvl >= 25 && Combo->Is(Action::Windmill))
-			return Action::Bladeshower;
 		if (effect(Status::FlourishingWindmill))
 			return Action::Rising_Windmill;
+		if (lvl >= 25 && Combo->Is(Action::Windmill))
+			return Action::Bladeshower;
 		if (effect(Status::FlourishingShower))
 			return Action::Bloodshower;
 		return Action::Windmill;
@@ -289,6 +323,33 @@ int ActionSys::Dancer(int action) {
 	case Action::Standard_Step:
 	case Action::Technical_Step:
 		return GetIcon(HUD->Forwards(action));
+	}; return GetIcon(action);
+};
+
+int ActionSys::GunBreaker(int action) {
+	local HUD = (GNB_HUD*)xiv->JobHud;
+	switch (action) {
+	case Action::Keen_Edge:
+		if (lvl >= 4 && Combo->Is(Action::Keen_Edge))
+			return GetIcon(Action::Brutal_Shell);
+		if (lvl >= 26 && Combo->Is(Action::Brutal_Shell))
+			return GetIcon(Action::Solid_Barrel);
+
+		break;
+	case Action::Demon_Slice:
+		if (lvl >= 40 && Combo->Is(Action::Demon_Slice))
+			return GetIcon(Action::Demon_Slaughter); break;
+	case Action::Gnashing_Fang:
+		switch (HUD->Phase) {
+			case 1:
+				return GetIcon(Action::Savage_Claw);
+			case 2:
+				return GetIcon(Action::Wicked_Talon);
+		}; break;
+	case Action::Danger_Zone:
+		if (HUD->Charges >= 2)
+			return GetIcon(Action::Burst_Strike);
+		break;
 	}; return GetIcon(action);
 };
 

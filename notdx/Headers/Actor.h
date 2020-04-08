@@ -81,6 +81,20 @@ public:
 	UCHAR Lily;
 };
 
+class BLM_HUD : JobGauge {
+public:
+	USHORT _UNK;
+	USHORT Timer;
+	CHAR Stacks; // Pos: Fire, Neg: Ice
+public:
+	CHAR Fire() {
+		return max(0, Stacks);
+	};
+	CHAR Ice() {
+		return -1 * min(0, Stacks);
+	};
+};
+
 class RDM_HUD: JobGauge {
 public:
 	UCHAR WhiteMana, BlackMana;
@@ -88,6 +102,12 @@ public:
 	bool Has(int level) {
 		return WhiteMana >= level && BlackMana >= level;
 	};
+};
+
+class GNB_HUD : JobGauge {
+public:
+	USHORT Charges, 
+		Style, Phase;
 };
 
 class DNC_HUD : JobGauge {

@@ -68,6 +68,7 @@ namespace Action {
 		Bootshine = 53,
 		True_Strike = 54,
 		Snap_Punch = 56,
+		Twin_Snakes = 61,
 		// LNC
 		True_Thrust = 75,
 		Vorpal_Thrust = 78,
@@ -90,15 +91,27 @@ namespace Action {
 		CureII = 135,
 		FluidAura = 134,
 		Regen = 137,
+		// BLM
+		Fire = 141,
+		Blizzard = 142,
+		Thunder = 144,
+		Thunder_II = 148,
+		Fire_III = 152,
+		Blizzard_III = 154,
 		// WAR
 		Mythril_Tempest = 16462,
 		// ROG
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
 		Gust_Slash = 2242,
+		Aeolian_Edge = 2255,
 		// AST
+		Benefic = 3594,
+		Aspected_Benefic = 3595,
 		Malefic = 3596,
 		Combust = 3599,
+		Helios = 3600,
+		Aspected_Helios = 3601,
 		Ascend = 3603,
 		// DRK
 		Hard_Slash = 3617,
@@ -146,8 +159,22 @@ namespace Action {
 		Jete = 16001,
 		Pirouette = 16002,
 		Closed_Position = 16006,
+		// GNB
+		Keen_Edge = 16137,
+		Brutal_Shell = 16139,
+		Demon_Slice = 16141,
+		Danger_Zone = 16144,
+		Solid_Barrel = 16145,
+		Gnashing_Fang = 16146,
+		Savage_Claw = 16147,
+		Demon_Slaughter = 16149,
+		Wicked_Talon = 16150,
+		Burst_Strike = 16162,
 		// WHM
 		Afflatus_Solace = 16531,
+		// PLD 2
+		Total_Eclipse = 7381,
+		Prominence = 16457,
 	};
 };
 
@@ -156,6 +183,7 @@ namespace Status {
 		// MRD
 		Storms_Eye = 90,
 		// PGL
+		Twin_Snakes = 101,
 		Opo_Form = 107,
 		Raptor_Form = 108,
 		Coeurl_Form = 109,
@@ -175,6 +203,8 @@ namespace Status {
 		Regen = 158,
 		Swiftcast = 167,
 		// AST
+		Aspected_Benefic = 835,
+		Aspected_Helios = 836,
 		Combust = 838,
 		Dinural_Sect = 839,
 		Nocturnal_Sect = 840,
