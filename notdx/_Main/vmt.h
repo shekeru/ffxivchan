@@ -86,45 +86,14 @@ public:
 }; class MemorySystem {
 public:
 	MODULEINFO baseModule; void StackTrace();
-	MemorySystem(const char* exe_name); 
-	template<typename TYPE = int>
-	TYPE* GetLocation(const char* signature, int start = 0) {
-		local pattern_to_byte = [](const char* pattern) {
-			auto bytes = std::vector<int>{};
-			auto start = const_cast<char*>(pattern);
-			auto end = const_cast<char*>(pattern) + strlen(pattern);
-			for (auto current = start; current < end; ++current) {
-				if (*current == '?') {
-					++current;
-					if (*current == '?')
-						++current;
-					bytes.push_back(-1);
-				}
-				else {
-					bytes.push_back(strtoul(current, &current, 16));
-				}
-			}; return bytes;
-		};
-		auto sizeOfImage = baseModule.SizeOfImage;
-		auto patternBytes = pattern_to_byte(signature);
-		auto scanBytes = reinterpret_cast<std::uint8_t*>(baseModule.lpBaseOfDll);
-		auto s = patternBytes.size(); auto d = patternBytes.data();
-		for (auto i = 0ul; i < sizeOfImage - s; ++i) {
-			bool found = true;
-			for (auto j = 0ul; j < s; ++j) {
-				if (scanBytes[i + j] != d[j] && d[j] != -1) {
-					found = false;
-					break;
-				}
-			} if (found) {
-				return (TYPE*)(scanBytes + i + start);
-			}
-		}; return (TYPE*)printf("SCAN FAILURE: %s\n", signature);
-	}; IntPtr ScanPattern(const char* signature, int size, int extra = 0) {
+	MemorySystem(const char* exe_name = "ffxiv_dx11.exe");
+	template<typename TYPE = int> TYPE* 
+		GetLocation(const char* signature, int start = 0);
+	IntPtr ScanPattern(const char* signature, int size, int extra = 0) {
 		auto offset = GetLocation<int>(signature, size); return 
 			IntPtr(*offset + uintptr_t(offset) + 4 + extra);
 	}; void DetourAll();
-}; inline MemorySystem game = MemorySystem("ffxiv_dx11.exe");
+}; inline MemorySystem game;
 // Move Somewhere Else?
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;

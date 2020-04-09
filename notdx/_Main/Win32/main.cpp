@@ -52,7 +52,7 @@ BOOL APIENTRY DllMain(
 	switch (fdwReason)
 	{
 	case DLL_PROCESS_ATTACH:
-		Utils::EnableConsole(); DisableThreadLibraryCalls(hInstance);
+		DisableThreadLibraryCalls(hInstance);
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE) ModuleEntry, hInstance, 0, 0); 
 		return TRUE;
 	case DLL_PROCESS_DETACH:

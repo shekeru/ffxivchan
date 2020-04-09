@@ -209,6 +209,6 @@ void Hooks::RaptureAttach() {
 	//	.Cast<PVOID>(); DetourAttach(&CD_ByObject, hkCD_ByObject);
 	//optionB = game.ScanPattern("49 8b cd e8 ? ? ? ? 48 8b 0d ? ? ? ? ba 41 01", 4)
 	//	.Cast<PVOID>(); DetourAttach(&optionB, hkoptionB);
-	GetElapsed = game.ScanPattern("e8 ? ? ? ? 44 8b c7 48 8d 0d ? ? ? ? 41", 1)
-		.Cast<PVOID>(); DetourAttach(&GetElapsed, hkGetElapsed);
+	//GetElapsed = game.ScanPattern("e8 ? ? ? ? 44 8b c7 48 8d 0d ? ? ? ? 41", 1)
+	//	.Cast<PVOID>(); DetourAttach(&GetElapsed, hkGetElapsed);
 }
