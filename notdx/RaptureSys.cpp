@@ -131,6 +131,54 @@ void hkCAST2(void* ptr) {
 	//original(ptr);
 }
 
+PVOID UpdatesBarInteger; PVOID cRelated;
+void hkUpdatesBarInteger(__int64 rcx, __int64 rdx, int r8d) {
+	ORIGINAL(hkUpdatesBarInteger, UpdatesBarInteger);
+	if (rdx == 0x159 && r8d == 210 && false) {
+		auto rax = *(__int64 *)(rcx + 0x20);
+		printf("Related: %p, Real: %p\n", 
+			cRelated, rax + rdx * 4);
+	}; return original(rcx, rdx, r8d);
+};
+
+PVOID BarInteger_Parent;
+__int64 hkBarInteger_Parent(__int64 rcx, __int64 rdx, char** c_ptr, __int64 a4, __int64 a5, unsigned int slot_no, unsigned int a7) {
+	ORIGINAL(hkBarInteger_Parent, BarInteger_Parent); cRelated = c_ptr; static CONTEXT ctx; 
+	auto value = original(rcx, rdx, c_ptr, a4, a5, slot_no, a7);
+	if (strstr(*c_ptr, "Holmgang")) {
+		RtlCaptureContext(&ctx); printf("rsp: %p, v: %i \n", 
+			(DWORD*)(ctx.Rsp - 0x6c), *(DWORD*)(ctx.Rsp - 0x6c));
+	}; return value;
+};
+
+PVOID CD_ByObject;
+__int64 hkCD_ByObject(char** ptr, char flag) {
+	ORIGINAL(hkCD_ByObject, CD_ByObject);
+	auto value = original(ptr, flag);
+	//if (strstr(*ptr, "Holmgang"))
+		//printf("\tptr:%p, is: %i\n", ptr, value);
+	return value;
+}
+
+PVOID optionB;
+__int64 hkoptionB(__int64 ptr, DWORD& st_ref, int a3) {
+	ORIGINAL(hkoptionB, optionB); 
+	if (st_ref == 205) printf("pre!!\n");
+	auto val = original(ptr, st_ref, a3);
+	if (st_ref == 205 || val == 205) {
+		printf("ptr: %p, a3: %i, v: %p\n", ptr, a3, val);
+	}; return val;
+};
+
+PVOID GetElapsed_ptr;
+float GetElapsed(ActionSys ptr, UINT8 flag, INT64 actionID) {
+	ORIGINAL(GetElapsed, GetElapsed_ptr);
+	auto value = GetElapsed(ptr, flag, actionID);
+	if (actionID == Action::Holmgang) {
+		printf("elapsed: %f\n", value);
+	}; return value;
+};
+
 void Hooks::RaptureAttach() {
 	printf("Process Heap: %x\n", ProcHeap = GetProcessHeap());
 	// Fuck Me
@@ -149,4 +197,14 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&SendAction, hkSendAction);
 	//DetourAttach(&FlagSwitch, FlagWriter);
 	//DetourAttach(&CAST2, hkCAST2);
+	//UpdatesBarInteger = game->ScanPattern("e8 ? ? ? ? 44 8b 65 97 eb 30", 1)
+	//	.Cast<PVOID>(); DetourAttach(&UpdatesBarInteger, hkUpdatesBarInteger);
+	//BarInteger_Parent = game->ScanPattern("e8 ? ? ? ? eb 20 e8 ? ? ? ? 8d 56 ff", 1)
+	//	.Cast<PVOID>(); DetourAttach(&BarInteger_Parent, hkBarInteger_Parent);
+	//CD_ByObject = game->ScanPattern("e8 ? ? ? ? 41 8d 57 05 44 8b c0", 1)
+	//	.Cast<PVOID>(); DetourAttach(&CD_ByObject, hkCD_ByObject);
+	//optionB = game->ScanPattern("49 8b cd e8 ? ? ? ? 48 8b 0d ? ? ? ? ba 41 01", 4)
+	//	.Cast<PVOID>(); DetourAttach(&optionB, hkoptionB);
+	GetElapsed_ptr = game->ScanPattern("e8 ? ? ? ? 44 8b c7 48 8d 0d ? ? ? ? 41", 1)
+		.Cast<PVOID>(); DetourAttach(&GetElapsed_ptr, GetElapsed);
 }

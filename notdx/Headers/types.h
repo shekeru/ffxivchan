@@ -61,6 +61,7 @@ namespace Action {
 		Maim = 37,
 		Overpower = 41,
 		Storms_Path = 42,
+		Holmgang = 43,
 		Storms_Eye = 45,
 		Inner_Beast = 49,
 		Steel_Cyclone = 51,
