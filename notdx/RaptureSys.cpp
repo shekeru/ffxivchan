@@ -170,25 +170,28 @@ __int64 hkoptionB(__int64 ptr, DWORD& st_ref, int a3) {
 	}; return val;
 };
 
-PVOID GetElapsed_ptr;
-float GetElapsed(ActionSys ptr, UINT8 flag, INT64 actionID) {
-	ORIGINAL(GetElapsed, GetElapsed_ptr);
-	auto value = GetElapsed(ptr, flag, actionID);
+PVOID GetElapsed;
+float hkGetElapsed(ActionSys* ptr, UINT8 flag, INT64 actionID) {
+	ORIGINAL(hkGetElapsed, GetElapsed); 
+	auto value = original(ptr, flag, actionID);
 	if (actionID == Action::Holmgang) {
-		printf("elapsed: %f\n", value);
+		//auto rcd = ptr->ActionRecast(actionID, flag);
+		auto rid = GetRecastIndex.Call(ptr, flag, actionID);
+		printf("elapsed: %f, flag: %i, recast: %i\n",
+			value, flag, rid);
 	}; return value;
 };
 
 void Hooks::RaptureAttach() {
 	printf("Process Heap: %x\n", ProcHeap = GetProcessHeap());
 	// Fuck Me
-	CtxSets_R5 = game->GetLocation("4c 89 4c 24 20 44 89 44 24 18 53 55 56 57 48 81");
-	SpawnWindow = game->ScanPattern("e8 ? ? ? ? 85 c0 75 1d 48 8b 0b", 1).Cast<PVOID>();
-	CtxVectorInit = game->ScanPattern("e8 ? ? ? ? 48 8b 43 08 48 2b 03 48 c1 f8 03", 1).Cast<PVOID>();
-	WindowReady = game->ScanPattern("48 8b ce e8 ? ? ? ? 48 8b 4d 4f", 4).Cast<PVOID>();
-	SendAction = game->ScanPattern("e8 ? ? ? ? 8b 44 24 20 c1 e8 05", 1).Cast<PVOID>();
-	FlagSwitch = game->ScanPattern("cf 89 44 24 20 e8 ? ? ? ? b0 01", 6).Cast<PVOID>();
-	CAST2 = game->GetLocation("40 53 48 83 ec 20 83 b9 30 09 00 00 00 48 8b d9 7e 57 48");
+	CtxSets_R5 = game.GetLocation("4c 89 4c 24 20 44 89 44 24 18 53 55 56 57 48 81");
+	SpawnWindow = game.ScanPattern("e8 ? ? ? ? 85 c0 75 1d 48 8b 0b", 1).Cast<PVOID>();
+	CtxVectorInit = game.ScanPattern("e8 ? ? ? ? 48 8b 43 08 48 2b 03 48 c1 f8 03", 1).Cast<PVOID>();
+	WindowReady = game.ScanPattern("48 8b ce e8 ? ? ? ? 48 8b 4d 4f", 4).Cast<PVOID>();
+	SendAction = game.ScanPattern("e8 ? ? ? ? 8b 44 24 20 c1 e8 05", 1).Cast<PVOID>();
+	FlagSwitch = game.ScanPattern("cf 89 44 24 20 e8 ? ? ? ? b0 01", 6).Cast<PVOID>();
+	CAST2 = game.GetLocation("40 53 48 83 ec 20 83 b9 30 09 00 00 00 48 8b d9 7e 57 48");
 	// Attachments
 	DetourAttach(&CtxSets_R5, hkCtxSets_R5);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
@@ -197,14 +200,15 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&SendAction, hkSendAction);
 	//DetourAttach(&FlagSwitch, FlagWriter);
 	//DetourAttach(&CAST2, hkCAST2);
-	//UpdatesBarInteger = game->ScanPattern("e8 ? ? ? ? 44 8b 65 97 eb 30", 1)
+
+	//UpdatesBarInteger = game.ScanPattern("e8 ? ? ? ? 44 8b 65 97 eb 30", 1)
 	//	.Cast<PVOID>(); DetourAttach(&UpdatesBarInteger, hkUpdatesBarInteger);
-	//BarInteger_Parent = game->ScanPattern("e8 ? ? ? ? eb 20 e8 ? ? ? ? 8d 56 ff", 1)
+	//BarInteger_Parent = game.ScanPattern("e8 ? ? ? ? eb 20 e8 ? ? ? ? 8d 56 ff", 1)
 	//	.Cast<PVOID>(); DetourAttach(&BarInteger_Parent, hkBarInteger_Parent);
-	//CD_ByObject = game->ScanPattern("e8 ? ? ? ? 41 8d 57 05 44 8b c0", 1)
+	//CD_ByObject = game.ScanPattern("e8 ? ? ? ? 41 8d 57 05 44 8b c0", 1)
 	//	.Cast<PVOID>(); DetourAttach(&CD_ByObject, hkCD_ByObject);
-	//optionB = game->ScanPattern("49 8b cd e8 ? ? ? ? 48 8b 0d ? ? ? ? ba 41 01", 4)
+	//optionB = game.ScanPattern("49 8b cd e8 ? ? ? ? 48 8b 0d ? ? ? ? ba 41 01", 4)
 	//	.Cast<PVOID>(); DetourAttach(&optionB, hkoptionB);
-	GetElapsed_ptr = game->ScanPattern("e8 ? ? ? ? 44 8b c7 48 8d 0d ? ? ? ? 41", 1)
-		.Cast<PVOID>(); DetourAttach(&GetElapsed_ptr, GetElapsed);
+	GetElapsed = game.ScanPattern("e8 ? ? ? ? 44 8b c7 48 8d 0d ? ? ? ? 41", 1)
+		.Cast<PVOID>(); DetourAttach(&GetElapsed, hkGetElapsed);
 }

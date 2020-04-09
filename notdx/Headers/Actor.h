@@ -8,11 +8,11 @@ typedef struct Aura {
 } Aura;
 
 #define FieldRef(TYPE, NAME, SIG, IX) \
-	TYPE& NAME() { local offset = *game->GetLocation \
+	TYPE& NAME() { local offset = *game.GetLocation \
 	(SIG, IX); return *(TYPE*)(uintptr_t(this) + offset); }
 
 #define FieldPtr(TYPE, NAME, SIG, IX) \
-	TYPE* NAME() { local offset = *game->GetLocation \
+	TYPE* NAME() { local offset = *game.GetLocation \
 	(SIG, IX); return (TYPE*)(uintptr_t(this) + offset); }
 
 class Actor {

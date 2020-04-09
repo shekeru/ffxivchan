@@ -1,7 +1,7 @@
 #include "Scripts.h"
 
 static int luaB_lactor(lua_State* L) {
-	//static auto LocalPlayer = game->ScanPattern
+	//static auto LocalPlayer = game.ScanPattern
 	//	(Offsets::LOCAL_ACTOR, 3).Cast<UINT64>();
 	/* get number of arguments */
 	int n = lua_gettop(L);
@@ -38,7 +38,7 @@ static int luaB_print(lua_State* L) {
 }
 
 void LuaVM::Connect() {
-	IntPtr lua_pb = game->ScanPattern(Offsets::LUA, 3, 1);
+	IntPtr lua_pb = game.ScanPattern(Offsets::LUA, 3, 1);
 	L = lua_pb[0][0x2C18][8].Cast<lua_State*>();
 	printf("Lua_State: OK, %p\n", L);
 	lua_register(L, "print", luaB_print);

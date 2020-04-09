@@ -23,7 +23,7 @@ HRESULT _fastcall Hooks::CreateSwapChain(IDXGIFactory* pFactory, ID3D11Device *p
 	(sys.pDevice = pDevice)->GetImmediateContext(&sys.pImmediateContext);
 	printf("CreateSwapChain() -> swc: %p, d3d: %x \n", sys.pSwapChain 
 		= *ppSwapChain, pDevice); sys.StartGUI(pDesc->OutputWindow);
-	VMT::SwapChain = new VMT(sys.pSwapChain); game->DetourAll();
+	VMT::SwapChain = new VMT(sys.pSwapChain); game.DetourAll();
 	VMT::SwapChain->HookVM(Hooks::Present, 8);
 	VMT::SwapChain->ApplyVMT(); return value;
 }

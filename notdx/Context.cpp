@@ -30,7 +30,7 @@ __int64 __fastcall CTX_1(__int64 a1, unsigned __int16 a2, unsigned int a3, __int
 }
 
 void Hooks::ContextAttach() {
-	auto Context = game->ScanPattern(Offsets::STRUCT_CTX, 3);
+	auto Context = game.ScanPattern(Offsets::STRUCT_CTX, 3);
 	CTX_0_fn = Context[0x8 * 0].Cast<PVOID>();
 	CTX_17_fn = Context[0x8 * 17].Cast<PVOID>();
 	CTX_5_fn = Context[0x8 * 5].Cast<PVOID>();

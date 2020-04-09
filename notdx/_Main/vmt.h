@@ -85,8 +85,8 @@ public:
 	INSTANCE(VMT, SwapChain);
 }; class MemorySystem {
 public:
-	MODULEINFO baseModule;
-	MemorySystem(const char* exe_name); void StackTrace();
+	MODULEINFO baseModule; void StackTrace();
+	MemorySystem(const char* exe_name); 
 	template<typename TYPE = int>
 	TYPE* GetLocation(const char* signature, int start = 0) {
 		local pattern_to_byte = [](const char* pattern) {
@@ -124,7 +124,7 @@ public:
 		auto offset = GetLocation<int>(signature, size); return 
 			IntPtr(*offset + uintptr_t(offset) + 4 + extra);
 	}; void DetourAll();
-}; inline MemorySystem* game;
+}; inline MemorySystem game = MemorySystem("ffxiv_dx11.exe");
 // Move Somewhere Else?
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;

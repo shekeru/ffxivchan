@@ -9,9 +9,9 @@ public:
 class ZoomSys;
 // Method: UpdateTick
 INSTALL(UpdateTick, void, ZoomSys*)
-Location = game->GetLocation("40 55 53 48 8d 6c 24 b1 48 81 ec c8 00 00 00 48 8b d9");
+	Location = game.GetLocation("40 55 53 48 8d 6c 24 b1 48 81 ec c8 00 00 00 48 8b d9");
 $ UpdateTick;
-
+// Main Class
 class ZoomSys {
 public:
 	virtual void _unk();

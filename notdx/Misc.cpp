@@ -93,7 +93,7 @@ void User::QuestPanel() {
 	using namespace ImGui;
 	if (!sys.IsQuest) return;
 	static char idBuffer[24] = {0};
-	static auto quest = game->ScanPattern(Offsets::QUEST_2, 3).Cast<Quest*>();
+	static auto quest = game.ScanPattern(Offsets::QUEST_2, 3).Cast<Quest*>();
 	Begin("Tradecraft Info", &sys.IsQuest, ImGuiWindowFlags_NoCollapse);
 	// Header
 	Columns(4, "tradecrafts"); // 4-ways, with border

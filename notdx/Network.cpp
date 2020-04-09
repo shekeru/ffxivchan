@@ -25,6 +25,6 @@ UINT64 __fastcall hkPzPacket(INT64 a1, UINT a2, INT64 a3) {
 }
 
 void Hooks::NetworkAttach() {
-	//ProcessZonePacket = (PVOID)game->GetLocation(Offsets::NETWORK);
+	//ProcessZonePacket = (PVOID)game.GetLocation(Offsets::NETWORK);
 	//DetourAttach(&ProcessZonePacket, hkPzPacket);
 }
