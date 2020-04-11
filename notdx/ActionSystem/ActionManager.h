@@ -47,6 +47,7 @@ class ActionSys {
 public:
 	int Marauder(int);
 	int Gladiator(int);
+	int Summoner(int);
 	int Astrologian(int);
 	int DarkKnight(int);
 	int WhiteMage(int);

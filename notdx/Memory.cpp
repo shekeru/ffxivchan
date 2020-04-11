@@ -20,8 +20,8 @@ MemorySystem::MemorySystem(const char* exe_name) {
 	o_security_check_cookie = ScanPattern("e8 ? ? ? ? 4c 8d 9c 24 80 03 00", 1).Cast<PVOID>(); 
 	DetourAttach(&o_security_check_cookie, hk_security_check_cookie); 
 	// Continue as Normal?
-	DetourTransactionCommit(); xiv = new FFXIV();
 	printf("ffxiv Executable Start -> %p\n", baseModule.lpBaseOfDll);
+	DetourTransactionCommit(); xiv = new FFXIV();
 };
 
 auto SignatureArray(char* ptr) {

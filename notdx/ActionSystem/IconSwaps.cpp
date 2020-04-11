@@ -52,6 +52,8 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 			return self->GunBreaker(action);
 		case Job::Dancer:
 			return self->Dancer(action);
+		case Job::Summoner:
+			return self->Summoner(action);
 		}
 	}; return self->GetIcon(action);
 };
@@ -350,6 +352,19 @@ int ActionSys::GunBreaker(int action) {
 		if (HUD->Charges >= 2)
 			return GetIcon(Action::Burst_Strike);
 		break;
+	}; return GetIcon(action);
+};
+
+int ActionSys::Summoner(int action) {
+	target = xiv->LocalActor->TargetPtr();
+	switch (action) {
+	case Action::Ruin:
+		if (target && target->IsType(EntityType::Monster)) {
+			if (lvl >= 2 && !(target->HasAura(Status::Bio) || target->HasAura(Status::Bio_II)))
+				return GetIcon(Action::Bio);
+			if (lvl >= 6 && !(target->HasAura(Status::Miasma)))
+				return GetIcon(Action::Miasma);
+		}; break;
 	}; return GetIcon(action);
 };
 

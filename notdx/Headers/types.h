@@ -99,6 +99,10 @@ namespace Action {
 		Thunder_II = 148,
 		Fire_III = 152,
 		Blizzard_III = 154,
+		// ARC
+		Ruin = 163,
+		Bio = 164,
+		Miasma = 168,
 		// WAR
 		Mythril_Tempest = 16462,
 		// ROG
@@ -203,6 +207,11 @@ namespace Status {
 		Freecure = 155,
 		Regen = 158,
 		Swiftcast = 167,
+		// SMN
+		Bio = 179,
+		Miasma = 180,
+		Miasma_II  = 188,
+		Bio_II  = 189,
 		// AST
 		Aspected_Benefic = 835,
 		Aspected_Helios = 836,
