@@ -122,3 +122,15 @@ public:
 		return dance + phase;
 	}
 };
+
+class AST_HUD : JobGauge {
+public:
+	int _unk; UCHAR 
+		Card, Seal[3];
+	bool InSet() {
+		for (char i = 0; i < 3; i++) {
+			if (i[Seal] == 1 + Card % 3)
+				return true;
+		}; return false;
+	}
+};

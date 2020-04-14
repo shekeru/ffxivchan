@@ -13,10 +13,15 @@ Actor* Actor::TargetPtr() {
 	xiv->LocalActor->HasAura
 #define Combo \
 	xiv->ComboSys
+#define BasicCombo(L, N) \
+	if (lvl >= L && Combo->Is(Action::##N))
+#define SetAction(Name) \
+	return GetIcon(Action::##Name);
 
 INT64 GetIcon::Detour(ActionSys* self, int action) {
 	if (xiv->LocalActor) {
 		lvl = xiv->LocalActor->JobLevel();
+		target = xiv->LocalActor->TargetPtr();
 	switch (xiv->LocalActor->ClassJob()) {
 		case Job::Conjurer:
 		case Job::White_Mage:
@@ -123,27 +128,23 @@ int ActionSys::Pugilist(int action) {
 
 int ActionSys::Dragoon(int action) {
 	switch (action) {
-		// Buffing Damage
-		case Action::Disembowel:
-			if (lvl >= 50 && Combo->Is(Action::Disembowel))
-				return GetIcon(Action::Chaos_Thrust);
-			return GetIcon(Action::Disembowel);
+		case Action::Lance_Charge:
+			BasicCombo(50, Disembowel)
+				SetAction(Chaos_Thrust); 
+			break;
 		case Action::True_Thrust:
-			// Brain Dead Rotation
-			if (lvl >= 4 && Combo->Is(Action::True_Thrust)) {
+			BasicCombo(4, True_Thrust) {
 				if (lvl >= 18 && !effect(Status::Disembowel, 7.5f))
-					return GetIcon(Action::Disembowel);
-				return GetIcon(Action::Vorpal_Thrust);
-			}; if (lvl >= 26 && Combo->Is(Action::Vorpal_Thrust))
-				return GetIcon(Action::Full_Thrust);
-			if (lvl >= 50 && Combo->Is(Action::Disembowel))
-				return GetIcon(Action::Chaos_Thrust);
-			return GetIcon(Action::True_Thrust);
+					SetAction(Disembowel); SetAction(Vorpal_Thrust);
+			}; BasicCombo(26, Vorpal_Thrust) {
+				if (lvl >= 6 && CanCast(Action::Life_Surge))
+					SetAction(Life_Surge); SetAction(Full_Thrust);
+			}; break;
 	};  return GetIcon(action);
 };
 
 int ActionSys::Astrologian(int action) {
-	target = xiv->LocalActor->TargetPtr();
+	local HUD = (AST_HUD*)xiv->JobHud;
 	switch (action) {
 	case Action::Benefic:
 		if (!target || target->IsType(EntityType::Monster))
@@ -163,12 +164,17 @@ int ActionSys::Astrologian(int action) {
 		if (lvl >= 12 && target && !target->CurrentHP())
 			if (!target->IsType(EntityType::Monster))
 				return GetIcon(Action::Ascend); break;
+	case Action::Draw:
+		if (lvl >= 40 && HUD->Card)
+			return GetIcon(Action::Redraw); break;
+	case Action::Play:
+		if (lvl >= 50 && HUD->InSet())
+			return GetIcon(Action::MinorArcana); break;
 	}; return GetIcon(action);
 };
 
 int ActionSys::WhiteMage(int action) {
 	local HUD = (WHM_HUD*) xiv->JobHud;
-	target = xiv->LocalActor->TargetPtr();
 	switch (action) {
 	case Action::Stone:
 		if (lvl >= 4 && target && target->IsType(EntityType::Monster)) {
@@ -179,7 +185,7 @@ int ActionSys::WhiteMage(int action) {
 	case Action::Cure:
 		if (!target || target->IsType(EntityType::Monster))
 			target = xiv->LocalActor;
-		if (lvl >= 25 && !target->HasAura(Status::Regen))
+		if (lvl >= 35 && !target->HasAura(Status::Regen))
 				return GetIcon(Action::Regen);
 		return GetIcon(Action::Cure);
 	case Action::CureII:
@@ -199,7 +205,6 @@ int ActionSys::WhiteMage(int action) {
 
 int ActionSys::BlackMage(int action) {
 	local HUD = (BLM_HUD*)xiv->JobHud;
-	target = xiv->LocalActor->TargetPtr();
 	switch (action) {
 	case Action::Fire:
 		if (lvl >= 34 && !HUD->Fire())
@@ -211,7 +216,6 @@ int ActionSys::BlackMage(int action) {
 }
 
 int ActionSys::Archer(int action) {
-	target = xiv->LocalActor->TargetPtr();
 	switch (action) {
 	case Action::Heavy_Shot:
 		// Brain Dead Rotation
@@ -238,65 +242,48 @@ int ActionSys::Rogue(int action) {
 };
 
 int ActionSys::Samurai(int action) {
-	// Instant-Cast/Non-Instant Switches, Harder
 	switch (action) {
-	case Action::Gekko:
-		if (lvl >= 4 && Combo->Is(Action::Hakaze))
-			return GetIcon(Action::Jinpu);
-		if (lvl >= 30 && Combo->Is(Action::Jinpu))
-			return GetIcon(Action::Gekko);
-		return GetIcon(Action::Hakaze);
-	case Action::Kasha:
-		if (lvl >= 18 && Combo->Is(Action::Hakaze))
-			return GetIcon(Action::Shifu);
-		if (lvl >= 40 && Combo->Is(Action::Shifu))
-			return GetIcon(Action::Kasha);
-		return GetIcon(Action::Hakaze);
-	case Action::Yukikaze:
-		return GetIcon(Combo->Is(Action::Hakaze) 
-			? Action::Yukikaze : Action::Hakaze);
 	}; return GetIcon(action);
 };
 
 
 int ActionSys::RedMage(int action) {
-	local HUD = (RDM_HUD*)xiv->JobHud;
-	using namespace Status; using namespace Action;
+	local HUD = (RDM_HUD*)xiv->JobHud; namespace S = Status;
 	// Instant-Cast/Non-Instant Switches, Harder
-	if (effect(Dualcast) || effect(Swiftcast)) switch (action) {
-	case Scatter:
-		return GetIcon(Scatter);
-	case Jolt: 
+	if (effect(S::Dualcast) || effect(S::Swiftcast)) 
+	switch (action) {
+	case Action::Scatter:
+		SetAction(Scatter);
+	case Action::Jolt:
 	// White Mana Need (Veraero)
-		if (lvl >= 10 && !effect(VerstoneReady)) {
-			if (effect(VerfireReady) || 
+		if (lvl >= 10 && !effect(S::VerstoneReady)) {
+			if (effect(S::VerfireReady) || 
 				HUD->WhiteMana <= HUD->BlackMana)
-				return GetIcon(Veraero);
+				SetAction(Veraero);
 		};
 	// Black Mana Need (Verthunder)
-		if (lvl >= 4 && !effect(VerfireReady)) {
-			return GetIcon(Verthunder);
-		}; 
+		if (lvl >= 4 && !effect(S::VerfireReady))
+			SetAction(Verthunder);
 	// Otherwise, Nothing
-		return GetIcon(Jolt);
+		SetAction(Jolt);
 	} switch (action) {
 	// Check for Proc Skills on Jolt, Easy
-	case Jolt:
-		if (effect(VerstoneReady))
-			return GetIcon(Verstone);
-		if (effect(VerfireReady))
-			return GetIcon(Verfire);
-		return GetIcon(Jolt);
+	case Action::Jolt:
+		if (effect(S::VerstoneReady))
+			SetAction(Verstone);
+		if (effect(S::VerfireReady))
+			SetAction(Verfire);
+		SetAction(Jolt);
 		// Flip AoE, based on mana needs
-	case Scatter:
-		return (lvl >= 22 && HUD->WhiteMana <= HUD->BlackMana)
-			? GetIcon(Veraero_II) : GetIcon(Verthunder_II);
+	case Action::Scatter:
+		if (lvl >= 22 && HUD->WhiteMana <= HUD->BlackMana)
+			SetAction(Veraero_II); SetAction(Verthunder_II);
 		// Melee Section
-	case Riposte:
-		if (lvl >= 35 && Combo->Is(Riposte))
-			return GetIcon(Zwerchhau);
-		if (lvl >= 50 && Combo->Is(Zwerchhau))
-			return GetIcon(Redoublement);
+	case Action::Riposte:
+		BasicCombo(35, Riposte)
+			SetAction(Zwerchhau);
+		BasicCombo(50, Zwerchhau)
+			SetAction(Redoublement);
 	}; return GetIcon(action);
 };
 
@@ -329,14 +316,21 @@ int ActionSys::Dancer(int action) {
 };
 
 int ActionSys::GunBreaker(int action) {
+	auto dzPtr = ActionRecast(Action::Danger_Zone);
 	local HUD = (GNB_HUD*)xiv->JobHud;
 	switch (action) {
 	case Action::Keen_Edge:
+		// Weaving?
+		if (lvl >= 18 && dzPtr && !dzPtr->Cooldown)
+			return GetIcon(Action::Danger_Zone);
+		// Drop Maxed Charges
+		if (HUD->Charges >= 2)
+			return GetIcon(Action::Burst_Strike);
+		// Continue Combo
 		if (lvl >= 4 && Combo->Is(Action::Keen_Edge))
 			return GetIcon(Action::Brutal_Shell);
 		if (lvl >= 26 && Combo->Is(Action::Brutal_Shell))
 			return GetIcon(Action::Solid_Barrel);
-
 		break;
 	case Action::Demon_Slice:
 		if (lvl >= 40 && Combo->Is(Action::Demon_Slice))
@@ -348,15 +342,10 @@ int ActionSys::GunBreaker(int action) {
 			case 2:
 				return GetIcon(Action::Wicked_Talon);
 		}; break;
-	case Action::Danger_Zone:
-		if (HUD->Charges >= 2)
-			return GetIcon(Action::Burst_Strike);
-		break;
 	}; return GetIcon(action);
 };
 
 int ActionSys::Summoner(int action) {
-	target = xiv->LocalActor->TargetPtr();
 	switch (action) {
 	case Action::Ruin:
 		if (target && target->IsType(EntityType::Monster)) {

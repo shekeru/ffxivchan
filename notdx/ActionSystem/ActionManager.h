@@ -68,7 +68,10 @@ public:
 		return GetRecastPtr.Call(this, GetRecastIndex
 			.Call(this, flag, action));
 	};
-// Detouring
+	bool CanCast(int action) {
+		auto ptr = ActionRecast(action);
+		return ptr && !ptr->Cooldown;
+	}; // Detouring
 	static void Attach() {
 		printf("Attaching to ActionSys!!\n");
 		::RequestAction.Attach();

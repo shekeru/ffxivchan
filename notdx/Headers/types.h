@@ -73,7 +73,9 @@ namespace Action {
 		// LNC
 		True_Thrust = 75,
 		Vorpal_Thrust = 78,
+		Life_Surge = 83,
 		Full_Thrust = 84,
+		Lance_Charge = 85,
 		Disembowel = 87,
 		Chaos_Thrust = 88,
 		// RNG
@@ -111,6 +113,8 @@ namespace Action {
 		Gust_Slash = 2242,
 		Aeolian_Edge = 2255,
 		// AST
+		Draw = 3590,
+		Redraw = 3593,
 		Benefic = 3594,
 		Aspected_Benefic = 3595,
 		Malefic = 3596,
@@ -177,9 +181,11 @@ namespace Action {
 		Burst_Strike = 16162,
 		// WHM
 		Afflatus_Solace = 16531,
-		// PLD 2
+		// Changes
 		Total_Eclipse = 7381,
+		MinorArcana = 7443,
 		Prominence = 16457,
+		Play = 17055,
 	};
 };
 
