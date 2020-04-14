@@ -243,7 +243,7 @@ namespace Status {
 };
 
 namespace CombatFlags {
-	enum Mask : char {
+	enum Mask : unsigned char {
 		None = '\0',
 		IsAggressive = 1 << 0,
 		InCombat = 1 << 1,
@@ -257,7 +257,7 @@ namespace CombatFlags {
 };
 
 namespace EntityType {
-	enum Type : char {
+	enum Type : unsigned char {
 		Unknown = '\0',
 		Player = 1 << 0,
 		Monster = 1 << 1,

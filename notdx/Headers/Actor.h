@@ -128,9 +128,26 @@ public:
 	int _unk; UCHAR 
 		Card, Seal[3];
 	bool InSet() {
+		auto Option = Aspect();
 		for (char i = 0; i < 3; i++) {
-			if (i[Seal] == 1 + Card % 3)
+			if (i[Seal] == Option)
 				return true;
 		}; return false;
+	}
+	UCHAR Aspect() {
+		switch (Card)
+		{
+		case 1:
+		case 2:
+			return 1;
+		case 3:
+		case 5:
+			return 2;
+		case 4:
+		case 6:
+			return 3;
+		default:
+			return -1;
+		};
 	}
 };

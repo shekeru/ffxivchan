@@ -169,7 +169,7 @@ int ActionSys::Astrologian(int action) {
 			return GetIcon(Action::Redraw); break;
 	case Action::Play:
 		if (lvl >= 50 && HUD->InSet())
-			return GetIcon(Action::MinorArcana); break;
+			SetAction(MinorArcana); break;
 	}; return GetIcon(action);
 };
 
