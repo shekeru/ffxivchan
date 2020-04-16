@@ -13,8 +13,8 @@ Actor* Actor::TargetPtr() {
 	xiv->LocalActor->HasAura
 #define Combo \
 	xiv->ComboSys
-#define BasicCombo(L, N) \
-	if (lvl >= L && Combo->Is(Action::##N))
+#define BasicCombo(L, N, RS) \
+	if (lvl >= L && Combo->Is(Action::##N) RS)
 #define SetAction(Name) \
 	return GetIcon(Action::##Name);
 
@@ -39,6 +39,7 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 			return self->Astrologian(action);
 		case Job::Dark_Knight:
 			return self->DarkKnight(action);
+		case Job::Monk:
 		case Job::Pugilist:
 			return self->Pugilist(action);
 		case Job::Dragoon:
@@ -48,6 +49,7 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 		case Job::Archer:
 			return self->Archer(action);
 		case Job::Rogue:
+		case Job::Ninja:
 			return self->Rogue(action);
 		case Job::Samurai:
 			return self->Samurai(action);
@@ -117,12 +119,18 @@ int ActionSys::Pugilist(int action) {
 	switch (action) {
 	case Action::Bootshine:
 		if (lvl >= 4 && effect(Status::Raptor_Form)) {
-			if (lvl >= 18 && !effect(Status::Twin_Snakes, 1.0f))
-				return GetIcon(Action::Twin_Snakes);
-			return GetIcon(Action::True_Strike);
+			if (lvl >= 18 && !effect(Status::Twin_Snakes, 2.5f))
+				SetAction(Action::Twin_Snakes);
+			SetAction(Action::True_Strike);
 		} if (lvl >= 6 && effect(Status::Coeurl_Form))
-			return GetIcon(Action::Snap_Punch);
-		return GetIcon(Action::Bootshine);
+			SetAction(Snap_Punch); 
+		SetAction(Bootshine);
+	case Action::Arm_of_Destroyer:
+		if (lvl >= 30 && effect(Status::Coeurl_Form))
+			SetAction(Demolish);
+		if (lvl >= 25 && effect(Status::Raptor_Form))
+			SetAction(Fourpoint_Fury);
+		break;
 	}; return GetIcon(action);
 };
 
@@ -131,14 +139,16 @@ int ActionSys::Dragoon(int action) {
 		case Action::Lance_Charge:
 			BasicCombo(50, Disembowel)
 				SetAction(Chaos_Thrust); 
+			BasicCombo(26, Vorpal_Thrust, && 
+				CanCast(Action::Life_Surge))
+				SetAction(Life_Surge); 
 			break;
 		case Action::True_Thrust:
 			BasicCombo(4, True_Thrust) {
 				if (lvl >= 18 && !effect(Status::Disembowel, 7.5f))
 					SetAction(Disembowel); SetAction(Vorpal_Thrust);
 			}; BasicCombo(26, Vorpal_Thrust) {
-				if (lvl >= 6 && CanCast(Action::Life_Surge))
-					SetAction(Life_Surge); SetAction(Full_Thrust);
+				 SetAction(Full_Thrust);
 			}; break;
 	};  return GetIcon(action);
 };
@@ -164,12 +174,15 @@ int ActionSys::Astrologian(int action) {
 		if (lvl >= 12 && target && !target->CurrentHP())
 			if (!target->IsType(EntityType::Monster))
 				return GetIcon(Action::Ascend); break;
+	//case Action::Draw:
+	//	if (lvl >= 40 && HUD->Card)
+	//		return GetIcon(Action::Redraw); break;
 	case Action::Draw:
-		if (lvl >= 40 && HUD->Card)
-			return GetIcon(Action::Redraw); break;
-	case Action::Play:
+		if (!HUD->Card)
+			return Action::Draw;
 		if (lvl >= 50 && HUD->InSet())
-			SetAction(MinorArcana); break;
+			SetAction(MinorArcana);
+		SetAction(Play);
 	}; return GetIcon(action);
 };
 
@@ -364,9 +377,8 @@ char IsIconReplaceable::Detour(int action) {
 bool Actor::HasAura(int value, float margin, UINT castSrc) {
 	auto Effects = AuraList(); if (!castSrc)
 		castSrc = xiv->LocalActor->EntityId();
-	// might be 60??
 	for (int i = 0; i < 30; i++)
 		if (Effects[i].Type == value && Effects[i].CastId == castSrc)
-			return Effects[i].Timer >= margin || Effects[i].Timer <= NULL;
+			return Effects[i].Timer >= margin || Effects[i].Timer < NULL;
 	return false;
 };

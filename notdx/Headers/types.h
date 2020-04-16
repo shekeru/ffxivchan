@@ -70,6 +70,10 @@ namespace Action {
 		True_Strike = 54,
 		Snap_Punch = 56,
 		Twin_Snakes = 61,
+		Arm_of_Destroyer = 62,
+		Demolish = 66,
+		Rockbreaker = 70,
+		Fourpoint_Fury = 16473,
 		// LNC
 		True_Thrust = 75,
 		Vorpal_Thrust = 78,
