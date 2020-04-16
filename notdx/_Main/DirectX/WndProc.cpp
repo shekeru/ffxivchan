@@ -4,7 +4,7 @@
 #include "examples/imgui_impl_dx11.h"
 #include "_Resources/resource.h"
 
-void Interface::StartGUI(HWND descW) {
+void IM_Engine::StartGUI(HWND descW) {
 	ctx = ImGui::CreateContext();
 	ImGui_ImplWin32_Init(hWindow = descW);
 	ImGui_ImplDX11_Init(pDevice, pImmediateContext);
@@ -23,7 +23,7 @@ void Interface::StartGUI(HWND descW) {
 	});
 };
 
-Interface::~Interface() {
+IM_Engine::~IM_Engine() {
 	// Clean imgui
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
@@ -45,7 +45,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return true;
 }
 
-bool Interface::ProcessMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
+bool IM_Engine::ProcessMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg) {
 	case WM_MBUTTONDBLCLK:
@@ -71,7 +71,7 @@ bool Interface::ProcessMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-bool Interface::ProcessMouseMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
+bool IM_Engine::ProcessMouseMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	auto key = VK_LBUTTON;
 	auto state = KeyState::None;
@@ -110,7 +110,7 @@ bool Interface::ProcessMouseMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return true;
 }
 
-bool Interface::ProcessKeybdMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
+bool IM_Engine::ProcessKeybdMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	auto key = wParam;
 	auto state = KeyState::None;
@@ -144,17 +144,17 @@ bool Interface::ProcessKeybdMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return true;
 }
 
-KeyState Interface::GetKeyState(uint32_t vk)
+KeyState IM_Engine::GetKeyState(uint32_t vk)
 {
 	return Keymap[vk];
 }
 
-bool Interface::IsKeyDown(uint32_t vk)
+bool IM_Engine::IsKeyDown(uint32_t vk)
 {
 	return Keymap[vk] == KeyState::Down;
 }
 
-bool Interface::WasKeyPressed(uint32_t vk)
+bool IM_Engine::WasKeyPressed(uint32_t vk)
 {
 	if (Keymap[vk] == KeyState::Pressed) {
 		Keymap[vk] = KeyState::Up;
@@ -163,12 +163,12 @@ bool Interface::WasKeyPressed(uint32_t vk)
 	return false;
 }
 
-void Interface::RegisterHotkey(uint32_t vk, function<void(void)> f)
+void IM_Engine::RegisterHotkey(uint32_t vk, function<void(void)> f)
 {
 	Hotkeys[vk] = f;
 }
 
-void Interface::RemoveHotkey(uint32_t vk)
+void IM_Engine::RemoveHotkey(uint32_t vk)
 {
 	Hotkeys[vk] = nullptr;
 }

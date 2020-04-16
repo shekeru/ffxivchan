@@ -10,7 +10,7 @@ void Strtrim(char* str) {
 ImVector<char*>       History;
 int                   HistoryPos;    // -1: new line, 0..History.Size-1 browsing history.
 int TextEditCallback(ImGuiInputTextCallbackData* data);
-void User::LuaConsole() {
+void User2::LuaConsole() {
 	if (!sys.IsRepl) return;
 	static bool scroll = false;
 	static ImGuiStyle& style = ImGui::GetStyle();

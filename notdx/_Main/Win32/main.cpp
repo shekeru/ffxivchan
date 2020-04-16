@@ -18,7 +18,7 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
 	//printf("chat_pb, chats: %p, %p\n", chat_pb, chat);
 	while (!sys.Stop) {
 		Sleep(1000);
-	}; sys.~Interface();
+	}; sys.~IM_Engine();
 FreeLibrary:
 	FreeLibraryAndExitThread(hInstance, 1);
 }

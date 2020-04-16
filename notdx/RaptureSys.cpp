@@ -124,13 +124,6 @@ __int64 FlagWriter(void* ptr, int state, char* skill, unsigned int action, int e
 	return original(ptr, state, skill, action, ex);
 }
 
-PVOID CAST2;
-void hkCAST2(void* ptr) {
-	ORIGINAL(hkCAST2, CAST2);
-	printf("cast2: %p\n", ptr);
-	//original(ptr);
-}
-
 PVOID UpdatesBarInteger; PVOID cRelated;
 void hkUpdatesBarInteger(__int64 rcx, __int64 rdx, int r8d) {
 	ORIGINAL(hkUpdatesBarInteger, UpdatesBarInteger);
@@ -191,7 +184,6 @@ void Hooks::RaptureAttach() {
 	WindowReady = game.ScanPattern("48 8b ce e8 ? ? ? ? 48 8b 4d 4f", 4).Cast<PVOID>();
 	SendAction = game.ScanPattern("e8 ? ? ? ? 8b 44 24 20 c1 e8 05", 1).Cast<PVOID>();
 	FlagSwitch = game.ScanPattern("cf 89 44 24 20 e8 ? ? ? ? b0 01", 6).Cast<PVOID>();
-	CAST2 = game.GetLocation("40 53 48 83 ec 20 83 b9 30 09 00 00 00 48 8b d9 7e 57 48");
 	// Attachments
 	DetourAttach(&CtxSets_R5, hkCtxSets_R5);
 	DetourAttach(&SpawnWindow, hkSpawnWindow);
@@ -199,8 +191,6 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&WindowReady, hkWindowReady);
 	DetourAttach(&SendAction, hkSendAction);
 	//DetourAttach(&FlagSwitch, FlagWriter);
-	//DetourAttach(&CAST2, hkCAST2);
-
 	//UpdatesBarInteger = game.ScanPattern("e8 ? ? ? ? 44 8b 65 97 eb 30", 1)
 	//	.Cast<PVOID>(); DetourAttach(&UpdatesBarInteger, hkUpdatesBarInteger);
 	//BarInteger_Parent = game.ScanPattern("e8 ? ? ? ? eb 20 e8 ? ? ? ? 8d 56 ff", 1)

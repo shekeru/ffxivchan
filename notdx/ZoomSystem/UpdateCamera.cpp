@@ -6,7 +6,7 @@ void UpdateTick::Detour(ZoomSys* self) {
 	(Camera = self)->UpdateTick();
 }
 
-void User::ZoomPanel() {
+void User2::ZoomPanel() {
 	using namespace ImGui; if (!sys.IsZoom) return; 
 	Begin("Zoom Panel", &sys.IsZoom, ImGuiWindowFlags_NoCollapse);
 	Text("Current Object: %p", Camera); if (Camera) {

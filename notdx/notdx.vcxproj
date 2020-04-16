@@ -105,7 +105,6 @@
     <ClInclude Include="xiv\ChatLog.h" />
     <ClInclude Include="Headers\types.h" />
     <ClInclude Include="ZoomSystem\ZoomManager.h" />
-    <ClInclude Include="_Main\logs.h" />
     <ClInclude Include="xiv\Market.h" />
     <ClInclude Include="xiv\Network.h" />
     <ClInclude Include="xiv\Quest.h" />
@@ -166,8 +165,10 @@
     <ClCompile Include="ActionSystem\ForceQueue.cpp" />
     <ClCompile Include="ActionSystem\IconSwaps.cpp" />
     <ClCompile Include="Context.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="LuaVM\Console.cpp" />
     <ClCompile Include="LuaVM\VM.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Market.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Network.cpp" />

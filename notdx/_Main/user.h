@@ -1,5 +1,6 @@
 #pragma once
-#include "logs.h"
+#include "vmt.h"
+#include "imgui.h"
 #include "Managers.h"
 // Fucking ImGUI autism
 #include <functional>
@@ -12,9 +13,9 @@ enum class KeyState
 	Up,
 	Pressed /*Down and then up*/
 }; DEFINE_ENUM_FLAG_OPERATORS(KeyState);
-class Interface {
+inline class IM_Engine {
 public:
-	~Interface();
+	~IM_Engine();
 	// Input Shit
 	bool IsKeyDown(uint32_t vk);
 	bool WasKeyPressed(uint32_t vk);
@@ -43,19 +44,31 @@ public:
 	void ResizeTarget();
 private:
 	function<void(void)> Hotkeys[256]; KeyState Keymap[256];
-}; inline Interface sys; LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+} sys; LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+// Move This Later
 inline map<string, PVOID> Windows;
+// User Shit
+class Logging {
+public:
+	bool scroll; deque<char*> Items;
+	void Render(), Log(const char* fmt...);
+};
+class LogWindow {
+public:
+	LogWindow(); void Render(); bool IsOpen;
+	map<const char*, Logging*> windows;
+};
+// Macros
+#define show(EXP) \
+	User.log.windows[#EXP]->Log
 // User Components
-namespace User {
+inline class IM_Interface {
+public:
+	bool IsOpen, ShowDemo;
+	LogWindow log; void Render(); 
+} User;
+namespace User2 {
 	void MainMenuBar(), NameOverlay(), ZoomPanel(),
-		LuaConsole(), SpinBotting(), QuestPanel(), 
-	MusicPanel(); inline LogWindow log = LogWindow();
-	inline void GenerateFrame() {
-		if (sys.IsOpen) {
-			log.Render(); if (sys.IsDemo)
-				ImGui::ShowDemoWindow(&sys.IsDemo);
-			MainMenuBar(); LuaConsole(); QuestPanel(); ZoomPanel();
-		} else NameOverlay(); SpinBotting(); MusicPanel();
-	};
+		LuaConsole(), QuestPanel(), MusicPanel(); 
 };
