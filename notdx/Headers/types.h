@@ -102,6 +102,8 @@ namespace Action {
 		Fire = 141,
 		Blizzard = 142,
 		Thunder = 144,
+		Blizzard_II = 146,
+		Fire_II = 147,
 		Thunder_II = 148,
 		Fire_III = 152,
 		Blizzard_III = 154,

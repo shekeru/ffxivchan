@@ -219,12 +219,15 @@ int ActionSys::WhiteMage(int action) {
 int ActionSys::BlackMage(int action) {
 	local HUD = (BLM_HUD*)xiv->JobHud;
 	switch (action) {
+	case Action::Blizzard_II:
+		if (lvl >= 18 && !HUD->Ice())
+			SetAction(Fire_II); break;
 	case Action::Fire:
 		if (lvl >= 34 && !HUD->Fire())
-			return Action::Fire_III;
+			SetAction(Fire_III); break;
 	case Action::Blizzard:
 		if (lvl >= 40 && !HUD->Ice())
-			return Action::Blizzard_III;
+			SetAction(Blizzard_III); break;
 	}; return GetIcon(action);
 }
 
