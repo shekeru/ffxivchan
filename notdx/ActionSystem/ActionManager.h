@@ -8,7 +8,8 @@ public:
 }; class ActionSys;
 // Method: IsIconReplaceable
 INSTALL(IsIconReplaceable, char, int)
-	Location = game.GetLocation("81 f9 2e 01 00 00 7f 39 81 f9");
+	Location = game.GetLocation
+		("81 f9 2e 01 00 00 7f 39 81 f9");
 $ IsIconReplaceable;
 // Method: GetIcon
 INSTALL(GetIcon, INT64, ActionSys*, int)
@@ -18,7 +19,8 @@ INSTALL(GetIcon, INT64, ActionSys*, int)
 $ GetIcon;
 // Method: RequestAction
 INSTALL(RequestAction, char, ActionSys*, UINT, UINT, INT64, INT, UINT, INT)
-	Location = game.GetLocation("40 53 55 57 41 54 41 57 48 83 ec 60");
+	Location = game.GetLocation
+		("40 53 55 57 41 54 41 57 48 83 ec 60");
 $ RequestAction;
 // Method: AllowRequestsGCD
 INSTALL(AllowRequestsGCD, char, ActionSys*, UINT, UINT)
@@ -32,11 +34,11 @@ INSTALL(GetRecastIndex, INT64, ActionSys*, UINT, UINT)
 		("e8 ? ? ? ? 83 f8 39 48", 1)
 	.Cast<PVOID>();
 $ GetRecastIndex;
-// Method: GetRecastPtr
-INSTALL(GetRecastPtr, Recast*, ActionSys*, UINT)
+// Method: GetRecastStruct
+INSTALL(GetRecastStruct, Recast*, ActionSys*, UINT)
 	Location = game.GetLocation
 		("40 53 48 83 ec 20 48 63 da 85 d2 78");
-$ GetRecastPtr;
+$ GetRecastStruct;
 // Main Class
 class ActionSys {
 // Local Data
@@ -65,7 +67,7 @@ public:
 		RESTORE(::GetIcon, action);
 	}; 
 	Recast* ActionRecast(int action, int flag = 1) {
-		return GetRecastPtr.Call(this, GetRecastIndex
+		return GetRecastStruct.Call(this, GetRecastIndex
 			.Call(this, flag, action));
 	};
 	bool CanCast(int action) {

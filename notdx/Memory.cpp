@@ -24,7 +24,7 @@ MemorySystem::MemorySystem(const char* exe_name) {
 	DetourTransactionCommit(); xiv = new FFXIV();
 };
 
-auto SignatureArray(char* ptr) {
+vector<short> MemorySystem::SignatureArray(char* ptr) {
 	auto Vec = vector<short>{};
 	for (char* end = ptr + strlen(ptr); ptr < end; ptr++) {
 		if ('?' == *ptr) {
@@ -32,19 +32,6 @@ auto SignatureArray(char* ptr) {
 		} else Vec.push_back(strtoul
 			(ptr, &ptr, 16));
 	}; return Vec;
-};
-
-template<typename TYPE>
-TYPE* MemorySystem::GetLocation(const char* signature, int start) {
-	auto bytes = (UCHAR*) baseModule.lpBaseOfDll;
-	auto Vec = SignatureArray((char*) signature);
-	auto End = baseModule.SizeOfImage - Vec.size(); 
-	for (auto i = 0ul; i < End; i++) {
-		bool found = true; for (auto j = 0ul; j < Vec.size(); j++)
-			if (bytes[i + j] != Vec[j] && Vec[j] != -1) {
-				found = false; break;
-		}; if (found) return (TYPE*)(bytes + i + start);
-	}; return (TYPE*) printf("SCAN FAILURE: %s\n", signature);
 };
 
 void MemorySystem::StackTrace() {

@@ -4,7 +4,7 @@ Actor* Actor::TargetPtr() {
 	int& target = TargetID(); if (target)
 	for (int i = 0; i <= 423; i++) {
 		auto ptr = xiv->CharMap[i];
-		if (ptr && target == ptr->EntityId())
+		if (ptr && target == ptr->EntityID())
 				return ptr;
 	}; return NULL;
 }; Actor* target; UCHAR lvl;
@@ -376,7 +376,7 @@ char IsIconReplaceable::Detour(int action) {
 
 bool Actor::HasAura(int value, float margin, UINT castSrc) {
 	auto Effects = AuraList(); if (!castSrc)
-		castSrc = xiv->LocalActor->EntityId();
+		castSrc = xiv->LocalActor->EntityID();
 	for (int i = 0; i < 30; i++)
 		if (Effects[i].Type == value && Effects[i].CastId == castSrc)
 			return Effects[i].Timer >= margin || Effects[i].Timer < NULL;

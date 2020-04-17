@@ -7,31 +7,28 @@ typedef struct Aura {
 	FLOAT Timer; UINT CastId;
 } Aura;
 
-#define FieldRef(TYPE, NAME, SIG, IX) \
-	TYPE& NAME() { local offset = *game.GetLocation \
+#define FieldRef(TYPE, NAME, SIG, IX, T) \
+	TYPE& NAME() { local offset = *game.GetLocation<T> \
 	(SIG, IX); return *(TYPE*)(uintptr_t(this) + offset); }
 
-#define FieldPtr(TYPE, NAME, SIG, IX) \
-	TYPE* NAME() { local offset = *game.GetLocation \
+#define FieldPtr(TYPE, NAME, SIG, IX, T) \
+	TYPE* NAME() { local offset = *game.GetLocation<T> \
 	(SIG, IX); return (TYPE*)(uintptr_t(this) + offset); }
 
 class Actor {
 public:
 	void* _vtable;
-	char pad[152];
-	float X, Z, Y;
-	int nil;
-	float Spin;
 public:
 	int& TargetID() {
 		return *(int*)(uintptr_t(this) + 496);
 	}
-	int& EntityId() {
-		return *(int*)(uintptr_t(this) + 116);
-	}
+	//int& EntityID() {
+	//	return *(int*)(uintptr_t(this) + 116);
+	//}
 	// Pointers
 	FieldPtr(Aura, AuraList, "89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
 	// Refrences
+	FieldRef(UINT, EntityID, "74 19 8b 50 ? 48 8d 0d", 4, UCHAR);
 	FieldRef(UINT, MaxHP, "45 8b 8e ? ? 00 00 49 8d", 3);
 	FieldRef(UINT, CurrentHP, "45 8b 86 ? ? 00 00 49 8b cd e8", 3);
 	FieldRef(CombatFlags::Mask, CombatFlags, "f6 80 ? ? 00 00 02 74 18 ba", 2);

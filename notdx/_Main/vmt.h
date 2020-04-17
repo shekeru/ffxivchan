@@ -84,14 +84,25 @@ public:
 	INSTANCE(VMT, Factory);
 	INSTANCE(VMT, SwapChain);
 }; class MemorySystem {
+private:
+	vector<short> SignatureArray(char* ptr);
 public:
 	MODULEINFO baseModule; void StackTrace();
 	MemorySystem(const char* exe_name = "ffxiv_dx11.exe");
-	template<typename TYPE = int> TYPE* 
-		GetLocation(const char* signature, int start = 0);
 	IntPtr ScanPattern(const char* signature, int size, int extra = 0) {
 		auto offset = GetLocation<int>(signature, size); return 
 			IntPtr(*offset + uintptr_t(offset) + 4 + extra);
+	}; template<typename TYPE = int> TYPE*
+	GetLocation(const char* signature, int start = 0) {
+		auto bytes = (UCHAR*)baseModule.lpBaseOfDll;
+		auto Vec = SignatureArray((char*)signature);
+		auto End = baseModule.SizeOfImage - Vec.size();
+		for (auto i = 0ul; i < End; i++) {
+			bool found = true; for (auto j = 0ul; j < Vec.size(); j++)
+				if (bytes[i + j] != Vec[j] && Vec[j] != -1) {
+					found = false; break;
+				}; if (found) return (TYPE*)(bytes + i + start);
+		}; return (TYPE*)printf("SCAN FAILURE: %s\n", signature);
 	}; void DetourAll();
 }; inline MemorySystem game;
 // Move Somewhere Else?
