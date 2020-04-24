@@ -80,6 +80,7 @@ namespace Action {
 		Life_Surge = 83,
 		Full_Thrust = 84,
 		Lance_Charge = 85,
+		Doom_Spike = 86,
 		Disembowel = 87,
 		Chaos_Thrust = 88,
 		// RNG
@@ -110,7 +111,10 @@ namespace Action {
 		// ARC
 		Ruin = 163,
 		Bio = 164,
+		Energy_Drain = 16508,
 		Miasma = 168,
+		Resurrection = 173,
+		Fester = 181,
 		// WAR
 		Mythril_Tempest = 16462,
 		// ROG
@@ -118,6 +122,12 @@ namespace Action {
 		Shade_Shift = 2241,
 		Gust_Slash = 2242,
 		Aeolian_Edge = 2255,
+		// MCH
+		SplitShot = 2866,
+		SlugShot = 2868,
+		HotShot = 2872,
+		CleanShot = 2873,
+		Reassemble = 2876,
 		// AST
 		Draw = 3590,
 		Redraw = 3593,
@@ -128,10 +138,14 @@ namespace Action {
 		Helios = 3600,
 		Aspected_Helios = 3601,
 		Ascend = 3603,
+		Diurnal_Sect = 3604,
+		Nocturnal_Sect = 3605,
 		// DRK
 		Hard_Slash = 3617,
 		Syphon_Strike = 3623,
 		Souleater = 3632,
+		// SB Skills
+		Sonic_Thrust = 7397,
 		// SAM
 		Hakaze = 7477,
 		Jinpu = 7478,
@@ -142,6 +156,7 @@ namespace Action {
 		Fuga = 7483,
 		Mangetsu = 7484,
 		Oka = 7485,
+		Enpi = 7486,
 		// RDM
 		Jolt = 7503,
 		Riposte = 7504,
@@ -191,7 +206,11 @@ namespace Action {
 		Total_Eclipse = 7381,
 		MinorArcana = 7443,
 		Prominence = 16457,
+		Repose = 16560,
 		Play = 17055,
+		// SCH why
+		Bio_SCH = 17864,
+		Ruin_SCH = 17869,
 	};
 };
 
@@ -218,6 +237,8 @@ namespace Status {
 		MedicaII = 150,
 		Freecure = 155,
 		Regen = 158,
+		// BLM
+		Firestarter = 165,
 		Swiftcast = 167,
 		// SMN
 		Bio = 179,

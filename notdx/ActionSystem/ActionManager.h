@@ -49,7 +49,6 @@ class ActionSys {
 public:
 	int Marauder(int);
 	int Gladiator(int);
-	int Summoner(int);
 	int Astrologian(int);
 	int DarkKnight(int);
 	int WhiteMage(int);
@@ -62,6 +61,9 @@ public:
 	int RedMage(int);
 	int GunBreaker(int);
 	int Dancer(int);
+	int Summoner(int);
+	int Scholar(int);
+	int Machinist(int);
 // Methods
 	INT64 GetIcon(int action) {
 		RESTORE(::GetIcon, action);

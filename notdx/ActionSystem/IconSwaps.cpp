@@ -18,6 +18,16 @@ Actor* Actor::TargetPtr() {
 #define SetAction(Name) \
 	return GetIcon(Action::##Name);
 
+#define MACRO_ESUNA(NAME) \
+	case Action::Esuna: \
+		if (lvl >= 12 && target && !target->CurrentHP()) \
+			if (!target->IsType(EntityType::Monster)) \
+				SetAction(NAME); break; \
+	case Action::Repose: \
+		if(lvl >= 48 && target && target->IsType(EntityType::Player)) \
+			SetAction(Rescue); break;
+
+
 INT64 GetIcon::Detour(ActionSys* self, int action) {
 	if (xiv->LocalActor) {
 		lvl = xiv->LocalActor->JobLevel();
@@ -61,6 +71,10 @@ INT64 GetIcon::Detour(ActionSys* self, int action) {
 			return self->Dancer(action);
 		case Job::Summoner:
 			return self->Summoner(action);
+		case Job::Scholar:
+			return self->Scholar(action);
+		case Job::Machinist:
+			return self->Machinist(action);
 		}
 	}; return self->GetIcon(action);
 };
@@ -128,7 +142,7 @@ int ActionSys::Pugilist(int action) {
 	case Action::Arm_of_Destroyer:
 		if (lvl >= 30 && effect(Status::Coeurl_Form))
 			SetAction(Demolish);
-		if (lvl >= 25 && effect(Status::Raptor_Form))
+		if (lvl >= 45 && effect(Status::Raptor_Form))
 			SetAction(Fourpoint_Fury);
 		break;
 	}; return GetIcon(action);
@@ -136,83 +150,78 @@ int ActionSys::Pugilist(int action) {
 
 int ActionSys::Dragoon(int action) {
 	switch (action) {
-		case Action::Lance_Charge:
-			BasicCombo(50, Disembowel)
-				SetAction(Chaos_Thrust); 
-			BasicCombo(26, Vorpal_Thrust, && 
-				CanCast(Action::Life_Surge))
-				SetAction(Life_Surge); 
-			break;
-		case Action::True_Thrust:
-			BasicCombo(4, True_Thrust) {
-				if (lvl >= 18 && !effect(Status::Disembowel, 7.5f))
-					SetAction(Disembowel); SetAction(Vorpal_Thrust);
-			}; BasicCombo(26, Vorpal_Thrust) {
-				 SetAction(Full_Thrust);
-			}; break;
+	case Action::Lance_Charge:
+		BasicCombo(50, Disembowel)
+			SetAction(Chaos_Thrust); 
+		BasicCombo(26, Vorpal_Thrust, && 
+			CanCast(Action::Life_Surge))
+			SetAction(Life_Surge); 
+		break;
+	case Action::True_Thrust:
+		BasicCombo(4, True_Thrust) {
+			if (lvl >= 18 && !effect(Status::Disembowel, 7.5f))
+				SetAction(Disembowel); SetAction(Vorpal_Thrust);
+		}; BasicCombo(26, Vorpal_Thrust) {
+			 SetAction(Full_Thrust);
+		}; break;
+	case Action::Doom_Spike:
+		BasicCombo(62, Doom_Spike)
+			SetAction(Sonic_Thrust); 
+		break;
 	};  return GetIcon(action);
 };
 
 int ActionSys::Astrologian(int action) {
 	local HUD = (AST_HUD*)xiv->JobHud;
 	switch (action) {
+	MACRO_ESUNA(Ascend)
 	case Action::Benefic:
 		if (!target || target->IsType(EntityType::Monster))
 			target = xiv->LocalActor;
 		if (lvl >= 34 && effect(Status::Dinural_Sect)
 			&& !target->HasAura(Status::Aspected_Benefic))
-			return GetIcon(Action::Aspected_Benefic); break;
+			SetAction(Aspected_Benefic); break;
 	case Action::Malefic:
 		if (lvl >= 4 && target && target->IsType(EntityType::Monster)) {
 			if (target->HasAura(Status::Combust) || target->HasAura
-				(Status::CombustII)); else return GetIcon(Action::Combust);
-		}; return GetIcon(Action::Malefic);
+				(Status::CombustII)); else SetAction(Combust);
+		}; break;
 	case Action::Helios:
 		if (lvl >= 42 && !effect(Status::Aspected_Helios))
-			return GetIcon(Action::Aspected_Helios); break;
-	case Action::Esuna:
-		if (lvl >= 12 && target && !target->CurrentHP())
-			if (!target->IsType(EntityType::Monster))
-				return GetIcon(Action::Ascend); break;
-	//case Action::Draw:
-	//	if (lvl >= 40 && HUD->Card)
-	//		return GetIcon(Action::Redraw); break;
+			SetAction(Aspected_Helios); break;
 	case Action::Draw:
 		if (!HUD->Card)
-			return Action::Draw;
+			SetAction(Draw);
 		if (lvl >= 50 && HUD->InSet())
 			SetAction(MinorArcana);
 		SetAction(Play);
+	case Action::Diurnal_Sect:
+		if (lvl >= 50 && effect(Status::Dinural_Sect))
+			SetAction(Nocturnal_Sect); break;
 	}; return GetIcon(action);
 };
 
 int ActionSys::WhiteMage(int action) {
 	local HUD = (WHM_HUD*) xiv->JobHud;
 	switch (action) {
+	MACRO_ESUNA(Raise)
 	case Action::Stone:
 		if (lvl >= 4 && target && target->IsType(EntityType::Monster)) {
 			if (target->HasAura(Status::Aero)
 				|| target->HasAura(Status::AeroII)); 
-			else return GetIcon(Action::Aero);
-		}; return GetIcon(Action::Stone);
+			else SetAction(Aero);
+		}; SetAction(Stone);
 	case Action::Cure:
 		if (!target || target->IsType(EntityType::Monster))
 			target = xiv->LocalActor;
 		if (lvl >= 35 && !target->HasAura(Status::Regen))
-				return GetIcon(Action::Regen);
-		return GetIcon(Action::Cure);
+			SetAction(Regen); break;
 	case Action::CureII:
 		if (lvl >= 52 && HUD->Lily && !effect(Status::Freecure))
-			return GetIcon(Action::Afflatus_Solace);
-		return GetIcon(Action::CureII);
+			SetAction(Afflatus_Solace); break;
 	case Action::Medica:
 		if (lvl >= 50 && !effect(Status::MedicaII))
-			return GetIcon(Action::MedicaII);
-		return GetIcon(Action::Medica);
-	case Action::Esuna:
-		if (lvl >= 12 && target && !target->CurrentHP())
-			if(!target->IsType(EntityType::Monster))
-				return GetIcon(Action::Raise); break;
+			SetAction(MedicaII); break;
 	}; return GetIcon(action);
 };
 
@@ -223,7 +232,7 @@ int ActionSys::BlackMage(int action) {
 		if (lvl >= 18 && !HUD->Ice())
 			SetAction(Fire_II); break;
 	case Action::Fire:
-		if (lvl >= 34 && !HUD->Fire())
+		if (lvl >= 34 && (!HUD->Fire() || effect(Status::Firestarter)))
 			SetAction(Fire_III); break;
 	case Action::Blizzard:
 		if (lvl >= 40 && !HUD->Ice())
@@ -236,12 +245,12 @@ int ActionSys::Archer(int action) {
 	case Action::Heavy_Shot:
 		// Brain Dead Rotation
 		if (lvl >= 2 && effect(Status::StraightShotReady))
-			return GetIcon(Action::Straight_Shot);
+			SetAction(Straight_Shot);
 		if (lvl >= 6 && target) {
 			if (!target->HasAura(Status::VenomousBite))
-				return GetIcon(Action::Venomous_Bite);
+				SetAction(Venomous_Bite);
 			if (lvl >= 30 && !target->HasAura(Status::Windbite))
-				return GetIcon(Action::Windbite);
+				SetAction(Windbite);
 		}; break;
 	}; return GetIcon(action);
 };
@@ -249,16 +258,36 @@ int ActionSys::Archer(int action) {
 int ActionSys::Rogue(int action) {
 	switch (action) {
 	case Action::Spinning_Edge:
-		if (lvl >= 4 && Combo->Is(Action::Spinning_Edge))
-			return GetIcon(Action::Gust_Slash);
-		if (lvl >= 26 && Combo->Is(Action::Gust_Slash))
-			return GetIcon(Action::Aeolian_Edge);
-		return GetIcon(Action::Spinning_Edge);
+		BasicCombo(4, Spinning_Edge)
+			SetAction(Gust_Slash);
+		BasicCombo(26, Gust_Slash) 
+			SetAction(Aeolian_Edge); 
+		break;
 	}; return GetIcon(action);
 };
 
 int ActionSys::Samurai(int action) {
 	switch (action) {
+	case Action::Hakaze:
+		BasicCombo(50, Hakaze)
+			SetAction(Yukikaze);
+		break;
+	case Action::Jinpu:
+		BasicCombo(30, Jinpu)
+			SetAction(Gekko);
+		break;
+	case Action::Shifu:
+		BasicCombo(40, Shifu)
+			SetAction(Kasha);
+		break;
+	case Action::Fuga:
+		BasicCombo(35, Fuga)
+			SetAction(Mangetsu);
+		break;
+	case Action::Enpi:
+		BasicCombo(45, Fuga)
+			SetAction(Oka);
+		break;
 	}; return GetIcon(action);
 };
 
@@ -308,19 +337,19 @@ int ActionSys::Dancer(int action) {
 	switch(action) {
 	// Single Target
 	case Action::Cascade:
-		if (effect(Status::FlourishingCascade))
-			return Action::Reverse_Cascade;
 		if (lvl >= 2 && Combo->Is(Action::Cascade))
 			return Action::Fountain;
+		if (effect(Status::FlourishingCascade))
+			return Action::Reverse_Cascade;
 		if (effect(Status::FlourishingFountain))
 			return Action::Fountainfall;
 		return Action::Cascade;
 	// AoE Rotation
 	case Action::Windmill:
-		if (effect(Status::FlourishingWindmill))
-			return Action::Rising_Windmill;
 		if (lvl >= 25 && Combo->Is(Action::Windmill))
 			return Action::Bladeshower;
+		if (effect(Status::FlourishingWindmill))
+			return Action::Rising_Windmill;
 		if (effect(Status::FlourishingShower))
 			return Action::Bloodshower;
 		return Action::Windmill;
@@ -362,6 +391,7 @@ int ActionSys::GunBreaker(int action) {
 };
 
 int ActionSys::Summoner(int action) {
+	local HUD = (SMN_HUD*) xiv->JobHud;
 	switch (action) {
 	case Action::Ruin:
 		if (target && target->IsType(EntityType::Monster)) {
@@ -370,6 +400,35 @@ int ActionSys::Summoner(int action) {
 			if (lvl >= 6 && !(target->HasAura(Status::Miasma)))
 				return GetIcon(Action::Miasma);
 		}; break;
+	case Action::Energy_Drain:
+		if (HUD->Aetherflow)
+			SetAction(Fester); 
+		break;
+	}; return GetIcon(action);
+};
+
+int ActionSys::Scholar(int action) {
+	switch (action) {
+	MACRO_ESUNA(Resurrection)
+	case Action::Ruin_SCH:
+		if (target && target->IsType(EntityType::Monster)) {
+			if (lvl >= 2 && !(target->HasAura(Status::Bio) 
+				|| target->HasAura(Status::Bio_II)))
+				SetAction(Bio_SCH);
+		}; break;
+	}; return GetIcon(action);
+};
+
+int ActionSys::Machinist(int action) {
+	switch (action) {
+	//case Action::HotShot:
+	//	BasicCombo()
+	case Action::SplitShot:
+		BasicCombo(2, SplitShot)
+			SetAction(SlugShot);
+		BasicCombo(26, SlugShot)
+			SetAction(CleanShot);
+		break;
 	}; return GetIcon(action);
 };
 

@@ -36,6 +36,9 @@ public:
 	FieldRef(UCHAR, JobLevel, "38 88 ? ? ? ? 73 08 32 c0", 2);
 	// Target Testing
 	bool HasAura(int value, float margin = 0.f, UINT castSrc = 0); Actor* TargetPtr();
+	bool IsMask(CombatFlags::Mask mask) {
+		return CombatFlags() & mask;
+	};
 	bool IsType(EntityType::Type type) {
 		return type == *(EntityType::Type*)
 			(uintptr_t(this) + 0x8c);
@@ -147,4 +150,11 @@ public:
 			return -1;
 		};
 	}
+};
+
+
+class SMN_HUD : JobGauge {
+public:
+	int _unk; UCHAR 
+		Aetherflow;
 };
