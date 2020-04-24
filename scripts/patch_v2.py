@@ -7,8 +7,10 @@ class ReadPattern:
             Signature += s.Arr[s.Et] + " "; s.Et += 1
         s.Addr = idc.FindBinary(0, idc.SEARCH_DOWN, Signature)
         while s.Et < len(s.Arr):
+            if 'read' == s.Arr[s.Et]:
+                return s.read(Name)
             getattr(s, s.Arr[s.Et])(); s.Et += 1
-        print("Assoc:", Name, hex(s.Addr))
+        print Name, '->' , hex(s.Addr)
         idc.MakeName(s.Addr, Name)
     def add(s):
         s.Et += 1; s.Addr += int(s.Arr[s.Et])
@@ -18,6 +20,9 @@ class ReadPattern:
         s.Addr += ctypes.c_int32(idc.Dword(s.Addr)).value + 4
     def tracecall(s):
         s.Addr += 1; s.tracerelative()
+    def read(s, Name):
+        print "Offset:", Name, hex(s.Addr)
+        idc.MakeComm(s.Addr, Name)
 
 # Globals
 ReadPattern("LocalActor",
@@ -44,5 +49,19 @@ ReadPattern("TargetPointer",
     "48 83 3D ?? ?? ?? ?? ?? 75 ?? C7 43 Add 3 TraceRelative Add 1")
 
 # Todo: Organize
+ReadPattern("InterfaceManager",
+    "e8 ?? ?? ?? ?? 48 85 c0 74 3c 48 8b 10 Sub 4 TraceRelative")
 ReadPattern("SafelyGetUiModule",
     "e8 ?? ?? ?? ?? 48 85 c0 74 3c 48 8b 10 TraceCall")
+
+# VMTs
+ReadPattern("UiModuleVMT",
+    "48 8d 05 ? ? ? ? 48 89 71 28 4c 8b e2 Add 3 TraceRelative")
+
+# CSV File
+ReadPattern("NetworkRequest",
+    "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 8B E9 41 8B D9 48 8B 0D ? ? ? ? 41 8B F8 8B F2")
+
+# Comments?
+ReadPattern("ActorList_MaxLen",
+    "81 FA ?? ?? ?? ?? 77 ?? 53 Read")
