@@ -167,7 +167,9 @@ namespace Action {
 		Verfire = 7510,
 		Verstone = 7511,
 		Zwerchhau = 7512,
+		Vercure = 7514,
 		Redoublement = 7516,
+		Verraise = 7523,
 		Verthunder_II = 16524,
 		Veraero_II = 16525,
 		// Role Shit

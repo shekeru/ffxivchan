@@ -106,8 +106,8 @@ public:
 
 class GNB_HUD : JobGauge {
 public:
-	USHORT Charges, 
-		Style, Phase;
+	UCHAR Charges, _UNK;
+	USHORT Style, Phase;
 };
 
 class DNC_HUD : JobGauge {

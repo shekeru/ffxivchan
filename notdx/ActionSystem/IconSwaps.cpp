@@ -329,6 +329,10 @@ int ActionSys::RedMage(int action) {
 			SetAction(Zwerchhau);
 		BasicCombo(50, Zwerchhau)
 			SetAction(Redoublement);
+	case Action::Vercure:
+		if (lvl >= 64 && target && !target->CurrentHP())
+			if (!target->IsType(EntityType::Monster))
+				SetAction(Verraise); break;
 	}; return GetIcon(action);
 };
 

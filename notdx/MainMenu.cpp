@@ -11,7 +11,7 @@ void NameOverlay() {
 	SetNextWindowPos(ImVec2(io.DisplaySize.x, 0.f),
 		ImGuiCond_Always, ImVec2(1.0f, 0.0f)); SetNextWindowBgAlpha(0.0f);
 	Begin("test overlay", NULL, ImGuiWindowFlags_NoMove | exIM_Overlay);
-	Text("Re; VerL, Patch 5.25, Apr 18"); End(); PopStyleVar();
+	Text("Re; VerL, Patch 5.25, May 16"); End(); PopStyleVar();
 };
 
 void MainMenuBar()
