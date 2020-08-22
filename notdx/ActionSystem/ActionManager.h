@@ -14,7 +14,7 @@ $ IsIconReplaceable;
 // Method: GetIcon
 INSTALL(GetIcon, INT64, ActionSys*, int)
 	Location = game.ScanPattern
-		("E8 ? ? ? ? F6 DB 8B C8", 1)
+		("e8 ? ? ? ? 44 8b f0 8b d8", 1)
 	.Cast<PVOID>();
 $ GetIcon;
 // Method: RequestAction
@@ -31,7 +31,7 @@ $ AllowRequestsGCD;
 // Method: GetRecastIndex
 INSTALL(GetRecastIndex, INT64, ActionSys*, UINT, UINT)
 	Location = game.ScanPattern
-		("e8 ? ? ? ? 83 f8 39 48", 1)
+		("0f 29 7c 24 20 e8 ? ? ? ? 8b d0", 6)
 	.Cast<PVOID>();
 $ GetRecastIndex;
 // Method: GetRecastStruct

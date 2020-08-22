@@ -28,7 +28,7 @@ public:
 	// Pointers
 	FieldPtr(Aura, AuraList, "89 81 ? ? ? ? 8b 89 ? ? 00 00 e8", 2);
 	// Refrences
-	FieldRef(UINT, EntityID, "74 19 8b 50 ? 48 8d 0d", 4, UCHAR);
+	FieldRef(UINT, EntityID, "48 8b 0d ? ? ? ? 8b 51 ? 48 8b c8 e8", 9, UCHAR);
 	FieldRef(UINT, MaxHP, "45 8b 8e ? ? 00 00 49 8d", 3);
 	FieldRef(UINT, CurrentHP, "45 8b 86 ? ? 00 00 49 8b cd e8", 3);
 	FieldRef(CombatFlags::Mask, CombatFlags, "f6 80 ? ? 00 00 02 74 18 ba", 2);
@@ -119,7 +119,7 @@ public:
 		UCHAR phase = Steps[Idx]; 
 		if (phase && dance & 1)
 			phase += 1;
-		return dance + phase;
+		return dance + (Idx < 4 ? phase : 0);
 	}
 };
 

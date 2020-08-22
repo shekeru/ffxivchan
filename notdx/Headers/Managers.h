@@ -35,7 +35,7 @@ public:
 		("48 89 2D ? ? ? ? 85 c0", 3)
 	.Cast<ComboArea*>();
 	JobGauge* JobHud = game.ScanPattern
-		("48 8d 0d ? ? ? ? 0f 95 c2 e8", 3)
+		("ff 48 8d 0d ? ? ? ? 0f 95 c2 e8", 4)
 	.Cast<JobGauge*>();
 // Testing
 	Actor** CharMap = game.ScanPattern

@@ -40,7 +40,7 @@ ReadPattern("InteractWith",
 ReadPattern("IsIconReplaceable",
     "81 f9 2e 01 00 00 7f 39 81 f9")
 ReadPattern("GetIcon",
-    "E8 ?? ?? ?? ?? F6 DB 8B C8 TraceCall")
+    "e8 ? ? ? ? 44 8b f0 8b d8 TraceCall")
 
 # ActorController
 ReadPattern("ActorList",
@@ -53,10 +53,19 @@ ReadPattern("InterfaceManager",
     "e8 ?? ?? ?? ?? 48 85 c0 74 3c 48 8b 10 Sub 4 TraceRelative")
 ReadPattern("SafelyGetUiModule",
     "e8 ?? ?? ?? ?? 48 85 c0 74 3c 48 8b 10 TraceCall")
+ReadPattern("GetRecastIndex",
+    "0f 29 7c 24 20 e8 ?? ?? ?? ?? 8b d0 Add 6 TraceRelative")
+ReadPattern("GetRecastStruct",
+    "40 53 48 83 ec 20 48 63 da 85 d2 78")
+
+ReadPattern("ComboArea",
+    "48 89 2D ?? ?? ?? ?? 85 c0 Add 3 TraceRelative")
+ReadPattern("JobHud",
+    "ff 48 8d 0d ?? ?? ?? ?? 0f 95 c2 e8 Add 4 TraceRelative")
 
 # VMTs
-ReadPattern("UiModuleVMT",
-    "48 8d 05 ? ? ? ? 48 89 71 28 4c 8b e2 Add 3 TraceRelative")
+#ReadPattern("UiModuleVMT",
+    #"48 8d 05 ? ? ? ? 48 89 71 28 4c 8b e2 Add 3 TraceRelative")
 
 # CSV File
 ReadPattern("NetworkRequest",
