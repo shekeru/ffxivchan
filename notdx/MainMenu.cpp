@@ -63,7 +63,7 @@ void IM_Interface::Render() {
 		log.Render(); if (ShowDemo)
 			ImGui::ShowDemoWindow(&ShowDemo);
 		MainMenuBar(); User2::LuaConsole(); User2::QuestPanel(); User2::ZoomPanel();
-	} else NameOverlay();
+	} //else NameOverlay();
 };
 
 //inline void GenerateFrame() {

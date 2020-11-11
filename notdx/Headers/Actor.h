@@ -152,6 +152,11 @@ public:
 	}
 };
 
+class MCH_HUD : JobGauge {
+public:
+	USHORT OverHeated, _UNK;
+	UCHAR HeatGauge;
+};
 
 class SMN_HUD : JobGauge {
 public:

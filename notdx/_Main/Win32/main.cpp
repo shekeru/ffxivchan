@@ -40,8 +40,17 @@ EXTERN_C HRESULT WINAPI CreateDXGIFactory1(REFIID riid, void** ppFactory)
 #pragma EXPORT
 	decltype(&CreateDXGIFactory1) original = DynLib
 	{ "C:\\Windows\\System32\\dxgi.dll" }["CreateDXGIFactory1"];
-		printf("should Never Be called {CreateDXGIFactory1}"); 
+		printf("should Never Be called {CreateDXGIFactory1}\n"); 
 	return original(riid, ppFactory);
+}
+
+EXTERN_C HRESULT WINAPI CreateDXGIFactory2(UINT Flags, REFIID riid, void** ppFactory)
+{
+#pragma EXPORT
+	decltype(&CreateDXGIFactory2) original = DynLib
+	{ "C:\\Windows\\System32\\dxgi.dll" } ["CreateDXGIFactory2"] ;
+	printf("should Never Be called {CreateDXGIFactory2}\n");
+	return original(Flags, riid, ppFactory);
 }
 
 BOOL APIENTRY DllMain(

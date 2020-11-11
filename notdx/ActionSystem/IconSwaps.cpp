@@ -424,10 +424,11 @@ int ActionSys::Scholar(int action) {
 };
 
 int ActionSys::Machinist(int action) {
+	local HUD = (MCH_HUD*) xiv->JobHud;
 	switch (action) {
-	//case Action::HotShot:
-	//	BasicCombo()
 	case Action::SplitShot:
+		if (lvl >= 35 && HUD->OverHeated)
+			SetAction(Heat_Blast);
 		BasicCombo(2, SplitShot)
 			SetAction(SlugShot);
 		BasicCombo(26, SlugShot)

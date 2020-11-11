@@ -146,6 +146,7 @@ namespace Action {
 		Souleater = 3632,
 		// SB Skills
 		Sonic_Thrust = 7397,
+		Heat_Blast = 7410,
 		// SAM
 		Hakaze = 7477,
 		Jinpu = 7478,

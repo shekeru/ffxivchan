@@ -1,6 +1,7 @@
 #pragma once
 #include "base.h"
 #include <psapi.h>
+#include <stdexcept>
 // Guard Class
 namespace detail {
 	class protect_guard {
