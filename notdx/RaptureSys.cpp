@@ -35,7 +35,7 @@ INT64 hkSendAction(PVOID obj, __int64 N, ULONG64* arr, __int64 opt) { //notes: o
 	show(SendAction)("ptr: %p, SendAction(%s), N: %i, ", obj, (char*) obj + 8, N);
 		for (int i = 0; i < N * 2; i += 2)
 			show(SendAction)("(%x, %llx), ", arr[i] & 0xFFFFFFFF,
-				arr[i + 1]); show(SendAction)("%x\n", opt);
+				arr[i + 1]); show(SendAction)("%llx\n", opt);
 	// Conditions
 	// if (obj == Windows["ToDoList"])
 	//	return ToDoList(obj, N, (Spec*) arr, opt);
@@ -87,15 +87,15 @@ __int64 hkSpawnWindow(void* super, void* ptr, const char* str) { // window paren
 
 // 0x41 ->  6, NULL -> 38
 // Various Mouse Actions here
-HANDLE ProcHeap;  PVOID CtxSets_R5; // 7: right click
+HANDLE ProcHeap; PVOID CtxSets_R5; // 7: right click
 __int64 hkCtxSets_R5(void* rAtkM, UINT signal, UINT size, Spec* data,
 	void* ctxList, INT64 zone, UINT16 uID, int flag) { // rapture shit?
-	ORIGINAL(hkCtxSets_R5, CtxSets_R5); if (signal == 7) {
+	ORIGINAL(hkCtxSets_R5, CtxSets_R5); if (signal == 8) {
 		if(!CtxMenu) CtxMenu = (Spec*) HeapAlloc(ProcHeap, HEAP_ZERO_MEMORY, 592);
 		const char* inject = NULL; CtxCaller = (char*) UiTable[uID];
 		// Context Menu Injections
-		if (CtxCaller == Windows["Gathering"])
-			inject = AutoGather;
+		//if (CtxCaller == Windows["Gathering"])
+			//inject = AutoGather;
 		//printf("dt: %p, window: %i -> %p, %s \n", data, 
 		//	uID, CtxCaller, CtxCaller ? CtxCaller + 8 : 0);
 		if (CtxCaller && inject && data) {
@@ -107,6 +107,15 @@ __int64 hkCtxSets_R5(void* rAtkM, UINT signal, UINT size, Spec* data,
 			CtxMenu->Value += 1; size += 1; data = CtxMenu;
 		} 
 	}; return original(rAtkM, signal, size, data, ctxList, zone, uID, flag);
+};
+
+PVOID MOVED_1;
+char hkMOVED_1(__int64* a1, char* a2, __int64 a3, __int64 a4) {
+	ORIGINAL(hkMOVED_1, MOVED_1);
+	if (!strcmp(a2, "Enable Quick Gathering")) {
+		printf("MV: %p, %lli, %lli\n", a1, a3, a4);
+		game.StackTrace();
+	}; return original(a1, a2, a3, a4);
 };
 
 void Hooks::RaptureAttach() {
@@ -123,6 +132,9 @@ void Hooks::RaptureAttach() {
 	DetourAttach(&CtxVectorInit, hkCtxVectorInit);
 	DetourAttach(&WindowReady, hkWindowReady);
 	DetourAttach(&SendAction, hkSendAction);
+	// MOVED_1
+	//MOVED_1 = game.ScanPattern("48 83 C4 20 5F E9 ? ? ? ?", 6).Cast<PVOID>();
+	//DetourAttach(&MOVED_1, hkMOVED_1);
 	//DetourAttach(&FlagSwitch, FlagWriter);
 	//UpdatesBarInteger = game.ScanPattern("e8 ? ? ? ? 44 8b 65 97 eb 30", 1)
 	//	.Cast<PVOID>(); DetourAttach(&UpdatesBarInteger, hkUpdatesBarInteger);
