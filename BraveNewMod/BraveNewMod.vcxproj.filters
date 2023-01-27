@@ -16,6 +16,9 @@
     <Filter Include="Overlay\ImGUI">
       <UniqueIdentifier>{c69d9c51-5670-44ab-abb6-37d517e20295}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{dc9dfaa2-6984-4c75-8d6d-08dc629bf3ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="loader\DXGI_DLL.cpp">
@@ -23,9 +26,6 @@
     </ClCompile>
     <ClCompile Include="loader\SwapChain.cpp">
       <Filter>Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="common\memory.cpp">
-      <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="loader\LoaderEntry.cpp">
       <Filter>Loader</Filter>
@@ -90,6 +90,12 @@
     <ClCompile Include="overlay\MenuBar.cpp">
       <Filter>Overlay</Filter>
     </ClCompile>
+    <ClCompile Include="source\memory.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\IconSwaps.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\dynamic_pointers.h">
@@ -118,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="overlay\overlay.h">
       <Filter>Overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="common\objects.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\types.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

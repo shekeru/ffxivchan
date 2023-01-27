@@ -28,21 +28,24 @@
     <ClCompile Include="..\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="common\memory.cpp" />
     <ClCompile Include="loader\Console.cpp" />
     <ClCompile Include="loader\DXGI_DLL.cpp" />
     <ClCompile Include="loader\LoaderEntry.cpp" />
     <ClCompile Include="loader\SwapChain.cpp" />
     <ClCompile Include="overlay\im_main.cpp" />
     <ClCompile Include="overlay\MenuBar.cpp" />
+    <ClCompile Include="source\IconSwaps.cpp" />
+    <ClCompile Include="source\memory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\context.h" />
     <ClInclude Include="common\dynamic_pointers.h" />
     <ClInclude Include="common\hooks.h" />
     <ClInclude Include="common\memory.h" />
+    <ClInclude Include="common\objects.h" />
     <ClInclude Include="common\offsets.h" />
     <ClInclude Include="common\system.h" />
+    <ClInclude Include="common\types.h" />
     <ClInclude Include="common\vmt.h" />
     <ClInclude Include="overlay\im_engine.h" />
     <ClInclude Include="overlay\overlay.h" />

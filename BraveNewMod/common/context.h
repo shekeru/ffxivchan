@@ -4,9 +4,9 @@
 #include "vmt.h"
 
 // Funny Macros
-# define local \
+#define local \
 	static auto
-# define foreign \
+#define foreign \
 	static auto&
 #define get_context \
 	static Context& ctx = Context::Current()

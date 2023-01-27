@@ -21,6 +21,9 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
 
+    IconSwaps::IsIconReplaceable::AttachHook();
+    IconSwaps::GetIcon::AttachHook();
+
     // Anti-Anti-Debugger
     oIsDebuggerPresent = GetProcAddress(GetModuleHandle(L"kernel32.dll"), "IsDebuggerPresent");
     DetourAttach(&oIsDebuggerPresent, hkIsDebuggerPresent);
@@ -36,7 +39,7 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
     // overlay.font_size = SizeofResource(hInstance, hRes);
     
     ctx.gui.prevProc = (WNDPROC) SetWindowLongPtr(ctx.gui.hWindow, GWLP_WNDPROC, (LONG_PTR)WndProc);
-    DebugActiveProcessStop(GetProcessId(0));
+    //DebugActiveProcessStop(GetProcessId(0));
 
     while (!ctx.Stop) {
         Sleep(1000);
