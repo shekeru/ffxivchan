@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Loader">
+      <UniqueIdentifier>{c6c3faed-6bab-44d0-910d-6499a7e18d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{87556c54-3bc2-4032-80fd-58f40e5f3f0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Detours">
+      <UniqueIdentifier>{4bace643-c40e-40e5-b3f2-e04bf146904f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay">
+      <UniqueIdentifier>{7b7b8b0a-1682-44eb-9fb9-90b2995262a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay\ImGUI">
+      <UniqueIdentifier>{c69d9c51-5670-44ab-abb6-37d517e20295}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="loader\DXGI_DLL.cpp">
+      <Filter>Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="loader\SwapChain.cpp">
+      <Filter>Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="common\memory.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="loader\LoaderEntry.cpp">
+      <Filter>Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\creatwth.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\detours.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disasm.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolarm.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolarm64.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolia64.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolx64.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\disolx86.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\image.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Detours\src\modules.cpp">
+      <Filter>Common\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="loader\Console.cpp">
+      <Filter>Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="overlay\im_main.cpp">
+      <Filter>Overlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui.cpp">
+      <Filter>Overlay\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_demo.cpp">
+      <Filter>Overlay\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_draw.cpp">
+      <Filter>Overlay\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_widgets.cpp">
+      <Filter>Overlay\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\backends\imgui_impl_dx11.cpp">
+      <Filter>Overlay\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>Overlay\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_tables.cpp">
+      <Filter>Overlay\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="overlay\MenuBar.cpp">
+      <Filter>Overlay</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common\dynamic_pointers.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\system.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\hooks.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\context.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\memory.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\vmt.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\offsets.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="overlay\im_engine.h">
+      <Filter>Overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="overlay\overlay.h">
+      <Filter>Overlay</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
