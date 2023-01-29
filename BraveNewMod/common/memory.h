@@ -1,4 +1,5 @@
 #pragma once
+#include "detours.h"
 // Pointer Class
 class IntPtr {
 public:
@@ -29,6 +30,7 @@ public:
 		//};
 
 		//void DetourAll();
+	bool EnableDebug();
 	void StackTrace();
 private:
 	static std::vector<short> SignatureArray(char* ptr);
@@ -50,7 +52,7 @@ public:
 	};
 };
 
-template<class Pattern, typename Method>
+template<typename Pattern, typename Method>
 class ExternalFn {
 public:
 	Method* original;
@@ -61,10 +63,18 @@ public:
 		this->pattern = pattern;
 		this->replacement = function;
 	}
+
+	bool AttachHook(MemorySystem& game) {
+		original = pattern->Resolve(game);
+		printf(__FUNCTION__ " replacing %p\n", original); \
+		if (original) 
+			return DetourAttach(&(PVOID&)original, replacement);
+	}; 
+
 };
 
 template<typename DefaultType = void>
-class FollowPattern : FindPattern<DefaultType> {
+class FollowPattern : public FindPattern<DefaultType> {
 public:
 	int extra;
 
@@ -92,12 +102,12 @@ public:
 };
 
 template <typename Type>
-class ReferencePattern : FollowPattern<Type> {
+class ReferencePattern : public FollowPattern<Type> {
 public:
-
 	ReferencePattern(
 		const char* byte_mask, int start_idx, int asm_extra = 0
-	) : FollowPattern<Type>(byte_mask, start_idx, asm_extra) {};
+	) : FollowPattern<Type>(byte_mask, start_idx, asm_extra) {
+	};
 
 	Type& Resolve(MemorySystem& game) {
 		return *FollowPattern<Type>::Resolve(game);

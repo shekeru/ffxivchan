@@ -42,13 +42,16 @@
     <ClInclude Include="common\dynamic_pointers.h" />
     <ClInclude Include="common\hooks.h" />
     <ClInclude Include="common\memory.h" />
-    <ClInclude Include="common\objects.h" />
     <ClInclude Include="common\offsets.h" />
     <ClInclude Include="common\system.h" />
-    <ClInclude Include="common\types.h" />
     <ClInclude Include="common\vmt.h" />
     <ClInclude Include="overlay\im_engine.h" />
     <ClInclude Include="overlay\overlay.h" />
+    <ClInclude Include="types\Actor.h" />
+    <ClInclude Include="types\enums.h" />
+    <ClInclude Include="types\JobGauge.h" />
+    <ClInclude Include="types\objects.h" />
+    <ClInclude Include="types\Status.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -102,6 +105,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>../imgui;../Detours/src;./common;./types;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -119,7 +123,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>system.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../imgui;../Detours/src;./common;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../imgui;../Detours/src;./common;./types;</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>system.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinimalRebuild>true</MinimalRebuild>

@@ -4,9 +4,6 @@ MemorySystem::MemorySystem(LPCWSTR exe_name) {
 	GetModuleInformation(GetCurrentProcess(),
 		GetModuleHandle(exe_name), &baseModule, sizeof(baseModule));
 	printf("Executable Start -> %p\n", baseModule.lpBaseOfDll);
-	//DetourRestoreAfterWith(); DetourTransactionBegin(); DetourUpdateThread(GetCurrentThread());
-
-	// DetourTransactionCommit();
 };
 
 UCHAR* MemorySystem::FindPattern(const char* signature, int start) {
@@ -49,4 +46,12 @@ void MemorySystem::StackTrace() {
 		printf(" [%i] frame: %p / %p \n", i + 1, Stack[i],
 			uintptr_t(Stack[i]) - uintptr_t(baseModule.lpBaseOfDll)
 			+ 0x140000000);
+};
+
+bool MemorySystem::EnableDebug() {
+	DWORD CurrentProcess = GetCurrentProcessId();
+	BOOL StopDebug = DebugActiveProcessStop(CurrentProcess);
+	BOOL DebugMode = DebugActiveProcess(CurrentProcess);
+	printf("Debug Allow: %i/%i\n", StopDebug, DebugMode);
+	return StopDebug && DebugMode;
 };

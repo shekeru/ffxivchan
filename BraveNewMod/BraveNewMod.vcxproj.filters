@@ -19,6 +19,9 @@
     <Filter Include="Source">
       <UniqueIdentifier>{dc9dfaa2-6984-4c75-8d6d-08dc629bf3ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Types">
+      <UniqueIdentifier>{430a3725-1352-4030-b945-bf333e66874c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="loader\DXGI_DLL.cpp">
@@ -125,11 +128,20 @@
     <ClInclude Include="overlay\overlay.h">
       <Filter>Overlay</Filter>
     </ClInclude>
-    <ClInclude Include="common\objects.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="types\enums.h">
+      <Filter>Types</Filter>
     </ClInclude>
-    <ClInclude Include="common\types.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="types\Actor.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="types\objects.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="types\JobGauge.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="types\Status.h">
+      <Filter>Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

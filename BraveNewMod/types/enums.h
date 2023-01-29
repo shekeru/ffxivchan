@@ -1,57 +1,85 @@
 #pragma once
 
-enum Job {
-	Adventurer = 0,
-	// Classes
-	Gladiator = 1,
-	Pugilist = 2,
-	Marauder = 3,
-	Lancer = 4,
-	Archer = 5,
-	Conjurer = 6,
-	Thaumaturge = 7,
-	// DoH
-	Carpenter = 8,
-	Blacksmith = 9,
-	Armorer = 10,
-	Goldsmith = 11,
-	Leatherworker = 12,
-	Weaver = 13,
-	Alchemist = 14,
-	Culinarian = 15,
-	// DoL
-	Miner = 16,
-	Botanist = 17,
-	Fisher = 18,
-	// Jobs
-	Paladin = 19,
-	Monk = 20,
-	Warrior = 21,
-	Dragoon = 22,
-	Bard = 23,
-	White_Mage = 24,
-	Black_Mage = 25,
-	// Expansions
-	Arcanist = 26,
-	Summoner = 27,
-	Scholar = 28,
-	Rogue = 29,
-	Ninja = 30,
-	// Heavensward
-	Machinist = 31,
-	Dark_Knight = 32,
-	Astrologian = 33,
-	// Stormblood
-	Samurai = 34,
-	Red_Mage = 35,
-	Blue_Mage = 36,
-	// Shadowbringers
-	Gunbreaker = 37,
-	Dancer = 38,
+namespace Job {
+	enum JobID : BYTE {
+		Adventurer = 0,
+		// Classes
+		Gladiator = 1,
+		Pugilist = 2,
+		Marauder = 3,
+		Lancer = 4,
+		Archer = 5,
+		Conjurer = 6,
+		Thaumaturge = 7,
+		// DoH
+		Carpenter = 8,
+		Blacksmith = 9,
+		Armorer = 10,
+		Goldsmith = 11,
+		Leatherworker = 12,
+		Weaver = 13,
+		Alchemist = 14,
+		Culinarian = 15,
+		// DoL
+		Miner = 16,
+		Botanist = 17,
+		Fisher = 18,
+		// Jobs
+		Paladin = 19,
+		Monk = 20,
+		Warrior = 21,
+		Dragoon = 22,
+		Bard = 23,
+		White_Mage = 24,
+		Black_Mage = 25,
+		// Expansions
+		Arcanist = 26,
+		Summoner = 27,
+		Scholar = 28,
+		Rogue = 29,
+		Ninja = 30,
+		// Heavensward
+		Machinist = 31,
+		Dark_Knight = 32,
+		Astrologian = 33,
+		// Stormblood
+		Samurai = 34,
+		Red_Mage = 35,
+		Blue_Mage = 36,
+		// Shadowbringers
+		Gunbreaker = 37,
+		Dancer = 38,
+		Reaper = 39,
+		Sage = 40,
+	};
 };
 
 namespace Action {
-	enum Action {
+	enum ActionType : BYTE {
+		None = 0x00,
+		Spell = 0x01,
+		Item = 0x02,
+		Key_Item = 0x03,
+		Ability = 0x04,
+		General = 0x05,
+		Companion = 0x06,
+		Unk_7 = 0x07,
+		Unk_8 = 0x08, //something with Leve?
+		Craft_Action = 0x09,
+		Main_Command = 0x0A,
+		Pet_Action = 0x0B,
+		Unk_12 = 0x0C,
+		Mount = 0x0D,
+		PvP_Action = 0x0E,
+		Waymark = 0x0F,
+		Chocobo_Race_Ability = 0x10,
+		Chocobo_Race_Item = 0x11,
+		Unk_18 = 0x12,
+		Squadron_Action = 0x13,
+		Accessory = 0x14
+	};
+
+	enum ActionID : USHORT{
 		// GLA
 		Fast_Blade = 9,
 		Riot_Blade = 15,
@@ -121,12 +149,13 @@ namespace Action {
 		Spinning_Edge = 2240,
 		Shade_Shift = 2241,
 		Gust_Slash = 2242,
+		Death_Blossom = 2254,
 		Aeolian_Edge = 2255,
 		// MCH
-		SplitShot = 2866,
-		SlugShot = 2868,
-		HotShot = 2872,
-		CleanShot = 2873,
+		Split_Shot = 2866,
+		Slug_Shot = 2868,
+		Hot_Shot = 2872,
+		Clean_Shot = 2873,
 		Reassemble = 2876,
 		// AST
 		Draw = 3590,
@@ -144,9 +173,11 @@ namespace Action {
 		Hard_Slash = 3617,
 		Syphon_Strike = 3623,
 		Souleater = 3632,
-		// SB Skills
+		// Stormblood Skills
+		Total_Eclipse = 7381,
 		Sonic_Thrust = 7397,
 		Heat_Blast = 7410,
+		Minor_Arcana = 7443,
 		// SAM
 		Hakaze = 7477,
 		Jinpu = 7478,
@@ -203,72 +234,16 @@ namespace Action {
 		Demon_Slaughter = 16149,
 		Wicked_Talon = 16150,
 		Burst_Strike = 16162,
-		// WHM
+		// NIN
+		Hakke_Mujinsatsu = 16488,
 		Afflatus_Solace = 16531,
 		// Updated Changes
-		Total_Eclipse = 7381,
-		MinorArcana = 7443,
 		Prominence = 16457,
 		Repose = 16560,
 		Play = 17055,
 		// SCH why
 		Bio_SCH = 17864,
 		Ruin_SCH = 17869,
-	};
-};
-
-namespace Status {
-	enum Status {
-		// MRD
-		Storms_Eye = 90,
-		// PGL
-		Twin_Snakes = 101,
-		Opo_Form = 107,
-		Raptor_Form = 108,
-		Coeurl_Form = 109,
-		// LNC
-		Life_Surge = 116,
-		Chaos_Thrust = 118,
-		Power_Surge = 120,
-		// RNG
-		StraightShotReady = 122,
-		VenomousBite = 124,
-		Windbite = 129,
-		// CNJ
-		Aero = 143,
-		AeroII = 144,
-		MedicaII = 150,
-		Freecure = 155,
-		Regen = 158,
-		// BLM
-		Firestarter = 165,
-		Swiftcast = 167,
-		// SMN
-		Bio = 179,
-		Miasma = 180,
-		Miasma_II = 188,
-		Bio_II = 189,
-		// AST
-		Aspected_Benefic = 835,
-		Aspected_Helios = 836,
-		Combust = 838,
-		Dinural_Sect = 839,
-		Nocturnal_Sect = 840,
-		CombustII = 843,
-		// RDM?
-		VerfireReady = 1234,
-		VerstoneReady = 1235,
-		Dualcast = 1249,
-		// Samurai
-		Jinpu = 1298,
-		Shifu = 1299,
-		// DNC
-		FlourishingCascade = 1814,
-		FlourishingFountain = 1815,
-		FlourishingWindmill = 1816,
-		FlourishingShower = 1817,
-		// Changes
-		Disembowel = 1914,
 	};
 };
 

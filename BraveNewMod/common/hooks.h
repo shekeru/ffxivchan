@@ -5,18 +5,18 @@
 #include "context.h"
 
 // Hooking Macros
-//#define ReplaceFN(type, NAME, ...) \
-//	class NAME { public: \
-//		inline static PVOID Original; \
-//		static type Function(__VA_ARGS__); \
-//		static PVOID GetLocation() { \
-//			return Offsets::NAME.Resolve(Context::Current().game);}; \
-//		static bool AttachHook() { \
-//			Original = decltype(&Function)(GetLocation()); \
-//			printf(__FUNCTION__ " replacing %p\n", Original); \
-//		if (Original) return DetourAttach(&(PVOID&)Original, Function); };\
-//		static bool ReleaseHook() { \
-//			return DetourDetach(&(PVOID&)Original, Function);} }
+#define ReplaceFN(type, NAME, ...) \
+	class NAME { public: \
+		inline static PVOID Original; \
+		static type Function(__VA_ARGS__); \
+		static PVOID GetLocation() { \
+			return Offsets::NAME.Resolve(Context::Current().game);}; \
+		static bool AttachHook() { \
+			Original = decltype(&Function)(GetLocation()); \
+			printf(__FUNCTION__ " replacing %p\n", Original); \
+		if (Original) return DetourAttach(&(PVOID&)Original, Function); };\
+		static bool ReleaseHook() { \
+			return DetourDetach(&(PVOID&)Original, Function);} }
 
 #define get_original \
 	static auto original = decltype(&Function)(Original)
@@ -43,6 +43,7 @@
 namespace IconSwaps {
 	ReplaceFN(char, IsIconReplaceable, UINT);
 	ReplaceFN(UINT64, GetIcon, ActionSys*, UINT);
+	UINT64 GetIcon_Test(ActionSys* self, UINT action);
 };
 
 //ReplaceFN_2(void, On_Spawn_1, void*, __int64, UCHAR);

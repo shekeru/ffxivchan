@@ -22,6 +22,9 @@ public:
 		printf("Context Created!\n");
 	};
 
+	~Context() {
+	}
+
 	static Context& Current(bool main_thread = false)
 	{
 		static std::unique_ptr<Context> _ctx = 0;
