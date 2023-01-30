@@ -136,13 +136,15 @@ namespace Action {
 		Thunder_II = 148,
 		Fire_III = 152,
 		Blizzard_III = 154,
-		// ARC
+		// ARC + SMN
 		Ruin = 163,
-		Bio = 164,
-		Energy_Drain = 16508,
-		Miasma = 168,
 		Resurrection = 173,
 		Fester = 181,
+		Painflare = 3578,
+		Deathflare = 3582,
+		Energy_Drain = 16508,
+		Energy_Syphon = 16510,
+		Gemshine = 25883,
 		// WAR
 		Mythril_Tempest = 16462,
 		// ROG
@@ -244,6 +246,8 @@ namespace Action {
 		// SCH why
 		Bio_SCH = 17864,
 		Ruin_SCH = 17869,
+		// Updates
+		Sleep = 25880,
 	};
 };
 

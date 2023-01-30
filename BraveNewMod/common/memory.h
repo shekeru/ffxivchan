@@ -21,7 +21,7 @@ public:
 class MemorySystem {
 public:
 	MODULEINFO baseModule;
-	MemorySystem(LPCWSTR exe_name = L"ffxiv_dx11.exe");
+	MemorySystem(LPCWSTR exe_name);
 	UCHAR* FindPattern(const char* signature, int start = 0);
 
 	//	IntPtr ResolvePattern(const char* signature, int start, int extra = 0) {

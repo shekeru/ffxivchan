@@ -1,6 +1,7 @@
 #pragma once
 #include "Actor.h"
 #include "JobGauge.h"
+#include "context.h"
 #include "memory.h"
 
 namespace Offsets {
@@ -23,4 +24,8 @@ namespace Offsets {
 
 	inline auto GetRecastTime = FollowPattern
 		("E8 ? ? ? ? 83 7F 4C 01 44 0F 28 C8", 1);
+};
+
+namespace Globals {
+	inline Actor*& LocalActor = Offsets::LocalActorPtr.Resolve(Context::game);
 };

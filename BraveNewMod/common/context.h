@@ -15,7 +15,7 @@
 class Context {
 public:
 	bool Stop = false;
-	MemorySystem game;
+	inline static MemorySystem game = MemorySystem(L"ffxiv_dx11.exe");
 	IM_Engine gui;
 
 	Context() {
@@ -30,7 +30,7 @@ public:
 		static std::unique_ptr<Context> _ctx = 0;
 		if (!main_thread)
 			while (!_ctx)
-				Sleep(750);
+				::Sleep(750);
 		else
 			_ctx = std::make_unique<Context>();
 		return *_ctx;

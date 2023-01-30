@@ -42,7 +42,7 @@ public:
 	//int Bard(int action);
 	int WhiteMage(int action);
 	//int BlackMage(int action);
-	//int Summoner(int action);
+	int Summoner(int action);
 	//int Scholar(int action);
 	int Ninja(int action);
 	int Machinist(int action);

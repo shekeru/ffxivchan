@@ -1,3 +1,4 @@
+#include "Actor.h"
 #include "JobGauge.h"
 #include "hooks.h"
 #include "enums.h"
@@ -6,9 +7,11 @@ using namespace IconSwaps;
 using namespace Action;
 using namespace Job;
 
-Job::JobID* CurrentJob;
-JobGaugeManager* JobGaugeMgrPtr;
 JobGauge* SharedGaugePtr;
+JobGaugeManager* JobGaugeMgrPtr;
+Job::JobID* CurrentJob;
+
+BYTE lvl;
 
 #define SwitchTo(Job) \
 	action = self->Job(action); break;
@@ -35,6 +38,10 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 	//	printf("ActionSys: %llx, Gauge: %llx, Job: %i\n", self, gauge, gauge->GetJobID());
 	//}
 
+	if (Globals::LocalActor) {
+		lvl = Globals::LocalActor->GetLevel();
+	}
+	
 	switch (*CurrentJob) {
 		case Gladiator:
 		case Paladin:
@@ -45,9 +52,14 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 		case Conjurer:
 		case White_Mage:
 			SwitchTo(WhiteMage);
+		case Arcanist:
+		case Summoner:
+			SwitchTo(Summoner);
 		case Rogue:
 		case Ninja:
 			SwitchTo(Ninja);
+		case Machinist:
+			SwitchTo(Machinist);
 		case Dancer:
 			SwitchTo(Dancer);
 	}; 
@@ -59,14 +71,14 @@ inline int ActionSys::Paladin(int action) {
 	switch (action) {
 
 	case Fast_Blade:
-		if (Combo.Is(Fast_Blade))
+		if (lvl >= 4 && Combo.Is(Fast_Blade))
 			return Riot_Blade;
-		if (Combo.Is(Riot_Blade))
+		if (lvl >= 26 && Combo.Is(Riot_Blade))
 			return Rage_of_Halon;
 		break;
 
 	case Total_Eclipse:
-		if (Combo.Is(Total_Eclipse))
+		if (lvl >= 40 && Combo.Is(Total_Eclipse))
 			return Prominence;
 		break;		
 
@@ -98,6 +110,25 @@ inline int ActionSys::WhiteMage(int action) {
 	};
 
 	return action;
+};
+
+inline int ActionSys::Summoner(int action) {
+	UsingHUD(SummonerGauge);
+
+	switch (action) {
+	// Single-Target
+	case Fester:
+		if (!(HUD->Flags & AetherFlags::Aetherflow))
+			return Energy_Drain;
+		break;
+	case Painflare:
+		if (!(HUD->Flags & AetherFlags::Aetherflow))
+			return Energy_Syphon;
+		break;
+	};
+
+	return action;
+
 };
 
 inline int ActionSys::Ninja(int action) {

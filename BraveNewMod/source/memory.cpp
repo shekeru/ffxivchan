@@ -1,7 +1,7 @@
 #include "memory.h"
 
 MemorySystem::MemorySystem(LPCWSTR exe_name) {
-	GetModuleInformation(GetCurrentProcess(),
+	GetModuleInformation(GetCurrentProcess(), 
 		GetModuleHandle(exe_name), &baseModule, sizeof(baseModule));
 	printf("Executable Start -> %p\n", baseModule.lpBaseOfDll);
 };
