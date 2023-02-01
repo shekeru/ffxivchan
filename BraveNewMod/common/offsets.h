@@ -11,6 +11,12 @@ namespace Offsets {
 	inline auto LocalActorPtr = ReferencePattern<Actor*>
 		("89 51 68 48 8b 05 ? ? ? ?", 6);
 
+	inline auto GameObjectMgr = FollowPattern<GameObjectManager>
+		("48 8D 35 ? ? ? ? 81 FA", 3);
+
+	inline auto TargetSys = FollowPattern<TargetSystem>
+		("48 8D 0D ? ? ? ? E8 ? ? ? ? 48 3B C6 0F 95 C0", 3);
+
 	inline auto JobGaugePtr = FollowPattern<JobGaugeManager>
 		("48 8B 3D ? ? ? ? 33 ED", 3);
 	
@@ -24,8 +30,11 @@ namespace Offsets {
 
 	inline auto GetRecastTime = FollowPattern
 		("E8 ? ? ? ? 83 7F 4C 01 44 0F 28 C8", 1);
+
 };
 
 namespace Globals {
 	inline Actor*& LocalActor = Offsets::LocalActorPtr.Resolve(Context::game);
+	inline GameObjectManager* GameObjectMgr = Offsets::GameObjectMgr.Resolve(Context::game);
+	inline TargetSystem* TargetSys = Offsets::TargetSys.Resolve(Context::game);
 };

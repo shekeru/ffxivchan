@@ -93,6 +93,7 @@ namespace Action {
 		Storms_Eye = 45,
 		Inner_Beast = 49,
 		Steel_Cyclone = 51,
+		Infuriate = 52,
 		// PGL
 		Bootshine = 53,
 		True_Strike = 54,
@@ -207,6 +208,7 @@ namespace Action {
 		Verthunder_II = 16524,
 		Veraero_II = 16525,
 		// Role Shit
+		Addle = 7560,
 		Esuna = 7568,
 		Rescue = 7571,
 		// DNC

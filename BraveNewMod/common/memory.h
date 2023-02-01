@@ -102,6 +102,19 @@ public:
 };
 
 template <typename Type>
+class FnPattern : public FollowPattern<LPVOID> {
+public:
+	FnPattern(
+		const char* byte_mask, int start_idx, int asm_extra = 0
+	) : FollowPattern<LPVOID>(byte_mask, start_idx, asm_extra) {
+	};
+
+	Type Resolve(MemorySystem& game) {
+		return (Type)(FollowPattern<LPVOID>::Resolve(game));
+	};
+};
+
+template <typename Type>
 class ReferencePattern : public FollowPattern<Type> {
 public:
 	ReferencePattern(

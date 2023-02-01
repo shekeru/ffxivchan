@@ -37,7 +37,7 @@ public:
 public:
 	int Paladin(int action);
 	//int Monk(int action);
-	//int Warrior(int action);
+	int Warrior(int action);
 	int Dragoon(int action);
 	//int Bard(int action);
 	int WhiteMage(int action);
@@ -47,6 +47,7 @@ public:
 	int Ninja(int action);
 	int Machinist(int action);
 	//int Dark_Knight(int action);
+	int RedMage(int action);
 	int Dancer(int action);
 public:
 

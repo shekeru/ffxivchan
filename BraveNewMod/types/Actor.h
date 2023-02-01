@@ -21,19 +21,64 @@ public:
 	Status AuraList[30];
 };
 
-class Actor {
+class GameObject {
+	static enum ObjectKind : byte;
 public:
-	void* _vtable;
+	virtual void _destroy();
+	virtual UINT GetObjectID();
+public:
+	GetField(UINT, ObjectID, 0x74); // EntityId
+	GetField(USHORT, ObjectIndex, 0x88);
+	GetField(ObjectKind, ObjectType, 0x8C);
+	GetField(BYTE, ObjectSubtype, 0x8D);
+public:
+	static enum ObjectKind : byte
+	{
+		None = 0,
+		Player = 1,
+		BattleNpc = 2,
+		EventNpc = 3,
+		Treasure = 4,
+		Aetheryte = 5,
+		GatheringPoint = 6,
+		EventObj = 7,
+		Mount = 8,
+		Companion = 9,
+		Retainer = 10,
+		AreaObject = 11,
+		HousingEventObject = 12,
+		Cutscene = 13,
+		CardStand = 14,
+		Ornament = 15
+	};
+};
+
+class Character : public GameObject {
 public:
 	GetField(UINT, CurrentHP, 0x1c4);
-	GetField(BYTE, GetLevel, 0x1e1);
+	GetField(Job::JobID, JobID, 0x1e0);
+	GetField(BYTE, Level, 0x1e1);
+};
 
-	int& TargetID() {
-		return *(int*)(uintptr_t(this) + 496);
-	}
-	int& EntityID() {
-		return *(int*)(uintptr_t(this) + 116);
-	}
+class Companion : public Character {
+public:
+
+};
+
+class Actor : public Character {
+public:
+	Character Char;
+public:
+
+public:
+	UINT GetTargetID();
+
+	//int& TargetID() {
+	//	return *(int*)(uintptr_t(this) + 496);
+	//}
+	//int& EntityID() {
+	//	return *(int*)(uintptr_t(this) + 116);
+	//}
 	// Status Manager: 0x1B60
 	StatusManager* StatusManagerPtr() {
 		return (StatusManager*)(size_t(this) + 0x1B60);
@@ -55,4 +100,27 @@ public:
 		return type == *(EntityType::Type*)
 			(uintptr_t(this) + 0x8c);
 	};
+};
+
+class CharacterManager {
+public:
+	Character* CharacterMap[100];
+	Actor*     BattleChar;
+	Companion* CompanionPet;
+	UINT       CompanionClassSize, 
+		       UpdateIndex;
+};
+
+class GameObjectManager {
+	UINT _UPDATE_IDX, _IS_ACTIVE;
+	ULONG _UNK_1, _UNK_2;
+	GameObject* ObjectList[200];
+};
+
+class TargetSystem {
+public:
+	GetField(GameObject*, Target, 0x80);
+	GetField(GameObject*, SoftTarget, 0x88);
+public:
+	GameObject* GetCurrentTargetPtr();
 };

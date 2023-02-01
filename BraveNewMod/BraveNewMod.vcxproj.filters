@@ -99,6 +99,9 @@
     <ClCompile Include="source\IconSwaps.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Actor.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\dynamic_pointers.h">

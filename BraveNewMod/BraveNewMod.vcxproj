@@ -34,6 +34,7 @@
     <ClCompile Include="loader\SwapChain.cpp" />
     <ClCompile Include="overlay\im_main.cpp" />
     <ClCompile Include="overlay\MenuBar.cpp" />
+    <ClCompile Include="source\Actor.cpp" />
     <ClCompile Include="source\IconSwaps.cpp" />
     <ClCompile Include="source\memory.cpp" />
   </ItemGroup>

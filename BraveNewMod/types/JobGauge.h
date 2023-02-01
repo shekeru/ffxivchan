@@ -58,33 +58,7 @@ public:
 	USHORT Style, Phase;
 };
 
-// Meele
-
-class BLM_HUD : JobGauge {
-public:
-	USHORT EnochianTimer,
-		   ElementTimeRemaining;
-	CHAR   ElementStance;
-	UCHAR  UmbralHearts,
-		PolyglotStacks;
-public:
-	UCHAR Fire() {
-		return max(0, ElementStance);
-	};
-	UCHAR Ice() {
-		return -1 * min(0, ElementStance);
-	};
-};
-
-// Healers
-
-class WhiteMageGauge : JobGauge {
-public:
-	USHORT _UNK_PAD; // ??
-	SHORT LilyTimer; // milliseconds
-	BYTE  Lily,
-		  BloodLily;
-};
+// Physical
 
 class DancerGauge : JobGauge {
 public:
@@ -98,6 +72,23 @@ public:
 		return dance + (Index < 4 ? phase : 0);
 	}
 };
+
+class MCH_HUD : JobGauge {
+public:
+	USHORT OverHeated, _UNK;
+	UCHAR HeatGauge;
+};
+
+// Healers
+
+class WhiteMageGauge : JobGauge {
+public:
+	USHORT _UNK_PAD; // ??
+	SHORT LilyTimer; // milliseconds
+	BYTE  Lily,
+		  BloodLily;
+};
+
 
 class AST_HUD : JobGauge {
 public:
@@ -130,7 +121,7 @@ public:
 
 // Casters
 
-class RDM_HUD : JobGauge {
+class RedMageGauge : JobGauge {
 public:
 	UCHAR WhiteMana, BlackMana, ManaStacks;
 public:
@@ -139,10 +130,20 @@ public:
 	};
 };
 
-class MCH_HUD : JobGauge {
+class BLM_HUD : JobGauge {
 public:
-	USHORT OverHeated, _UNK;
-	UCHAR HeatGauge;
+	USHORT EnochianTimer,
+		ElementTimeRemaining;
+	CHAR   ElementStance;
+	UCHAR  UmbralHearts,
+		PolyglotStacks;
+public:
+	UCHAR Fire() {
+		return max(0, ElementStance);
+	};
+	UCHAR Ice() {
+		return -1 * min(0, ElementStance);
+	};
 };
 
 namespace AetherFlags {

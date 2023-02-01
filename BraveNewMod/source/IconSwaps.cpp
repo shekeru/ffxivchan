@@ -11,6 +11,8 @@ JobGauge* SharedGaugePtr;
 JobGaugeManager* JobGaugeMgrPtr;
 Job::JobID* CurrentJob;
 
+GameObject* target;
+GameObject::ObjectKind target_type;
 BYTE lvl;
 
 #define SwitchTo(Job) \
@@ -22,7 +24,6 @@ BYTE lvl;
 UINT64 GetIcon_Test(ActionSys * self, UINT action) {
 
 };
-
 
 $set_original(GetIcon);
 UINT64 GetIcon::Function(ActionSys* self, UINT action) {
@@ -39,7 +40,12 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 	//}
 
 	if (Globals::LocalActor) {
-		lvl = Globals::LocalActor->GetLevel();
+		lvl = Globals::LocalActor->Level();
+	}
+
+	if (Globals::TargetSys) {
+		target = Globals::TargetSys->GetCurrentTargetPtr();
+		target_type = target ? target->ObjectType() : GameObject::None;
 	}
 	
 	switch (*CurrentJob) {
@@ -49,6 +55,9 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 		case Lancer:
 		case Dragoon:
 			SwitchTo(Dragoon);
+		case Marauder:
+		case Warrior:
+			SwitchTo(Warrior);
 		case Conjurer:
 		case White_Mage:
 			SwitchTo(WhiteMage);
@@ -60,12 +69,17 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 			SwitchTo(Ninja);
 		case Machinist:
 			SwitchTo(Machinist);
+		case Red_Mage:
+			SwitchTo(RedMage);
 		case Dancer:
 			SwitchTo(Dancer);
 	}; 
 	
 	return original(self, action);
 };
+
+#define BasicCombo(L, N, RS) \
+	if (lvl >= L && Combo.Is(Action::##N) RS)
 
 inline int ActionSys::Paladin(int action) {
 	switch (action) {
@@ -95,6 +109,34 @@ inline int ActionSys::Dragoon(int action) {
 		if (Combo.Is(Doom_Spike))
 			return Sonic_Thrust;
 		break;
+
+	};
+
+	return action;
+};
+
+inline int ActionSys::Warrior(int action) {
+	UsingHUD(WarriorGauge);
+
+	switch (action) {
+	// SIngle
+	case Action::Heavy_Swing:
+		BasicCombo(4, Heavy_Swing)
+			return Maim;
+		BasicCombo(26, Maim)
+			return Storms_Path;
+	break;
+	// Multi
+	case Action::Overpower:
+		BasicCombo(26, Overpower)
+			return Mythril_Tempest;
+	break;
+	// F1
+
+	case Inner_Beast:
+		if (lvl >= 50 && HUD->BeastGauge < 50)
+			return Infuriate;
+	break;
 
 	};
 
@@ -167,6 +209,35 @@ inline int ActionSys::Machinist(int action) {
 
 	return action;
 
+};
+
+inline int ActionSys::RedMage(int action) {
+	UsingHUD(RedMageGauge);
+
+	switch (action) {
+	// Role Actions
+	case Action::Addle:
+		if(lvl >= 54 && target_type != GameObject::BattleNpc)
+			return Vercure;
+	break;
+	case Action::Sleep:
+		if (lvl >= 64 && target_type != GameObject::BattleNpc)
+			return Verraise;
+	break;
+	// Meele-Combo
+	case Action::Riposte:
+		BasicCombo(35, Riposte)
+			return Zwerchhau;
+		BasicCombo(50, Zwerchhau)
+			return Redoublement;
+	break;
+	case Verthunder:
+		//if (lvl >= 10 && HUD->BlackMana)
+
+	break;
+	};
+
+	return action;
 };
 
 
