@@ -21,6 +21,9 @@ BYTE lvl;
 #define UsingHUD(which) \
 	which* HUD = reinterpret_cast<which*>(SharedGaugePtr);
 
+#define effect \
+	Globals::LocalActor->HasStatus
+
 UINT64 GetIcon_Test(ActionSys * self, UINT action) {
 
 };
@@ -128,7 +131,7 @@ inline int ActionSys::Warrior(int action) {
 	break;
 	// Multi
 	case Action::Overpower:
-		BasicCombo(26, Overpower)
+		BasicCombo(40, Overpower)
 			return Mythril_Tempest;
 	break;
 	// F1
@@ -245,17 +248,25 @@ inline int ActionSys::Dancer(int action) {
 	UsingHUD(DancerGauge);
 
 	switch (action) {
-		// Single Target
+	// Single Target
 	case Cascade:
-		if (Combo.Is(Cascade))
+		if (lvl >= 20 && effect(Status::SilkenSymmetry))
+			return Reverse_Cascade;
+		if (lvl >= 40 && effect(Status::SilkenFlow))
+			return Fountainfall;
+		BasicCombo(2, Cascade)
 			return Fountain;
 		break;
-		// AoE Rotation
+	// AoE Rotation
 	case Windmill:
-		if (Combo.Is(Windmill))
+		if (lvl >= 35 && effect(Status::SilkenSymmetry))
+			return Rising_Windmill;
+		if (lvl >= 45 && effect(Status::SilkenFlow))
+			return Bloodshower;
+		BasicCombo(25, Windmill)
 			return Bladeshower;
 		break;
-		// Multi-Step Dance
+	// Multi-Step Dance
 	case Standard_Step:
 	case Technical_Step:
 		return HUD->NextStep(action);
@@ -273,4 +284,14 @@ float ActionSys::_GetRecastTime(ActionSys* self, ActionType type, ActionID actio
 	local original = decltype(&ActionSys::_GetRecastTime)
 		(Offsets::GetRecastTime.Resolve(Context::Current().game));
 	return (self, type, action);
+};
+
+bool Actor::HasStatus(int value, float margin, UINT castSrc) {
+	auto Effects = StatusManagerPtr()->AuraList; 
+	if (!castSrc)
+		castSrc = Globals::LocalActor->EntityID();
+	for (BYTE i = 0; i < 30; i++)
+		if (Effects[i].Type == value && Effects[i].CastId == castSrc)
+			return Effects[i].Timer >= margin || Effects[i].Timer < NULL;
+	return false;
 };

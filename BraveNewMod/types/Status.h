@@ -54,7 +54,19 @@ public:
 		FlourishingFountain = 1815,
 		FlourishingWindmill = 1816,
 		FlourishingShower = 1817,
+		// DNC 2
+		SilkenSymmetry = 2693,
+		SilkenFlow = 2694,
+		FlourishingSymmetry = 3017,
+		FlourishingFlow = 3018,
 		// Changes
 		Disembowel = 1914,
 	};
+};
+
+class Character;
+class StatusManager {
+public:
+	Character* OwnerPtr;
+	Status AuraList[30];
 };
