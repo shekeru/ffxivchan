@@ -62,8 +62,8 @@ void IM_Interface::Render() {
 
 	if (IsOpen) {
 		//log.Render(); 
-		if (ShowDemo)
-			ImGui::ShowDemoWindow(&ShowDemo);
+		//if (ShowDemo)
+			//ImGui::ShowDemoWindow(&ShowDemo);
 		MainMenuBar(); 
 		//User2::LuaConsole(); 
 		//User2::QuestPanel(); 

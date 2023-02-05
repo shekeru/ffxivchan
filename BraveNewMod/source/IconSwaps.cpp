@@ -13,6 +13,8 @@ Job::JobID* CurrentJob;
 
 GameObject* target;
 GameObject::ObjectKind target_type;
+
+UINT playerId;
 BYTE lvl;
 
 #define SwitchTo(Job) \
@@ -44,6 +46,7 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 
 	if (Globals::LocalActor) {
 		lvl = Globals::LocalActor->Level();
+		playerId = Globals::LocalActor->EntityID();
 	}
 
 	if (Globals::TargetSys) {
@@ -52,22 +55,24 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 	}
 	
 	switch (*CurrentJob) {
-		case Gladiator:
+		//case Gladiator:
 		case Paladin:
 			SwitchTo(Paladin);
-		case Lancer:
+		//case Lancer:
 		case Dragoon:
 			SwitchTo(Dragoon);
-		case Marauder:
+		case Bard:
+			SwitchTo(Bard);
+		//case Marauder:
 		case Warrior:
 			SwitchTo(Warrior);
-		case Conjurer:
+		//case Conjurer:
 		case White_Mage:
 			SwitchTo(WhiteMage);
-		case Arcanist:
+		//case Arcanist:
 		case Summoner:
 			SwitchTo(Summoner);
-		case Rogue:
+		//case Rogue:
 		case Ninja:
 			SwitchTo(Ninja);
 		case Machinist:
@@ -118,6 +123,20 @@ inline int ActionSys::Dragoon(int action) {
 	return action;
 };
 
+inline int ActionSys::Bard(int action) {
+
+	switch (action) {
+		// Brain Dead Rotation
+	case Action::Heavy_Shot:
+		if (lvl >= 2 && effect(Status::StraightShotReady))
+			return Straight_Shot;
+		break;
+
+	};
+
+	return action;
+};
+
 inline int ActionSys::Warrior(int action) {
 	UsingHUD(WarriorGauge);
 
@@ -136,21 +155,47 @@ inline int ActionSys::Warrior(int action) {
 	break;
 	// F1
 
-	case Inner_Beast:
-		if (lvl >= 50 && HUD->BeastGauge < 50)
-			return Infuriate;
-	break;
+	//case Inner_Beast:
+	//	if (lvl >= 50 && HUD->BeastGauge < 50)
+	//		return Infuriate;
+	//break;
 
 	};
 
 	return action;
 };
 
-#define WHM_HUD (WhiteMageGauge)(StaticGaugePtr->LocalGauge);
 inline int ActionSys::WhiteMage(int action) {
+	UsingHUD(WhiteMageGauge);
+	auto active = (Actor*)target;
 
 	switch (action) {
-
+	// Regen + Cure
+	case Action::Cure:
+		if (!active || active->ObjectType() == GameObject::BattleNpc)
+			active = Globals::LocalActor;
+		if (lvl >= 35 && !active->HasStatus(Status::Regen))
+			return Regen; 
+	break;
+	// DoT Switch
+	case Action::Stone:
+		if (lvl >= 4 && target && target->ObjectType() == GameObject::BattleNpc) {
+			if (active->HasStatus(Status::AeroII) || active->HasStatus(Status::Aero))
+				return Stone;
+			else
+				return Aero;
+		};
+	break;
+	// Cure II
+	case Action::CureII:
+		if (lvl >= 52 && HUD->Lily && !effect(Status::Freecure))
+			return Afflatus_Solace; 
+	break;
+	// Medica
+	case Action::Medica:
+		if (lvl >= 50 && !effect(Status::MedicaII))
+			return MedicaII;
+	break;
 
 	};
 
@@ -287,11 +332,17 @@ float ActionSys::_GetRecastTime(ActionSys* self, ActionType type, ActionID actio
 };
 
 bool Actor::HasStatus(int value, float margin, UINT castSrc) {
+	if (this == nullptr)
+		return false;
+
 	auto Effects = StatusManagerPtr()->AuraList; 
+
 	if (!castSrc)
-		castSrc = Globals::LocalActor->EntityID();
+		castSrc = playerId;
+
 	for (BYTE i = 0; i < 30; i++)
 		if (Effects[i].Type == value && Effects[i].CastId == castSrc)
 			return Effects[i].Timer >= margin || Effects[i].Timer < NULL;
+
 	return false;
 };
