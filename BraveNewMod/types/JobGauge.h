@@ -130,13 +130,13 @@ public:
 	};
 };
 
-class BLM_HUD : JobGauge {
+class BlackMageGauge : JobGauge {
 public:
 	USHORT EnochianTimer,
-		ElementTimeRemaining;
+		   ElementTimeRemaining;
 	CHAR   ElementStance;
 	UCHAR  UmbralHearts,
-		PolyglotStacks;
+		   PolyglotStacks;
 public:
 	UCHAR Fire() {
 		return max(0, ElementStance);

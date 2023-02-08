@@ -26,6 +26,13 @@ BYTE lvl;
 #define effect \
 	Globals::LocalActor->HasStatus
 
+#define MACRO_REPOSE_RESCUE \
+	case Repose: \
+		if (lvl >= 48 && target_type != GameObject::BattleNpc) \
+			return Rescue; \
+	break; \
+
+
 UINT64 GetIcon_Test(ActionSys * self, UINT action) {
 
 };
@@ -58,6 +65,8 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 		//case Gladiator:
 		case Paladin:
 			SwitchTo(Paladin);
+		case Monk:
+			SwitchTo(Monk);
 		//case Lancer:
 		case Dragoon:
 			SwitchTo(Dragoon);
@@ -68,6 +77,8 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 			SwitchTo(Warrior);
 		//case Conjurer:
 		case White_Mage:
+			SwitchTo(WhiteMage);
+		case Black_Mage:
 			SwitchTo(WhiteMage);
 		//case Arcanist:
 		case Summoner:
@@ -103,6 +114,20 @@ inline int ActionSys::Paladin(int action) {
 		if (lvl >= 40 && Combo.Is(Total_Eclipse))
 			return Prominence;
 		break;		
+
+	};
+
+	return action;
+};
+
+inline int ActionSys::Monk(int action) {
+
+	switch (action) {
+
+	case True_Strike:
+		if (lvl >= 18 && effect(Status::Twin_Snakes, 2.5f))
+			return Action::Twin_Snakes;
+		break;
 
 	};
 
@@ -170,6 +195,7 @@ inline int ActionSys::WhiteMage(int action) {
 	auto active = (Actor*)target;
 
 	switch (action) {
+	MACRO_REPOSE_RESCUE;
 	// Regen + Cure
 	case Action::Cure:
 		if (!active || active->ObjectType() == GameObject::BattleNpc)
@@ -202,6 +228,18 @@ inline int ActionSys::WhiteMage(int action) {
 	return action;
 };
 
+inline int ActionSys::BlackMage(int action) {
+	UsingHUD(BlackMageGauge);
+
+	switch (action) {
+
+
+	};
+
+	return action;
+
+};
+
 inline int ActionSys::Summoner(int action) {
 	UsingHUD(SummonerGauge);
 
@@ -226,9 +264,9 @@ inline int ActionSys::Ninja(int action) {
 	switch (action) {
 	// Single-Target
 	case Spinning_Edge:
-		if (Combo.Is(Spinning_Edge))
+		BasicCombo(4, Spinning_Edge)
 			return Gust_Slash;
-		if (Combo.Is(Gust_Slash))
+		BasicCombo(26, Gust_Slash)
 			return Aeolian_Edge;
 		break;
 	// Multi-Target
@@ -265,11 +303,11 @@ inline int ActionSys::RedMage(int action) {
 	switch (action) {
 	// Role Actions
 	case Action::Addle:
-		if(lvl >= 54 && target_type != GameObject::BattleNpc)
+		if(target_type != GameObject::BattleNpc)
 			return Vercure;
 	break;
 	case Action::Sleep:
-		if (lvl >= 64 && target_type != GameObject::BattleNpc)
+		if (target_type != GameObject::BattleNpc)
 			return Verraise;
 	break;
 	// Meele-Combo
@@ -279,9 +317,22 @@ inline int ActionSys::RedMage(int action) {
 		BasicCombo(50, Zwerchhau)
 			return Redoublement;
 	break;
+	// Slow Cast
 	case Verthunder:
-		//if (lvl >= 10 && HUD->BlackMana)
-
+		if (lvl >= 10 && HUD->BlackMana > HUD->WhiteMana)
+			return Veraero;
+	break;
+	// Quick-Cast
+	case Jolt:
+		if (lvl >= 26 && effect(Status::VerfireReady, 0.5f))
+			return Verfire;
+		if (lvl >= 30 && effect(Status::VerstoneReady, 0.5f))
+			return Verstone;
+	break;
+	// Multi
+	case Verthunder_II:
+		if (lvl >= 22 && HUD->BlackMana > HUD->WhiteMana)
+			return Veraero_II;
 	break;
 	};
 

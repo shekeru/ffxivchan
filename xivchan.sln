@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.852
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "notdx", "notdx\notdx.vcxproj", "{9D00FA0A-DB2E-4655-9D78-8DC3E46D4B5F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BraveNewMod", "BraveNewMod\BraveNewMod.vcxproj", "{9FD7AA08-A908-4C30-80B3-01EC61504D65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9D00FA0A-DB2E-4655-9D78-8DC3E46D4B5F}.Debug|x64.Build.0 = Debug|x64
 		{9D00FA0A-DB2E-4655-9D78-8DC3E46D4B5F}.Release|x64.ActiveCfg = Release|x64
 		{9D00FA0A-DB2E-4655-9D78-8DC3E46D4B5F}.Release|x64.Build.0 = Release|x64
+		{9FD7AA08-A908-4C30-80B3-01EC61504D65}.Debug|x64.ActiveCfg = Debug|x64
+		{9FD7AA08-A908-4C30-80B3-01EC61504D65}.Debug|x64.Build.0 = Debug|x64
+		{9FD7AA08-A908-4C30-80B3-01EC61504D65}.Release|x64.ActiveCfg = Release|x64
+		{9FD7AA08-A908-4C30-80B3-01EC61504D65}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
