@@ -28,7 +28,7 @@ BYTE lvl;
 
 #define MACRO_REPOSE_RESCUE \
 	case Repose: \
-		if (lvl >= 48 && target_type != GameObject::BattleNpc) \
+		if (target_type == GameObject::Player) \
 			return Rescue; \
 	break; \
 
@@ -78,8 +78,10 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 		//case Conjurer:
 		case White_Mage:
 			SwitchTo(WhiteMage);
+		case Job::Astrologian:
+			SwitchTo(Astrologian);
 		case Black_Mage:
-			SwitchTo(WhiteMage);
+			SwitchTo(BlackMage);
 		//case Arcanist:
 		case Summoner:
 			SwitchTo(Summoner);
@@ -138,10 +140,17 @@ inline int ActionSys::Dragoon(int action) {
 
 	switch (action) {
 
+	case True_Thrust:
+		BasicCombo(26, Vorpal_Thrust)
+			return Full_Thrust;
+		BasicCombo(50, Disembowel)
+			return Chaos_Thrust;
+	break;
+
 	case Doom_Spike:
-		if (Combo.Is(Doom_Spike))
+		BasicCombo(62, Doom_Spike)
 			return Sonic_Thrust;
-		break;
+	break;
 
 	};
 
@@ -228,6 +237,44 @@ inline int ActionSys::WhiteMage(int action) {
 	return action;
 };
 
+inline int ActionSys::Astrologian(int action) {
+	UsingHUD(AstrologianGauge);
+	auto active = (Actor*)target;
+
+	switch (action) {
+		MACRO_REPOSE_RESCUE;
+	// Regen + Cure
+	case Action::Benefic:
+		if (!active || active->ObjectType() == GameObject::BattleNpc)
+			active = Globals::LocalActor;
+		if (lvl >= 34 && !active->HasStatus(Status::Aspected_Benefic))
+			return Aspected_Benefic;
+		break;
+	// DoT Switch
+	case Action::Malefic:
+		if (lvl >= 4 && target && target->ObjectType() == GameObject::BattleNpc) {
+			if (active->HasStatus(Status::CombustII) || active->HasStatus(Status::Combust))
+				return Malefic;
+			else
+				return Combust;
+		};
+		break;
+	// Medica
+	case Action::Helios:
+		if (lvl >= 42 && !effect(Status::Aspected_Helios))
+			return Aspected_Helios;
+		break;
+	// Cards
+	case Action::Draw:
+		if (HUD->Card)
+			return Play;
+	break;
+
+	};
+
+	return action;
+};
+
 inline int ActionSys::BlackMage(int action) {
 	UsingHUD(BlackMageGauge);
 
@@ -302,10 +349,10 @@ inline int ActionSys::RedMage(int action) {
 
 	switch (action) {
 	// Role Actions
-	case Action::Addle:
-		if(target_type != GameObject::BattleNpc)
-			return Vercure;
-	break;
+	//case Action::Addle:
+	//	if(target_type != GameObject::BattleNpc)
+	//		return Vercure;
+	//break;
 	case Action::Sleep:
 		if (target_type != GameObject::BattleNpc)
 			return Verraise;

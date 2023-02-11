@@ -90,33 +90,33 @@ public:
 };
 
 
-class AST_HUD : JobGauge {
+class AstrologianGauge : JobGauge {
 public:
-	int _unk; UCHAR
-		Card, Seal[3];
-	bool InSet() {
-		auto Option = Aspect();
-		for (char i = 0; i < 3; i++) {
-			if (i[Seal] == Option)
-				return true;
-		}; return false;
-	}
-	UCHAR Aspect() {
-		switch (Card)
-		{
-		case 1:
-		case 2:
-			return 1;
-		case 3:
-		case 5:
-			return 2;
-		case 4:
-		case 6:
-			return 3;
-		default:
-			return -1;
-		};
-	}
+	SHORT Timer, _UNK_1;  // 0x8
+	UCHAR _UNK_2, Card, Seals;
+	//bool InSet() {
+	//	auto Option = Aspect();
+	//	for (char i = 0; i < 3; i++) {
+	//		if (i[Seal] == Option)
+	//			return true;
+	//	}; return false;
+	//}
+	//UCHAR Aspect() {
+	//	switch (Card)
+	//	{
+	//	case 1:
+	//	case 2:
+	//		return 1;
+	//	case 3:
+	//	case 5:
+	//		return 2;
+	//	case 4:
+	//	case 6:
+	//		return 3;
+	//	default:
+	//		return -1;
+	//	};
+	//}
 };
 
 // Casters

@@ -42,6 +42,7 @@ public:
 	int Dragoon(int action);
 	int Bard(int action);
 	int WhiteMage(int action);
+	int Astrologian(int action);
 	int BlackMage(int action);
 	int Summoner(int action);
 	//int Scholar(int action);
