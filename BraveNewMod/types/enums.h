@@ -174,6 +174,7 @@ namespace Action {
 		Nocturnal_Sect = 3605,
 		// DRK
 		Hard_Slash = 3617,
+		Unleash = 3621,
 		Syphon_Strike = 3623,
 		Souleater = 3632,
 		// Stormblood Skills
@@ -238,10 +239,10 @@ namespace Action {
 		Demon_Slaughter = 16149,
 		Wicked_Talon = 16150,
 		Burst_Strike = 16162,
-		// NIN
+		// Updated Changes
+		Stalwart_Soul = 16468,
 		Hakke_Mujinsatsu = 16488,
 		Afflatus_Solace = 16531,
-		// Updated Changes
 		Prominence = 16457,
 		Repose = 16560,
 		Play = 17055,

@@ -28,7 +28,7 @@ BYTE lvl;
 
 #define MACRO_REPOSE_RESCUE \
 	case Repose: \
-		if (target_type == GameObject::Player) \
+		if (target_type != GameObject::BattleNpc) \
 			return Rescue; \
 	break; \
 
@@ -90,6 +90,10 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 			SwitchTo(Ninja);
 		case Machinist:
 			SwitchTo(Machinist);
+		case Dark_Knight:
+			SwitchTo(DarkKnight);
+		case Samurai:
+				SwitchTo(Samurai);
 		case Red_Mage:
 			SwitchTo(RedMage);
 		case Dancer:
@@ -318,13 +322,12 @@ inline int ActionSys::Ninja(int action) {
 		break;
 	// Multi-Target
 	case Death_Blossom:
-		if (Combo.Is(Death_Blossom))
+		BasicCombo(52, Death_Blossom)
 			return Hakke_Mujinsatsu;
 		break;
 	};
 
 	return action;
-
 };
 
 
@@ -341,7 +344,46 @@ inline int ActionSys::Machinist(int action) {
 	};
 
 	return action;
+};
 
+inline int ActionSys::DarkKnight(int action) {
+	switch (action) {
+		// Single-Target
+	case Hard_Slash:
+		BasicCombo(4, Hard_Slash)
+			return Syphon_Strike;
+		BasicCombo(26, Syphon_Strike)
+			return Souleater;
+	break;
+		// Multi-Target
+	case Unleash:
+		BasicCombo(40, Unleash)
+		return Stalwart_Soul;
+	break;
+	};
+
+	return action;
+
+};
+
+inline int ActionSys::Samurai(int action) {
+
+	switch (action) {
+	case Hakaze:
+		BasicCombo(30, Jinpu)
+			return Gekko;
+		BasicCombo(40, Shifu)
+			return Kasha;
+		break;
+
+	//case Fuga:
+	//	BasicCombo(35, Fuga)
+	//		return Mangetsu;
+	//break;
+
+
+	};
+	return action;
 };
 
 inline int ActionSys::RedMage(int action) {
@@ -367,7 +409,7 @@ inline int ActionSys::RedMage(int action) {
 	// Slow Cast
 	case Verthunder:
 		if (lvl >= 10 && HUD->BlackMana > HUD->WhiteMana)
-			return Veraero;
+			return (lvl >= 68 && HUD->ManaStacks == 3 && lvl < 70) ? Verthunder : Veraero;
 	break;
 	// Quick-Cast
 	case Jolt:
@@ -379,7 +421,7 @@ inline int ActionSys::RedMage(int action) {
 	// Multi
 	case Verthunder_II:
 		if (lvl >= 22 && HUD->BlackMana > HUD->WhiteMana)
-			return Veraero_II;
+			return (lvl >= 68 && HUD->ManaStacks == 3 && lvl < 70) ? Verthunder_II : Veraero_II;
 	break;
 	};
 

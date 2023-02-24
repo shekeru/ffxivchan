@@ -48,7 +48,8 @@ public:
 	//int Scholar(int action);
 	int Ninja(int action);
 	int Machinist(int action);
-	//int Dark_Knight(int action);
+	int DarkKnight(int action);
+	int Samurai(int action);
 	int RedMage(int action);
 	int Dancer(int action);
 public:
