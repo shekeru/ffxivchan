@@ -78,7 +78,7 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 		//case Conjurer:
 		case White_Mage:
 			SwitchTo(WhiteMage);
-		case Job::Astrologian:
+		case Astrologian:
 			SwitchTo(Astrologian);
 		case Black_Mage:
 			SwitchTo(BlackMage);
@@ -93,7 +93,7 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 		case Dark_Knight:
 			SwitchTo(DarkKnight);
 		case Samurai:
-				SwitchTo(Samurai);
+			SwitchTo(Samurai);
 		case Red_Mage:
 			SwitchTo(RedMage);
 		case Dancer:
@@ -143,21 +143,20 @@ inline int ActionSys::Monk(int action) {
 inline int ActionSys::Dragoon(int action) {
 
 	switch (action) {
-
+	// Single-Target
 	case True_Thrust:
 		BasicCombo(26, Vorpal_Thrust)
 			return Full_Thrust;
 		BasicCombo(50, Disembowel)
 			return Chaos_Thrust;
 	break;
-
+	// AOE
 	case Doom_Spike:
 		BasicCombo(62, Doom_Spike)
 			return Sonic_Thrust;
 	break;
 
 	};
-
 	return action;
 };
 
@@ -179,7 +178,7 @@ inline int ActionSys::Warrior(int action) {
 	UsingHUD(WarriorGauge);
 
 	switch (action) {
-	// SIngle
+	// Single
 	case Action::Heavy_Swing:
 		BasicCombo(4, Heavy_Swing)
 			return Maim;
@@ -241,19 +240,20 @@ inline int ActionSys::WhiteMage(int action) {
 	return action;
 };
 
+
 inline int ActionSys::Astrologian(int action) {
 	UsingHUD(AstrologianGauge);
 	auto active = (Actor*)target;
 
 	switch (action) {
-		MACRO_REPOSE_RESCUE;
+	MACRO_REPOSE_RESCUE;
 	// Regen + Cure
 	case Action::Benefic:
 		if (!active || active->ObjectType() == GameObject::BattleNpc)
 			active = Globals::LocalActor;
 		if (lvl >= 34 && !active->HasStatus(Status::Aspected_Benefic))
 			return Aspected_Benefic;
-		break;
+	break;
 	// DoT Switch
 	case Action::Malefic:
 		if (lvl >= 4 && target && target->ObjectType() == GameObject::BattleNpc) {
@@ -262,12 +262,12 @@ inline int ActionSys::Astrologian(int action) {
 			else
 				return Combust;
 		};
-		break;
+	break;
 	// Medica
 	case Action::Helios:
 		if (lvl >= 42 && !effect(Status::Aspected_Helios))
 			return Aspected_Helios;
-		break;
+	break;
 	// Cards
 	case Action::Draw:
 		if (HUD->Card)
@@ -275,9 +275,9 @@ inline int ActionSys::Astrologian(int action) {
 	break;
 
 	};
-
 	return action;
 };
+
 
 inline int ActionSys::BlackMage(int action) {
 	UsingHUD(BlackMageGauge);
@@ -335,10 +335,10 @@ inline int ActionSys::Machinist(int action) {
 	switch (action) {
 	// Single-Target
 	case Split_Shot:
-		if (Combo.Is(Split_Shot))
-			return Slug_Shot;
-		if (Combo.Is(Slug_Shot))
-			return Clean_Shot;
+		//if (Combo.Is(Split_Shot))
+		//	return Slug_Shot;
+		//if (Combo.Is(Slug_Shot))
+		//	return Clean_Shot;
 		break;
 	// Multi-Target
 	};
@@ -354,12 +354,12 @@ inline int ActionSys::DarkKnight(int action) {
 			return Syphon_Strike;
 		BasicCombo(26, Syphon_Strike)
 			return Souleater;
-	break;
+		break;
 		// Multi-Target
 	case Unleash:
 		BasicCombo(40, Unleash)
-		return Stalwart_Soul;
-	break;
+			return Stalwart_Soul;
+		break;
 	};
 
 	return action;

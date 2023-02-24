@@ -169,6 +169,4 @@ public:
 	BYTE SummonID, SummonGlamID; 
 	BYTE AttunementCount;
 	AetherFlags::AetherFlags Flags;
-
-		//Aetherflow;
 };
