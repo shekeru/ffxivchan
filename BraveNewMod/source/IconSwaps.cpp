@@ -37,6 +37,45 @@ UINT64 GetIcon_Test(ActionSys * self, UINT action) {
 
 };
 
+$set_original(RequestAction);
+char RequestAction::Function(ActionSys* self, UINT actionType, UINT actionID,
+	INT64 ptr4, INT a5, UINT a6, INT a7) {
+	get_original;
+
+	auto value = original(self, actionType, actionID, ptr4, a5, a6, a7);
+	//printf("acq: %p, a5: %i, id: %i, a7: %i\n", self, a5, action, a7);
+	//if (AllowRequestsGCD::Function(self, actionType, actionID))
+		return self->Combo.Set(value, actionID);
+
+	//return value;
+};
+
+$set_original(GetRecastIndex);
+$set_original(GetRecastStruct);
+
+RecastDetail* ActionSys::ActionRecast(int action, int flag){
+	static auto _GetRecastIndex = decltype(&GetRecastIndex::Function)(GetRecastIndex::GetLocation());
+	static auto _GetRecastStruct = decltype(&GetRecastStruct::Function)(GetRecastStruct::GetLocation());
+
+	return _GetRecastStruct(this, _GetRecastIndex(this, flag, action));
+};
+
+$set_original(AllowRequestsGCD);
+char AllowRequestsGCD::Function(ActionSys* self, UINT flag, UINT action) {
+	get_original;
+
+	auto result = original(self, flag, action);
+	RecastDetail* recast = self->ActionRecast(action, flag);
+
+	//printf("recast: %p\n", recast);
+
+	if (!result && recast) {
+		return (recast->TotalTime - recast->ElapsedTime) < 1.0f;
+	}
+
+	return result;
+}
+
 $set_original(GetIcon);
 UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 	get_original; 
@@ -210,7 +249,7 @@ inline int ActionSys::WhiteMage(int action) {
 	MACRO_REPOSE_RESCUE;
 	// Regen + Cure
 	case Action::Cure:
-		if (!active || active->ObjectType() == GameObject::BattleNpc)
+		if (!active || (active->ObjectType() == GameObject::BattleNpc && active->IsMask(StatusFlags::Aggressive)))
 			active = Globals::LocalActor;
 		if (lvl >= 35 && !active->HasStatus(Status::Regen))
 			return Regen; 
@@ -283,8 +322,22 @@ inline int ActionSys::BlackMage(int action) {
 	UsingHUD(BlackMageGauge);
 
 	switch (action) {
+	case Action::Blizzard:
+		if (lvl >= 4 && HUD->Fire())
+			return Transpose;
+	break;
 
+	case Action::Fire:
+		if (lvl >= 4 && HUD->Ice())
+			return Transpose;
+		//if (lvl >= 34 && effect(Status::Firestarter))
+		//	return Fire_III; 
+	break;
 
+	case Action::Freeze:
+		if (lvl >= 50 && HUD->ElementStance >= 0)
+			return Flare;
+	break;
 	};
 
 	return action;

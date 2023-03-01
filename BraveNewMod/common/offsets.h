@@ -31,6 +31,18 @@ namespace Offsets {
 	inline auto GetRecastTime = FollowPattern
 		("E8 ? ? ? ? 83 7F 4C 01 44 0F 28 C8", 1);
 
+	inline auto GetRecastIndex = FollowPattern
+		("48 8b f9 e8 ? ? ? ? 8b d0 48 8b cf e8", 4);
+
+	inline auto GetRecastStruct = FollowPattern
+		("48 8b cf e8 ? ? ? ? 48 8b d8 48 85 c0 75 04 32 c0", 4);
+
+	inline auto AllowRequestsGCD = FollowPattern
+		("44 8b c3 41 8b d5 48 8b cf e8 ? ? ? ? 84 c0 74 37", 10);
+
+	inline auto RequestAction = FollowPattern
+		("E8 ? ? ? ? EB 64 B1 01", 1);
+
 };
 
 namespace Globals {

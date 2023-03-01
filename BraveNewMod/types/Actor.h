@@ -37,7 +37,7 @@ public:
 		GatheringPoint = 6,
 		EventObj = 7,
 		Mount = 8,
-		Companion = 9,
+		Minion = 9,
 		Retainer = 10,
 		AreaObject = 11,
 		HousingEventObject = 12,
@@ -63,7 +63,7 @@ class Actor : public Character {
 public:
 	Character Char;
 public:
-
+	GetField(BYTE, StatusFlags, 0x1b1b);
 public:
 	UINT GetTargetID();
 
@@ -90,9 +90,9 @@ public:
 	// Target Testing
 	bool HasStatus(int value, float margin = 0.4f, UINT castSrc = 0); 
 	//Actor* TargetPtr();
-	// bool IsMask(CombatFlags::Mask mask) {
-		//return CombatFlags() & mask;
-	//};
+	 bool IsMask(StatusFlags::Mask mask) {
+		return StatusFlags() & mask;
+	};
 	bool IsType(EntityType::Type type) {
 		return type == *(EntityType::Type*)
 			(uintptr_t(this) + 0x8c);

@@ -26,6 +26,9 @@ VOID WINAPI ModuleEntry(HMODULE hInstance) {
     //Offsets::GetIcon.ToFunction(IconSwaps::GetIcon_Test).AttachHook(ctx.game);
     
     IconSwaps::GetIcon::AttachHook();
+    IconSwaps::AllowRequestsGCD::AttachHook();
+    //IconSwaps::RequestAction::AttachHook();
+
 
     // Anti-Anti-Debugger
     oIsDebuggerPresent = GetProcAddress(GetModuleHandle(L"kernel32.dll"), "IsDebuggerPresent");

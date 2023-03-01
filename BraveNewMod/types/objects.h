@@ -7,7 +7,7 @@ class JobGaugeManager;
 class RecastDetail {
 public:
 	UINT Cooldown, ActionID;
-	float Elapsed, Recast;
+	float ElapsedTime, TotalTime;
 };
 
 class ComboDetail {
@@ -53,6 +53,8 @@ public:
 	int RedMage(int action);
 	int Dancer(int action);
 public:
+
+	RecastDetail* ActionRecast(int action, int flag = 1);
 
 	float GetRecastTime(Action::ActionType type, Action::ActionID action) {
 		return ActionSys::_GetRecastTime(this, type, action);

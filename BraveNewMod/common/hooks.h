@@ -43,6 +43,12 @@
 namespace IconSwaps {
 	ReplaceFN(char, IsIconReplaceable, UINT);
 	ReplaceFN(UINT64, GetIcon, ActionSys*, UINT);
+
+	ReplaceFN(char, AllowRequestsGCD, ActionSys*, UINT, UINT);
+	ReplaceFN(char, RequestAction, ActionSys*, UINT, UINT, INT64, INT, UINT, INT);
+
+	ReplaceFN(INT64, GetRecastIndex, ActionSys*, UINT, UINT);
+	ReplaceFN(RecastDetail*, GetRecastStruct, ActionSys*, UINT);
 	UINT64 GetIcon_Test(ActionSys* self, UINT action);
 };
 

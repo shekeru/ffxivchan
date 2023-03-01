@@ -135,8 +135,11 @@ namespace Action {
 		Blizzard_II = 146,
 		Fire_II = 147,
 		Thunder_II = 148,
+		Transpose = 149,
 		Fire_III = 152,
 		Blizzard_III = 154,
+		Freeze = 159,
+		Flare = 162,
 		// ARC + SMN
 		Ruin = 163,
 		Resurrection = 173,
@@ -254,17 +257,18 @@ namespace Action {
 	};
 };
 
-namespace CombatFlags {
+namespace StatusFlags {
 	enum Mask : unsigned char {
 		None = '\0',
-		IsAggressive = 1 << 0,
+		Aggressive = 1 << 0,
 		InCombat = 1 << 1,
 		WeaponUnsheathed = 1 << 2,
 		_UNKNOWN_8_POS = 1 << 3,
-		PartyMember = 1 << 4,
-		AllianceMember = 1 << 5,
-		Friend = 1 << 6,
-		IsCasting = 1 << 7
+		_UNKNOWN_16_POS = 1 << 4,
+		PartyMember = 1 << 5,
+		AllianceMember = 1 << 6,
+		IsFriend = 1 << 7,
+		// IsCasting = 1 << 8
 	};
 };
 

@@ -139,10 +139,10 @@ public:
 		   PolyglotStacks;
 public:
 	UCHAR Fire() {
-		return max(0, ElementStance);
+		return ElementStance <= 0 ? 0 : ElementStance;
 	};
 	UCHAR Ice() {
-		return -1 * min(0, ElementStance);
+		return ElementStance >= 0 ? 0 : ElementStance * -1;
 	};
 };
 
