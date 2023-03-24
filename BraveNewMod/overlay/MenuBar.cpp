@@ -60,13 +60,13 @@ void IM_Interface::Render() {
 	get_context;
 	static byte nil = printf("IM_Interface::Render() called!\n");
 
-	if (IsOpen) {
-		//log.Render(); 
-		//if (ShowDemo)
-			//ImGui::ShowDemoWindow(&ShowDemo);
-		MainMenuBar(); 
-		//User2::LuaConsole(); 
-		//User2::QuestPanel(); 
-		//User2::ZoomPanel();
-	} else NameOverlay();
+	//if (IsOpen) {
+	//	//log.Render(); 
+	//	//if (ShowDemo)
+	//		//ImGui::ShowDemoWindow(&ShowDemo);
+	//	MainMenuBar(); 
+	//	//User2::LuaConsole(); 
+	//	//User2::QuestPanel(); 
+	//	//User2::ZoomPanel();
+	//} else NameOverlay();
 };

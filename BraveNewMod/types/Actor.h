@@ -19,7 +19,10 @@ class GameObject {
 	static enum ObjectKind : byte;
 public:
 	virtual void _destroy();
-	virtual UINT GetEntityID();
+	virtual UINT GetObjectID();
+	virtual BYTE GetObjectKind();
+	virtual bool GetIsTargetable();
+	virtual char* GetName();
 public:
 	GetField(UINT, EntityID, 0x74); // EntityId
 	GetField(USHORT, ObjectIndex, 0x88);

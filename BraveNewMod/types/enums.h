@@ -142,11 +142,13 @@ namespace Action {
 		Flare = 162,
 		// ARC + SMN
 		Ruin = 163,
+		Aetherflow = 166,
+		Energy_Drain_SCH = 167,
 		Resurrection = 173,
 		Fester = 181,
 		Painflare = 3578,
 		Deathflare = 3582,
-		Energy_Drain = 16508,
+		Energy_Drain_SMN = 16508,
 		Energy_Syphon = 16510,
 		Gemshine = 25883,
 		// WAR
@@ -241,6 +243,7 @@ namespace Action {
 		Savage_Claw = 16147,
 		Demon_Slaughter = 16149,
 		Wicked_Talon = 16150,
+		Continuation = 16155,
 		Burst_Strike = 16162,
 		// Updated Changes
 		Stalwart_Soul = 16468,
@@ -272,6 +275,10 @@ namespace StatusFlags {
 	};
 };
 
+
+// Self: 01 + 04 (100)
+// Monter: 02 + 05 (101)
+// Thancred: 02 + 09 (1001)
 namespace EntityType {
 	enum Type : unsigned char {
 		Unknown = '\0',

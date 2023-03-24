@@ -89,6 +89,13 @@ public:
 		  BloodLily;
 };
 
+class ScholarGauge : JobGauge {
+public:
+	BYTE Aetherflow, FairyGauge;
+	SHORT SeraphTimer;
+	BYTE DismissedFairy;
+};
+
 
 class AstrologianGauge : JobGauge {
 public:

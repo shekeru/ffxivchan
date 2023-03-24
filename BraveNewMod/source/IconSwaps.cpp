@@ -104,6 +104,8 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 		//case Gladiator:
 		case Paladin:
 			SwitchTo(Paladin);
+		case Gunbreaker:
+			SwitchTo(Gunbreaker);
 		case Monk:
 			SwitchTo(Monk);
 		//case Lancer:
@@ -117,6 +119,8 @@ UINT64 GetIcon::Function(ActionSys* self, UINT action) {
 		//case Conjurer:
 		case White_Mage:
 			SwitchTo(WhiteMage);
+		case Scholar:
+			SwitchTo(Scholar);
 		case Astrologian:
 			SwitchTo(Astrologian);
 		case Black_Mage:
@@ -149,16 +153,36 @@ inline int ActionSys::Paladin(int action) {
 	switch (action) {
 
 	case Fast_Blade:
-		if (lvl >= 4 && Combo.Is(Fast_Blade))
+		BasicCombo(4, Fast_Blade)
 			return Riot_Blade;
-		if (lvl >= 26 && Combo.Is(Riot_Blade))
+		BasicCombo(26, Riot_Blade)
 			return Rage_of_Halon;
 		break;
 
 	case Total_Eclipse:
-		if (lvl >= 40 && Combo.Is(Total_Eclipse))
+		BasicCombo(40, Total_Eclipse)
 			return Prominence;
 		break;		
+
+	};
+
+	return action;
+};
+
+inline int ActionSys::Gunbreaker(int action) {
+	switch (action) {
+
+	case Fast_Blade:
+		BasicCombo(4, Keen_Edge)
+			return Brutal_Shell;
+		BasicCombo(26, Brutal_Shell)
+			return Solid_Barrel;
+		break;
+
+	case Demon_Slice:
+		BasicCombo(40, Demon_Slice)
+			return Demon_Slaughter;
+		break;
 
 	};
 
@@ -249,15 +273,22 @@ inline int ActionSys::WhiteMage(int action) {
 	MACRO_REPOSE_RESCUE;
 	// Regen + Cure
 	case Action::Cure:
-		if (!active || (active->ObjectType() == GameObject::BattleNpc && active->IsMask(StatusFlags::Aggressive)))
-			active = Globals::LocalActor;
-		if (lvl >= 35 && !active->HasStatus(Status::Regen))
-			return Regen; 
+		if (lvl >= 35) {
+			if (!active)
+				active = Globals::LocalActor;
+			else if (active->ObjectType() == GameObject::BattleNpc) {
+				printf("subtype: %hhu, for: ??\n", active->ObjectSubtype());
+				if ((active->ObjectSubtype() & 4) == 4)
+					active = Globals::LocalActor;
+			}
+			if (!active->HasStatus(Status::Regen))
+				return Regen;
+		}
 	break;
 	// DoT Switch
 	case Action::Stone:
 		if (lvl >= 4 && target && target->ObjectType() == GameObject::BattleNpc) {
-			if (active->HasStatus(Status::AeroII) || active->HasStatus(Status::Aero))
+			if (active->HasStatus(Status::Dia) || active->HasStatus(Status::AeroII) || active->HasStatus(Status::Aero))
 				return Stone;
 			else
 				return Aero;
@@ -279,6 +310,27 @@ inline int ActionSys::WhiteMage(int action) {
 	return action;
 };
 
+
+inline int ActionSys::Scholar(int action) {
+	UsingHUD(ScholarGauge);
+	auto active = (Actor*)target;
+
+	switch (action) {
+	// Single-Target
+	case Action::Ruin_SCH:
+		if (lvl >= 4 && target && target->ObjectType() == GameObject::BattleNpc) {
+			if (!(active->HasStatus(Status::Bio_II) || active->HasStatus(Status::Bio)))
+				return Bio_SCH;
+		}; break;
+	case Action::Aetherflow:
+		if (HUD->Aetherflow)
+			return Energy_Drain_SCH;
+	break;
+	};
+
+	return action;
+
+};
 
 inline int ActionSys::Astrologian(int action) {
 	UsingHUD(AstrologianGauge);
@@ -351,7 +403,7 @@ inline int ActionSys::Summoner(int action) {
 	// Single-Target
 	case Fester:
 		if (!(HUD->Flags & AetherFlags::Aetherflow))
-			return Energy_Drain;
+			return Energy_Drain_SMN;
 		break;
 	case Painflare:
 		if (!(HUD->Flags & AetherFlags::Aetherflow))
@@ -388,11 +440,11 @@ inline int ActionSys::Machinist(int action) {
 	switch (action) {
 	// Single-Target
 	case Split_Shot:
-		//if (Combo.Is(Split_Shot))
-		//	return Slug_Shot;
-		//if (Combo.Is(Slug_Shot))
-		//	return Clean_Shot;
-		break;
+		BasicCombo(2, Split_Shot)
+			return Slug_Shot;
+		BasicCombo(26, Slug_Shot)
+			return Clean_Shot;
+	break;
 	// Multi-Target
 	};
 
@@ -460,10 +512,10 @@ inline int ActionSys::RedMage(int action) {
 			return Redoublement;
 	break;
 	// Slow Cast
-	case Verthunder:
-		if (lvl >= 10 && HUD->BlackMana > HUD->WhiteMana)
-			return (lvl >= 68 && HUD->ManaStacks == 3 && lvl < 70) ? Verthunder : Veraero;
-	break;
+	//case Verthunder:
+	//	if (lvl >= 10 && HUD->BlackMana > HUD->WhiteMana)
+	//		return (lvl >= 68 && HUD->ManaStacks == 3 && lvl < 70) ? Verthunder : Veraero;
+	//break;
 	// Quick-Cast
 	case Jolt:
 		if (lvl >= 26 && effect(Status::VerfireReady, 0.5f))
@@ -472,10 +524,10 @@ inline int ActionSys::RedMage(int action) {
 			return Verstone;
 	break;
 	// Multi
-	case Verthunder_II:
-		if (lvl >= 22 && HUD->BlackMana > HUD->WhiteMana)
-			return (lvl >= 68 && HUD->ManaStacks == 3 && lvl < 70) ? Verthunder_II : Veraero_II;
-	break;
+	//case Verthunder_II:
+	//	if (lvl >= 22 && HUD->BlackMana > HUD->WhiteMana)
+	//		return (lvl >= 68 && HUD->ManaStacks == 3 && lvl < 70) ? Verthunder_II : Veraero_II;
+	//break;
 	};
 
 	return action;

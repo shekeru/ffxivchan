@@ -54,6 +54,8 @@ public:
 		FlourishingFountain = 1815,
 		FlourishingWindmill = 1816,
 		FlourishingShower = 1817,
+		// WHM
+		Dia = 1871,
 		// DNC 2
 		SilkenSymmetry = 2693,
 		SilkenFlow = 2694,
